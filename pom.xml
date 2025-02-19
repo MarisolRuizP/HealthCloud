@@ -6,9 +6,9 @@
     <version>0</version>
     <packaging>pom</packaging>
     <modules>
-        <module>HealthCloudPersistencia</module>
         <module>HealthCloudNegocio</module>
         <module>HealthCloudPresentacion</module>
+        <module>HealthCloudPersistencia</module>
     </modules>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
