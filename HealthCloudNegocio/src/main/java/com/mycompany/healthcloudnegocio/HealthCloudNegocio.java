@@ -2,13 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package error.healthcloudpresentacion;
+package com.mycompany.healthcloudnegocio;
 
 /**
  *
  * @author Maryr
  */
-public class HealthCloudPresentacion {
+public class HealthCloudNegocio {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
