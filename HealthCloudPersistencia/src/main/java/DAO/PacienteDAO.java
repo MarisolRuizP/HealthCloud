@@ -34,7 +34,8 @@ public class PacienteDAO implements IPacienteDAO {
 
     /**
      *
-     * @param paciente recibe un objeto de tipo paciente para poder realizar la insercion
+     * @param paciente recibe un objeto de tipo paciente para poder realizar la
+     * insercion
      * @return
      * @throws PersistenciaException
      */
@@ -42,12 +43,9 @@ public class PacienteDAO implements IPacienteDAO {
     public Paciente registrarPaciente(Paciente paciente) throws PersistenciaException {
 
         String sentenciaSQLUsuario = "INSERT INTO Usuarios (identificador, contrasenia, tipoDeUsuario) VALUES (?, ?, ?)";
-        String sentenciaSQLDireccion = "INSERT INTO DireccionPacientes (calleYNumCasa, colonia, municipio) VALUES (?,?,?)";
-        String sentenciaSQLPaciente = "INSERT INTO Pacientes (nombrePila, apellidoPaterno, apellidoMaterno, numTelefono, fechaNacimiento, correoElectronico, idUsuario, idDireccion) VALUES (?, ?,?,?,?,?,?,?)";
-
         try (Connection con = conexion.crearConexion()) {
             con.setAutoCommit(false);
-            
+
             Usuario usuario = paciente.getUsuario();
             String hashedPswd = BCrypt.hashpw(usuario.getContrasenia(), BCrypt.gensalt());
 
@@ -71,6 +69,7 @@ public class PacienteDAO implements IPacienteDAO {
                 }
             }
 
+            String sentenciaSQLDireccion = "INSERT INTO DireccionPacientes (calleYNumCasa, colonia, municipio) VALUES (?,?,?)";
             try (PreparedStatement psDireccion = con.prepareStatement(sentenciaSQLDireccion, Statement.RETURN_GENERATED_KEYS)) {
                 Direccion direccion = paciente.getDireccion();
                 psDireccion.setString(1, direccion.getCalleYNum());
@@ -92,6 +91,7 @@ public class PacienteDAO implements IPacienteDAO {
                 }
             }
 
+            String sentenciaSQLPaciente = "INSERT INTO Pacientes (nombrePila, apellidoPaterno, apellidoMaterno, numTelefono, fechaNacimiento, correoElectronico, idUsuario, idDireccion) VALUES (?, ?,?,?,?,?,?,?)";
             try (PreparedStatement psPaciente = con.prepareStatement(sentenciaSQLPaciente, Statement.RETURN_GENERATED_KEYS)) {
                 psPaciente.setString(1, paciente.getNombrePila());
                 psPaciente.setString(2, paciente.getApellidoPaterno());
