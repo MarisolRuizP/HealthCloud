@@ -17,8 +17,8 @@ public class Paciente extends Usuario {
     private String apellidoMaterno;
     private String correoElectronico;
     private String numTelefono;
-    private String contrasenia;
     private Date fechaNacimiento;
+    private String contrasenia;
     private String direccion;
     
 
