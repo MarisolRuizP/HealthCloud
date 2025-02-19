@@ -224,7 +224,7 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorial frmHistorial = new FrmHistorial();
+        FrmHistorialPaciente frmHistorial = new FrmHistorialPaciente();
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 

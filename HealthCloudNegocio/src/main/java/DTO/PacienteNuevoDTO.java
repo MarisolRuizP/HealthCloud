@@ -1,5 +1,6 @@
 package DTO;
 
+import Entidades.Direccion;
 import java.util.Date;
 
 public class PacienteNuevoDTO {
@@ -10,26 +11,23 @@ public class PacienteNuevoDTO {
     private String correoElectronico;
     private String numTelefono;
     private Date fechaNacimiento;  // Realizar Import
-    private String contrasenia;
-    private String direccion;
+    private Direccion direccion;
 
     // Constructor vacio
     public PacienteNuevoDTO() {
     }
 
     // Constructor con todo
-    public PacienteNuevoDTO(String nombrePila, String apellidoPaterno, String apellidoMaterno, String correoElectronico, String numTelefono, String contrasenia, Date fechaNacimiento, String direccion) {
+    public PacienteNuevoDTO(String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono, Date fechaNacimiento, String correoElectronico, Direccion direccion) {
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.correoElectronico = correoElectronico;
         this.numTelefono = numTelefono;
-        this.contrasenia = contrasenia;
         this.fechaNacimiento = fechaNacimiento;
+        this.correoElectronico = correoElectronico;
         this.direccion = direccion;
     }
 
-    // Getters and Setters
     public String getNombrePila() {
         return nombrePila;
     }
@@ -70,14 +68,6 @@ public class PacienteNuevoDTO {
         this.numTelefono = numTelefono;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -86,18 +76,13 @@ public class PacienteNuevoDTO {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getDireccion() {
+    public Direccion getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
+    public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
 
-    // ToString
-    @Override
-    public String toString() {
-        return "PacienteNuevoDTO{" + "nombrePila=" + nombrePila + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", correoElectronico=" + correoElectronico + ", numTelefono=" + numTelefono + ", contrasenia=" + contrasenia + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + '}';
-    }
-
+   
 }

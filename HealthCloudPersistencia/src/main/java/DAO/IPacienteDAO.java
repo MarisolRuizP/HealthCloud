@@ -2,17 +2,17 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package Conexion;
+package DAO;
 
+import Entidades.Paciente;
 import Exception.PersistenciaException;
-import java.sql.Connection;
 
 /**
  *
  * @author jrasc
  */
-public interface IConexionBD {
+public interface IPacienteDAO {
     
-    public Connection crearConexion() throws PersistenciaException;
+    public Paciente registrarPaciente(Paciente paciente) throws PersistenciaException;
     
 }

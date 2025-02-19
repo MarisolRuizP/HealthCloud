@@ -10,42 +10,51 @@ package Entidades;
  */
 public class Direccion {
     
-    private String calle;
-    private String ciudad;
-    private String codigoPostal;
+    private int id;
+    private String calleYNum;
+    private String colonia;
+    private String municipio;
 
     public Direccion() {
     }
 
-    public Direccion(String calle, String ciudad, String codigoPostal) {
-        this.calle = calle;
-        this.ciudad = ciudad;
-        this.codigoPostal = codigoPostal;
+    public Direccion(String calleYNum, String colonia, String municipio) {
+        this.calleYNum = calleYNum;
+        this.colonia = colonia;
+        this.municipio = municipio;
     }
 
-    public String getCalle() {
-        return calle;
+    public int getId() {
+        return id;
     }
 
-    public void setCalle(String calle) {
-        this.calle = calle;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getCalleYNum() {
+        return calleYNum;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setCalleYNum(String calleYNum) {
+        this.calleYNum = calleYNum;
     }
 
-    public String getCodigoPostal() {
-        return codigoPostal;
+    public String getColonia() {
+        return colonia;
     }
 
-    public void setCodigoPostal(String codigoPostal) {
-        this.codigoPostal = codigoPostal;
+    public void setColonia(String colonia) {
+        this.colonia = colonia;
     }
-    
-    
+
+    public String getMunicipio() {
+        return municipio;
+    }
+
+    public void setMunicipio(String municipio) {
+        this.municipio = municipio;
+    }
+
+
 }
