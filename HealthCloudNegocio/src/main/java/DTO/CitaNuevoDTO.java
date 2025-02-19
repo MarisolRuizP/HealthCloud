@@ -1,5 +1,10 @@
 package DTO;
 
+import Entidades.Doctor;
+import Entidades.Paciente;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 public class CitaNuevoDTO {
 
     private int folioEmergencia;

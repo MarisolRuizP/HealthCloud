@@ -1,5 +1,7 @@
 package DTO;
 
+import Entidades.Cita;
+
 public class ConsultaNuevoDTO {
 
     private String notasMedicas;

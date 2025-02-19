@@ -1,5 +1,7 @@
 package DTO;
 
+import java.util.Date;
+
 public class PacienteNuevoDTO {
 
     private String nombrePila;
@@ -7,8 +9,8 @@ public class PacienteNuevoDTO {
     private String apellidoMaterno;
     private String correoElectronico;
     private String numTelefono;
-    private String contrasenia;
     private Date fechaNacimiento;  // Realizar Import
+    private String contrasenia;
     private String direccion;
 
     // Constructor vacio
