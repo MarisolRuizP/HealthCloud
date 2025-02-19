@@ -32,7 +32,7 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         BtnInfoSide = new javax.swing.JButton();
         BtnHistorialSide = new javax.swing.JButton();
         BtnCitaEmSide = new javax.swing.JButton();
-        BtnCitaEmSide1 = new javax.swing.JButton();
+        BtnCerrarSesion = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList<>();
 
@@ -50,6 +50,11 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         BtnCitasSide.setText("Citas");
         BtnCitasSide.setBorder(null);
         BtnCitasSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnCitasSide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnCitasSideMouseClicked(evt);
+            }
+        });
         BtnCitasSide.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCitasSideActionPerformed(evt);
@@ -81,6 +86,11 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         BtnHistorialSide.setText("Historial");
         BtnHistorialSide.setBorder(null);
         BtnHistorialSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnHistorialSide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnHistorialSideMouseClicked(evt);
+            }
+        });
         BtnHistorialSide.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnHistorialSideActionPerformed(evt);
@@ -94,22 +104,32 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         BtnCitaEmSide.setText("Cita emergencia");
         BtnCitaEmSide.setBorder(null);
         BtnCitaEmSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnCitaEmSide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnCitaEmSideMouseClicked(evt);
+            }
+        });
         BtnCitaEmSide.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnCitaEmSideActionPerformed(evt);
             }
         });
 
-        BtnCitaEmSide1.setBackground(new java.awt.Color(58, 109, 140));
-        BtnCitaEmSide1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        BtnCitaEmSide1.setForeground(new java.awt.Color(0, 0, 0));
-        BtnCitaEmSide1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/3844470-home-house_110332.png"))); // NOI18N
-        BtnCitaEmSide1.setBorder(null);
-        BtnCitaEmSide1.setContentAreaFilled(false);
-        BtnCitaEmSide1.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        BtnCitaEmSide1.addActionListener(new java.awt.event.ActionListener() {
+        BtnCerrarSesion.setBackground(new java.awt.Color(58, 109, 140));
+        BtnCerrarSesion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        BtnCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
+        BtnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ic-back_97586.png"))); // NOI18N
+        BtnCerrarSesion.setText("Cerrar sesion");
+        BtnCerrarSesion.setBorder(null);
+        BtnCerrarSesion.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnCerrarSesionMouseClicked(evt);
+            }
+        });
+        BtnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCitaEmSide1ActionPerformed(evt);
+                BtnCerrarSesionActionPerformed(evt);
             }
         });
 
@@ -120,29 +140,27 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnCitaEmSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnInfoSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BtnCitaEmSide1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(120, Short.MAX_VALUE)
+                .addContainerGap(88, Short.MAX_VALUE)
                 .addComponent(BtnInfoSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(30, 30, 30)
                 .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(29, 29, 29)
                 .addComponent(BtnCitaEmSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(BtnCitaEmSide1, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29)
+                .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
 
         jList1.setModel(new javax.swing.AbstractListModel<String>() {
@@ -192,15 +210,39 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnCitaEmSideActionPerformed
 
-    private void BtnCitaEmSide1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitaEmSide1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCitaEmSide1ActionPerformed
-
     private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
         setVisible(false);
         FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente();
         frmInfoPerPac.setVisible(true);
     }//GEN-LAST:event_BtnInfoSideMouseClicked
+
+    private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
+        setVisible(false);
+        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
+        frmCitas.setVisible(true);
+    }//GEN-LAST:event_BtnCitasSideMouseClicked
+
+    private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
+        setVisible(false);
+        FrmHistorial frmHistorial = new FrmHistorial();
+        frmHistorial.setVisible(true);
+    }//GEN-LAST:event_BtnHistorialSideMouseClicked
+
+    private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
+        setVisible(false);
+        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
+        frmCitaEm.setVisible(true);
+    }//GEN-LAST:event_BtnCitaEmSideMouseClicked
+
+    private void BtnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarSesionMouseClicked
+        setVisible(false);
+        FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion();
+        frmIniciarSesion.setVisible(true);
+    }//GEN-LAST:event_BtnCerrarSesionMouseClicked
+
+    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -238,8 +280,8 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCerrarSesion;
     private javax.swing.JButton BtnCitaEmSide;
-    private javax.swing.JButton BtnCitaEmSide1;
     private javax.swing.JButton BtnCitasSide;
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JButton BtnInfoSide;

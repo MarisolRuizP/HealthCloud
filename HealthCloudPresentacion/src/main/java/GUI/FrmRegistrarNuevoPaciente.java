@@ -40,9 +40,10 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         TxtDireccionReg1 = new javax.swing.JTextField();
         LblCorreo = new javax.swing.JLabel();
         TxtCorreoReg = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        BtnRegis = new javax.swing.JButton();
         LblContra = new javax.swing.JLabel();
         TxtContraReg = new javax.swing.JTextField();
+        BtnCancelReg = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -88,13 +89,13 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         TxtCorreoReg.setBackground(new java.awt.Color(255, 255, 255));
         TxtCorreoReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(217, 217, 217), 1, true));
 
-        jButton1.setBackground(new java.awt.Color(58, 109, 140));
-        jButton1.setForeground(new java.awt.Color(0, 0, 0));
-        jButton1.setText("Registrarse");
-        jButton1.setBorder(null);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnRegis.setBackground(new java.awt.Color(58, 109, 140));
+        BtnRegis.setForeground(new java.awt.Color(0, 0, 0));
+        BtnRegis.setText("Registrarse");
+        BtnRegis.setBorder(null);
+        BtnRegis.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                BtnRegisMouseClicked(evt);
             }
         });
 
@@ -103,6 +104,21 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
 
         TxtContraReg.setBackground(new java.awt.Color(255, 255, 255));
         TxtContraReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(217, 217, 217), 1, true));
+
+        BtnCancelReg.setBackground(new java.awt.Color(58, 109, 140));
+        BtnCancelReg.setForeground(new java.awt.Color(0, 0, 0));
+        BtnCancelReg.setText("Cancelar");
+        BtnCancelReg.setBorder(null);
+        BtnCancelReg.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnCancelRegMouseClicked(evt);
+            }
+        });
+        BtnCancelReg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCancelRegActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -117,10 +133,6 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addComponent(LblFechaNacReg)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(113, 113, 113)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,6 +165,12 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(LblCorreo)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(BtnCancelReg, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(BtnRegis, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(54, 54, 54))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -186,7 +204,9 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(TxtContraReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnRegis, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnCancelReg, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(25, 25, 25))
         );
 
@@ -212,10 +232,21 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void BtnRegisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegisMouseClicked
         DlgResgistroExitoso dlgRegEx = new DlgResgistroExitoso(this, rootPaneCheckingEnabled);
+        dlgRegEx.setLocationRelativeTo(null);
         dlgRegEx.setVisible(true);
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_BtnRegisMouseClicked
+
+    private void BtnCancelRegMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCancelRegMouseClicked
+        setVisible(false);
+        FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion();
+        frmIniciarSesion.setVisible(true);
+    }//GEN-LAST:event_BtnCancelRegMouseClicked
+
+    private void BtnCancelRegActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelRegActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnCancelRegActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,6 +284,8 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BtnCancelReg;
+    private javax.swing.JButton BtnRegis;
     private com.toedter.calendar.JDateChooser DtChFechaNac;
     private javax.swing.JLabel LblApellidosReg;
     private javax.swing.JLabel LblContra;
@@ -267,7 +300,6 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField TxtDireccionReg;
     private javax.swing.JTextField TxtDireccionReg1;
     private javax.swing.JTextField TxtNombreReg;
-    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

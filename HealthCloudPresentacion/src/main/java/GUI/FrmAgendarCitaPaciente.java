@@ -8,12 +8,12 @@ package GUI;
  *
  * @author Maryr
  */
-public class FrmInfoPersPaciente extends javax.swing.JFrame {
+public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmInicioPaciente
      */
-    public FrmInfoPersPaciente() {
+    public FrmAgendarCitaPaciente() {
         initComponents();
     }
 
@@ -33,20 +33,19 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         BtnHistorialSide = new javax.swing.JButton();
         BtnCitaEmSide = new javax.swing.JButton();
         BtnInicio = new javax.swing.JButton();
-        jPanel3 = new javax.swing.JPanel();
-        LblNombre = new javax.swing.JLabel();
-        TxtNomIP = new javax.swing.JTextField();
-        LblApellidos = new javax.swing.JLabel();
-        TxtApellidos = new javax.swing.JTextField();
-        LblDireccion = new javax.swing.JLabel();
-        TxtDireccion = new javax.swing.JTextField();
-        LblFechaNac = new javax.swing.JLabel();
-        TxtFechaNac = new javax.swing.JTextField();
-        LblTelefono = new javax.swing.JLabel();
-        TxtTelefono = new javax.swing.JTextField();
+        BtnCancel = new javax.swing.JPanel();
+        LblEspecialidad = new javax.swing.JLabel();
+        LblDoctor = new javax.swing.JLabel();
+        LblFecha = new javax.swing.JLabel();
+        LblHora = new javax.swing.JLabel();
         LblCorreo = new javax.swing.JLabel();
         TxtCorreo = new javax.swing.JTextField();
-        BtnEditInfo = new javax.swing.JButton();
+        BtnConfirmEdit = new javax.swing.JButton();
+        BtnCancelEdit = new javax.swing.JButton();
+        DtChFechaCita = new com.toedter.calendar.JDateChooser();
+        CbBoxEspecialidad = new javax.swing.JComboBox<>();
+        CbBoxDoctor = new javax.swing.JComboBox<>();
+        CbBoxHora = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -80,6 +79,11 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         BtnInfoSide.setText("Información personal");
         BtnInfoSide.setBorder(null);
         BtnInfoSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnInfoSide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnInfoSideMouseClicked(evt);
+            }
+        });
         BtnInfoSide.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnInfoSideActionPerformed(evt);
@@ -172,132 +176,136 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
                 .addComponent(BtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        BtnCancel.setBackground(new java.awt.Color(255, 255, 255));
 
-        LblNombre.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblNombre.setForeground(new java.awt.Color(0, 0, 0));
-        LblNombre.setText("Nombre");
+        LblEspecialidad.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblEspecialidad.setForeground(new java.awt.Color(0, 0, 0));
+        LblEspecialidad.setText("Escpecialidad");
 
-        TxtNomIP.setBackground(new java.awt.Color(255, 255, 255));
-        TxtNomIP.setEnabled(false);
+        LblDoctor.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblDoctor.setForeground(new java.awt.Color(0, 0, 0));
+        LblDoctor.setText("Doctor");
 
-        LblApellidos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblApellidos.setForeground(new java.awt.Color(0, 0, 0));
-        LblApellidos.setText("Apellidos");
+        LblFecha.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblFecha.setForeground(new java.awt.Color(0, 0, 0));
+        LblFecha.setText("Seleccionar fecha");
 
-        TxtApellidos.setBackground(new java.awt.Color(255, 255, 255));
-        TxtApellidos.setEnabled(false);
-
-        LblDireccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblDireccion.setForeground(new java.awt.Color(0, 0, 0));
-        LblDireccion.setText("Dirección");
-
-        TxtDireccion.setBackground(new java.awt.Color(255, 255, 255));
-        TxtDireccion.setEnabled(false);
-
-        LblFechaNac.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblFechaNac.setForeground(new java.awt.Color(0, 0, 0));
-        LblFechaNac.setText("Fecha de nacimiento");
-
-        TxtFechaNac.setBackground(new java.awt.Color(255, 255, 255));
-        TxtFechaNac.setEnabled(false);
-
-        LblTelefono.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblTelefono.setForeground(new java.awt.Color(0, 0, 0));
-        LblTelefono.setText("Número celular");
-
-        TxtTelefono.setBackground(new java.awt.Color(255, 255, 255));
-        TxtTelefono.setEnabled(false);
+        LblHora.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblHora.setForeground(new java.awt.Color(0, 0, 0));
+        LblHora.setText("Hora");
 
         LblCorreo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         LblCorreo.setForeground(new java.awt.Color(0, 0, 0));
-        LblCorreo.setText("Correo electronico");
+        LblCorreo.setText("Notas para el doctor");
 
         TxtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         TxtCorreo.setEnabled(false);
 
-        BtnEditInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/edit_icon_128873.png"))); // NOI18N
-        BtnEditInfo.setBorder(null);
-        BtnEditInfo.setContentAreaFilled(false);
-        BtnEditInfo.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnConfirmEdit.setBackground(new java.awt.Color(58, 109, 140));
+        BtnConfirmEdit.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        BtnConfirmEdit.setForeground(new java.awt.Color(0, 0, 0));
+        BtnConfirmEdit.setText("Confirmar");
+        BtnConfirmEdit.setBorder(null);
+
+        BtnCancelEdit.setBackground(new java.awt.Color(58, 109, 140));
+        BtnCancelEdit.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        BtnCancelEdit.setForeground(new java.awt.Color(0, 0, 0));
+        BtnCancelEdit.setText("Cancelar");
+        BtnCancelEdit.setBorder(null);
+        BtnCancelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnEditInfoMouseClicked(evt);
+                BtnCancelEditMouseClicked(evt);
+            }
+        });
+        BtnCancelEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCancelEditActionPerformed(evt);
             }
         });
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+        DtChFechaCita.setBackground(new java.awt.Color(255, 255, 255));
+        DtChFechaCita.setForeground(new java.awt.Color(0, 0, 0));
+
+        CbBoxEspecialidad.setBackground(new java.awt.Color(255, 255, 255));
+        CbBoxEspecialidad.setMaximumRowCount(20);
+        CbBoxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbBoxEspecialidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
+
+        CbBoxDoctor.setBackground(new java.awt.Color(255, 255, 255));
+        CbBoxDoctor.setMaximumRowCount(20);
+        CbBoxDoctor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbBoxDoctor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
+
+        CbBoxHora.setBackground(new java.awt.Color(255, 255, 255));
+        CbBoxHora.setMaximumRowCount(20);
+        CbBoxHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbBoxHora.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
+
+        javax.swing.GroupLayout BtnCancelLayout = new javax.swing.GroupLayout(BtnCancel);
+        BtnCancel.setLayout(BtnCancelLayout);
+        BtnCancelLayout.setHorizontalGroup(
+            BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnCancelLayout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(BtnCancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addComponent(BtnConfirmEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+            .addGroup(BtnCancelLayout.createSequentialGroup()
+                .addGroup(BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(LblNombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnEditInfo))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtNomIP, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(LblFechaNac))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(LblCorreo))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(LblApellidos))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(LblDireccion)))
-                        .addGap(0, 23, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(LblTelefono)
+                        .addComponent(LblEspecialidad))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(LblDoctor))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(LblHora))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TxtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                            .addComponent(DtChFechaCita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CbBoxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CbBoxDoctor, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(CbBoxHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(LblFecha))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(LblCorreo)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LblNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(BtnEditInfo)
-                        .addGap(4, 4, 4)))
+        BtnCancelLayout.setVerticalGroup(
+            BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BtnCancelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(LblEspecialidad)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtNomIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CbBoxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(LblDoctor)
+                .addGap(4, 4, 4)
+                .addComponent(CbBoxDoctor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblApellidos)
+                .addComponent(LblFecha)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DtChFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblDireccion)
+                .addComponent(LblHora)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblFechaNac)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblTelefono)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CbBoxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LblCorreo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnCancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnConfirmEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -306,17 +314,17 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(BtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(70, 70, 70))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(37, 37, 37))
         );
 
         getContentPane().add(jPanel1);
@@ -344,11 +352,15 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnInicioActionPerformed
 
-    private void BtnEditInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnEditInfoMouseClicked
+    private void BtnCancelEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelEditActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnCancelEditActionPerformed
+
+    private void BtnCancelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCancelEditMouseClicked
         setVisible(false);
-        FrmEditarInfoPersPaciente frmEditInfoPers = new FrmEditarInfoPersPaciente();
-        frmEditInfoPers.setVisible(true);
-    }//GEN-LAST:event_BtnEditInfoMouseClicked
+        FrmCitasPaciente frmCitas= new FrmCitasPaciente();
+        frmCitas.setVisible(true);
+    }//GEN-LAST:event_BtnCancelEditMouseClicked
 
     private void BtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInicioMouseClicked
         setVisible(false);
@@ -356,11 +368,11 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         frmInicio.setVisible(true);
     }//GEN-LAST:event_BtnInicioMouseClicked
 
-    private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
+    private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
         setVisible(false);
-        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
-        frmCitaEm.setVisible(true);
-    }//GEN-LAST:event_BtnCitaEmSideMouseClicked
+        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente();
+        frmInfoPerPac.setVisible(true);
+    }//GEN-LAST:event_BtnInfoSideMouseClicked
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
         setVisible(false);
@@ -373,6 +385,12 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         FrmHistorial frmHistorial = new FrmHistorial();
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
+
+    private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
+        setVisible(false);
+        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
+        frmCitaEm.setVisible(true);
+    }//GEN-LAST:event_BtnCitaEmSideMouseClicked
 
     /**
      * @param args the command line arguments
@@ -391,46 +409,51 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgendarCitaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgendarCitaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgendarCitaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmAgendarCitaPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmInfoPersPaciente().setVisible(true);
+                new FrmAgendarCitaPaciente().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BtnCancel;
+    private javax.swing.JButton BtnCancelEdit;
     private javax.swing.JButton BtnCitaEmSide;
     private javax.swing.JButton BtnCitasSide;
-    private javax.swing.JButton BtnEditInfo;
+    private javax.swing.JButton BtnConfirmEdit;
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JButton BtnInfoSide;
     private javax.swing.JButton BtnInicio;
-    private javax.swing.JLabel LblApellidos;
+    private javax.swing.JComboBox<String> CbBoxDoctor;
+    private javax.swing.JComboBox<String> CbBoxEspecialidad;
+    private javax.swing.JComboBox<String> CbBoxHora;
+    private com.toedter.calendar.JDateChooser DtChFechaCita;
     private javax.swing.JLabel LblCorreo;
-    private javax.swing.JLabel LblDireccion;
-    private javax.swing.JLabel LblFechaNac;
-    private javax.swing.JLabel LblNombre;
-    private javax.swing.JLabel LblTelefono;
-    private javax.swing.JTextField TxtApellidos;
+    private javax.swing.JLabel LblDoctor;
+    private javax.swing.JLabel LblEspecialidad;
+    private javax.swing.JLabel LblFecha;
+    private javax.swing.JLabel LblHora;
     private javax.swing.JTextField TxtCorreo;
-    private javax.swing.JTextField TxtDireccion;
-    private javax.swing.JTextField TxtFechaNac;
-    private javax.swing.JTextField TxtNomIP;
-    private javax.swing.JTextField TxtTelefono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }
