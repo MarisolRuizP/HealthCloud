@@ -11,28 +11,26 @@ import java.sql.Date;
  * @author jrasc
  */
 public class Paciente extends Usuario {
-    
+
     private String nombrePila;
     private String apellidoPaterno;
     private String apellidoMaterno;
-    private String correoElectronico;
     private String numTelefono;
     private Date fechaNacimiento;
-    private String contrasenia;
-    private String direccion;
-    
+    private String correoElectronico;
+    private Direccion direccion;
+    private Usuario usuario;
 
     public Paciente() {
     }
 
-    public Paciente(String nombrePila, String apellidoPaterno, String apellidoMaterno, String correoElectronico, String numTelefono, Date fechaNacimiento, String contrasenia, String direccion) {
-        this.contrasenia = contrasenia;
+    public Paciente(String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono, Date fechaNacimiento, String correoElectronico, Direccion direccion) {
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
-        this.correoElectronico = correoElectronico;
         this.numTelefono = numTelefono;
         this.fechaNacimiento = fechaNacimiento;
+        this.correoElectronico = correoElectronico;
         this.direccion = direccion;
     }
 
@@ -60,14 +58,6 @@ public class Paciente extends Usuario {
         this.apellidoMaterno = apellidoMaterno;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
-    }
-
     public String getNumTelefono() {
         return numTelefono;
     }
@@ -84,22 +74,28 @@ public class Paciente extends Usuario {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
+    public String getCorreoElectronico() {
+        return correoElectronico;
     }
 
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
     }
 
-    public String getDireccion() {
+    public Direccion getDireccion() {
         return direccion;
     }
 
-    public void setDireccion(String direccion) {
+    public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
     }
-    
-    
-    
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
 }

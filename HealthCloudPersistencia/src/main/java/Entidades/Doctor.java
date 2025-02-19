@@ -15,6 +15,7 @@ public class Doctor extends Usuario {
     private String apellidoMaterno;
     private String especialidad;
     private String cedulaProfesional;
+    private Usuario usuario;
 
     public Doctor() {
     }
@@ -67,4 +68,13 @@ public class Doctor extends Usuario {
         this.cedulaProfesional = cedulaProfesional;
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    
 }

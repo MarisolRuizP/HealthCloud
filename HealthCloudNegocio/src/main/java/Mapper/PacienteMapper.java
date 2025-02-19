@@ -6,23 +6,17 @@ import java.sql.Date;
 
 public class PacienteMapper {
 
-    /**
-     * Es necesario agregar la dependencia de Persistencia.
-     * Realizar Clean and Build de HealthCloudPersistencia y agregar en Dependencia de HealthCloudNegocio.
-     * Por ultimo realizar import necesario.
-     */  
-
     public Paciente toEntity (PacienteNuevoDTO pacienteNuevo) {
-        Paciente paciente = new Paciente(pacienteNuevo.getNombrePila(), pacienteNuevo.getApellidoPaterno(), 
-        pacienteNuevo.getApellidoMaterno(), pacienteNuevo.getCorreoElectronico(), pacienteNuevo.getNumTelefono(), (Date) pacienteNuevo.getFechaNacimiento(), 
-        pacienteNuevo.getContrasenia(), pacienteNuevo.getDireccion());
+        Paciente paciente;
+        paciente = new Paciente(pacienteNuevo.getNombrePila(), pacienteNuevo.getApellidoPaterno(), 
+                pacienteNuevo.getApellidoMaterno(), pacienteNuevo.getNumTelefono(), (Date) pacienteNuevo.getFechaNacimiento(), pacienteNuevo.getCorreoElectronico(),
+                pacienteNuevo.getDireccion());
         return paciente;
     }
 
     public PacienteNuevoDTO toDTO (Paciente paciente) {
         PacienteNuevoDTO pacienteDTO = new PacienteNuevoDTO(paciente.getNombrePila(), paciente.getApellidoPaterno(),
-        paciente.getApellidoMaterno(), paciente.getCorreoElectronico(), paciente.getNumTelefono(), paciente.getContrasenia(),
-        paciente.getFechaNacimiento(), paciente.getDireccion());
+        paciente.getApellidoMaterno(), paciente.getNumTelefono(), paciente.getFechaNacimiento(), paciente.getCorreoElectronico(), paciente.getDireccion());
         return pacienteDTO;
     }
 
