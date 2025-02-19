@@ -11,8 +11,7 @@ public class PacienteMapper {
      * Por ultimo realizar import necesario.
      */  
 
-    // Sale error por falta de Dependencia de Persistencia.
-    puublic Paciente toEntity (PacienteNuevoDTO pacienteNuevo) {
+    public Paciente toEntity (PacienteNuevoDTO pacienteNuevo) {
         Paciente paciente = new Paciente(pacienteNuevo.getNombrePila(), pacienteNuevo.getApellidoPaterno(), 
         pacienteNuevo.getApellidoMaterno(), pacienteNuevo.getCorreoElectronico(), pacienteNuevo.getNumTelefono(),
         pacienteNuevo.getContrasenia(), pacienteNuevo.getFechaNacimiento(), pacienteNuevo.getDireccion());
