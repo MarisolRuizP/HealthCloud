@@ -19,8 +19,7 @@ public class Doctor extends Usuario {
     public Doctor() {
     }
 
-    public Doctor(String nombrePila, String apellidoPaterno, String apellidoMaterno, String especialidad, String cedulaProfesional, String contrasenia) {
-        super(contrasenia);
+    public Doctor(String nombrePila, String apellidoPaterno, String apellidoMaterno, String especialidad, String cedulaProfesional) {
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;

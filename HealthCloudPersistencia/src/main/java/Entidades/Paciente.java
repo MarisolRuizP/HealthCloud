@@ -4,7 +4,7 @@
  */
 package Entidades;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 /**
  *
@@ -17,19 +17,23 @@ public class Paciente extends Usuario {
     private String apellidoMaterno;
     private String correoElectronico;
     private String numTelefono;
-    private LocalDate fechaNacimiento;  
+    private String contrasenia;
+    private Date fechaNacimiento;
+    private String direccion;
+    
 
     public Paciente() {
     }
 
-    public Paciente(String nombrePila, String apellidoPaterno, String apellidoMaterno, String correoElectronico, String numTelefono, LocalDate fechaNacimiento, String contrasenia) {
-        super(contrasenia);
+    public Paciente(String nombrePila, String apellidoPaterno, String apellidoMaterno, String correoElectronico, String numTelefono, Date fechaNacimiento, String contrasenia, String direccion) {
+        this.contrasenia = contrasenia;
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
         this.correoElectronico = correoElectronico;
         this.numTelefono = numTelefono;
         this.fechaNacimiento = fechaNacimiento;
+        this.direccion = direccion;
     }
 
     public String getNombrePila() {
@@ -72,12 +76,28 @@ public class Paciente extends Usuario {
         this.numTelefono = numTelefono;
     }
 
-    public LocalDate getFechaNacimiento() {
+    public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public String getContrasenia() {
+        return contrasenia;
+    }
+
+    public void setContrasenia(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
     
     

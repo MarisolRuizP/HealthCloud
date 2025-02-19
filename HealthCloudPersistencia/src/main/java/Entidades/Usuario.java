@@ -11,13 +11,8 @@ package Entidades;
 public class Usuario {
     
     private int id;
-    private String contrasenia;
 
     public Usuario() {
-    }
-
-    public Usuario(String contrasenia) {
-        this.contrasenia = contrasenia;
     }
 
     public int getId() {
@@ -28,14 +23,4 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
-    public void setContrasenia(String contrasenia) {
-        this.contrasenia = contrasenia;
-    }
-    
-    
-    
 }
