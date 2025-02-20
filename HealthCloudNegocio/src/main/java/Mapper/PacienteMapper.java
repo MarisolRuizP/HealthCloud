@@ -9,7 +9,7 @@ public class PacienteMapper {
     public Paciente toEntity (PacienteNuevoDTO pacienteNuevo) {
         Paciente paciente;
         paciente = new Paciente(pacienteNuevo.getNombrePila(), pacienteNuevo.getApellidoPaterno(), 
-                pacienteNuevo.getApellidoMaterno(), pacienteNuevo.getNumTelefono(), (Date) pacienteNuevo.getFechaNacimiento(), pacienteNuevo.getCorreoElectronico(),
+                pacienteNuevo.getApellidoMaterno(), pacienteNuevo.getNumTelefono(), new java.sql.Date(pacienteNuevo.getFechaNacimiento().getTime()), pacienteNuevo.getCorreoElectronico(),
                 pacienteNuevo.getDireccion());
         return paciente;
     }
