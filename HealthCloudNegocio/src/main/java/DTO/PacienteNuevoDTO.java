@@ -20,7 +20,7 @@ public class PacienteNuevoDTO {
     }
 
     // Constructor con todo
-    public PacienteNuevoDTO(String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono, Date fechaNacimiento, String correoElectronico, Direccion direccion) {
+    public PacienteNuevoDTO(String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono, Date fechaNacimiento, String correoElectronico, Direccion direccion, Usuario usuario) {
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -28,6 +28,7 @@ public class PacienteNuevoDTO {
         this.fechaNacimiento = fechaNacimiento;
         this.correoElectronico = correoElectronico;
         this.direccion = direccion;
+        this.usuario = usuario;
     }
 
     public String getNombrePila() {

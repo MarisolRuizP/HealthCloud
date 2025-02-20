@@ -18,8 +18,8 @@ import java.util.logging.Logger;
 public class ConexionBD implements IConexionBD {
 
     final String USUARIO = "root";
-    final String PASS = "Elmataperros1";
-    final String CADENA_CONEXION = "jdbc:mysql://localhost:3306/citasMedicas";
+    final String PASS = "itson";
+    final String CADENA_CONEXION = "jdbc:mysql://127.0.0.1:3306/citasMedicas";
 
     @Override
     public Connection crearConexion() throws PersistenciaException {

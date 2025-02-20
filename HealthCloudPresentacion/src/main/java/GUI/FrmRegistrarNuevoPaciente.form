@@ -87,17 +87,30 @@
                                       <Component id="DtChFechaNac" min="-2" pref="287" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                           <Component id="TxtApellidosReg" alignment="1" pref="287" max="32767" attributes="0"/>
-                                          <Component id="TxtDireccionReg" alignment="1" pref="287" max="32767" attributes="0"/>
                                           <Component id="TxtNombreReg" alignment="1" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="LblDireccionReg" min="-2" max="-2" attributes="0"/>
                                                   <Component id="LblApellidosReg" min="-2" max="-2" attributes="0"/>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="LblDireccionCalleReg" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
+                                                      <Component id="LblDireccionColoniaReg" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="32767" attributes="0"/>
+                                                      <Component id="LblDireccionMunReg" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                                  </Group>
                                               </Group>
                                           </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="TxtDireccionCalleReg" min="-2" pref="93" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="TxtDireccionColoniaReg" min="-2" pref="82" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="TxtDireccionMunReg" max="32767" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <Component id="TxtDireccionReg1" alignment="1" max="32767" attributes="0"/>
+                                      <Component id="TxtTelefono" alignment="1" max="32767" attributes="0"/>
                                       <Component id="TxtCorreoReg" alignment="0" max="32767" attributes="0"/>
                                       <Component id="TxtContraReg" alignment="1" max="32767" attributes="0"/>
                                   </Group>
@@ -140,9 +153,17 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="TxtApellidosReg" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                      <Component id="LblDireccionReg" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="LblDireccionCalleReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="LblDireccionColoniaReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="LblDireccionMunReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TxtDireccionReg" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="TxtDireccionCalleReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TxtDireccionColoniaReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TxtDireccionMunReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="LblFechaNacReg" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -150,7 +171,7 @@
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="LblTelefono" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TxtDireccionReg1" min="-2" max="-2" attributes="0"/>
+                      <Component id="TxtTelefono" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="LblCorreo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -200,7 +221,7 @@
                 <Property name="text" type="java.lang.String" value="Apellidos"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="TxtDireccionReg">
+            <Component class="javax.swing.JTextField" name="TxtDireccionCalleReg">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -213,13 +234,16 @@
                   </Border>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtDireccionCalleRegActionPerformed"/>
+              </Events>
             </Component>
-            <Component class="javax.swing.JLabel" name="LblDireccionReg">
+            <Component class="javax.swing.JLabel" name="LblDireccionCalleReg">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Direcci&#xf3;n"/>
+                <Property name="text" type="java.lang.String" value="Calle y No."/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="TxtApellidosReg">
@@ -269,7 +293,7 @@
                 <Property name="text" type="java.lang.String" value="N&#xfa;mero de celular"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="TxtDireccionReg1">
+            <Component class="javax.swing.JTextField" name="TxtTelefono">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -360,6 +384,56 @@
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtnCancelRegMouseClicked"/>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtnCancelRegActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LblDireccionColoniaReg">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Colonia"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="TxtDireccionColoniaReg">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder roundedCorners="true">
+                      <Color PropertyName="color" blue="d9" green="d9" red="d9" type="rgb"/>
+                    </LineBorder>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtDireccionColoniaRegActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LblDireccionMunReg">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Municipio"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="TxtDireccionMunReg">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder roundedCorners="true">
+                      <Color PropertyName="color" blue="d9" green="d9" red="d9" type="rgb"/>
+                    </LineBorder>
+                  </Border>
+                </Property>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtDireccionMunRegActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
