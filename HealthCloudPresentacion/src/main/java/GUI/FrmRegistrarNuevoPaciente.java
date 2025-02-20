@@ -28,6 +28,7 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         ConexionBD conexion = new ConexionBD();
         this.pacienteBO = new PacienteBO(conexion);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -299,7 +300,12 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
             String apellidos = TxtApellidosReg.getText();
             String [] apellidosArray = apellidos.split(" ", 2);
             String apellidoPaterno = apellidosArray[0];
-            String apellidoMaterno = apellidosArray[1];
+            String apellidoMaterno;
+            if (apellidosArray.length > 1) {
+                apellidoMaterno = apellidosArray[1];
+            } else {
+                apellidoMaterno = null;
+            }
             String telefono = TxtTelefono.getText();
             Date fechaNacimiento = new Date(DtChFechaNac.getDate().getTime());
             String correo = TxtCorreoReg.getText();
@@ -318,6 +324,9 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
                 dlgRegEx.setVisible(true);
             }
         } catch (NegocioException ex) {
+            DlgResgistroError dlgResgistroError = new DlgResgistroError(this, rootPaneCheckingEnabled);
+            dlgResgistroError.setLocationRelativeTo(null);
+            dlgResgistroError.setVisible(true);
             Logger.getLogger(FrmRegistrarNuevoPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BtnRegisMouseClicked

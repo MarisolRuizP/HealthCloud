@@ -26,19 +26,15 @@ public class PacienteBO {
             throw new NegocioException("Favor de llenar los espacios.");
         }
 
-        if (pacienteNuevo.getNombrePila() == null) {
+        if (pacienteNuevo.getNombrePila().isEmpty()) {
             throw new NegocioException("Favor de ingresar el nombre del paciente.");
         }
 
-        if (pacienteNuevo.getApellidoPaterno() == null) {
+        if (pacienteNuevo.getApellidoPaterno().isEmpty()) {
             throw new NegocioException("Favor de ingresar el apellido paterno del paciente.");
         }
 
-        if (pacienteNuevo.getApellidoMaterno() == null) {
-            throw new NegocioException("Favor de ingresar el apellido materno del paciente.");
-        }
-
-        if (pacienteNuevo.getNumTelefono() == null) {
+        if (pacienteNuevo.getNumTelefono().isEmpty()) {
             throw new NegocioException("Favor de ingresar el numero de telefono del paciente.");
         }
 
@@ -46,8 +42,12 @@ public class PacienteBO {
             throw new NegocioException("Favor de introducir la fecha de nacimiento del paciente.");
         }
 
-        if (pacienteNuevo.getCorreoElectronico() == null) {
+        if (pacienteNuevo.getCorreoElectronico().isEmpty()) {
             throw new NegocioException("Favor de agregar el correo del paciente.");
+        }
+        
+        if (!pacienteNuevo.getCorreoElectronico().contains("@")) {
+            throw new NegocioException("Correo no valido.");
         }
 
         if (pacienteNuevo.getDireccion() == null) {
@@ -57,15 +57,13 @@ public class PacienteBO {
     }
 
     public String registrarPaciente (PacienteNuevoDTO pacienteNuevo) throws NegocioException {
-        
-        ValidarPaciente(pacienteNuevo);
-
-        Paciente paciente = new Paciente();
-        PacienteMapper convertidor = new PacienteMapper();
-        paciente = convertidor.toEntity(pacienteNuevo);
-
-
         try {
+            ValidarPaciente(pacienteNuevo);
+
+            Paciente paciente = new Paciente();
+            PacienteMapper convertidor = new PacienteMapper();
+            paciente = convertidor.toEntity(pacienteNuevo);
+
             Paciente pacienteRegistrado = pacienteDAO.registrarPaciente(paciente);
             return "Paciente registrado";
         }catch (PersistenciaException ex) {
