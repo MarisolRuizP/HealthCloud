@@ -14,7 +14,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mindrot.jbcrypt.BCrypt;
@@ -48,6 +47,7 @@ public class PacienteDAO implements IPacienteDAO {
 
             Usuario usuario = paciente.getUsuario();
             String hashedPswd = BCrypt.hashpw(usuario.getContrasenia(), BCrypt.gensalt());
+            
 
             try (PreparedStatement psUsuario = con.prepareStatement(sentenciaSQLUsuario, Statement.RETURN_GENERATED_KEYS)) {
                 psUsuario.setString(1, usuario.getIdentificador());

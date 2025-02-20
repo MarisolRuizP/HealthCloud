@@ -2,21 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>error</groupId>
+        <groupId>com.mycompany</groupId>
         <artifactId>HealthCloud</artifactId>
         <version>0</version>
     </parent>
     <artifactId>HealthCloudNegocio</artifactId>
     <packaging>jar</packaging>
-    <dependencies>
-        <dependency>
-            <groupId>com.mycompany</groupId>
-            <artifactId>HealthCloudPersistencia</artifactId>
-            <version>0</version>
-        </dependency>
-    </dependencies>
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
         <exec.mainClass>error.healthcloudnegocio.HealthCloudNegocio</exec.mainClass>
     </properties>
+    <groupId>com.mycompany</groupId>
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>HealthCloudPersistencia</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

@@ -24,7 +24,7 @@ public class Paciente extends Usuario {
     public Paciente() {
     }
 
-    public Paciente(String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono, Date fechaNacimiento, String correoElectronico, Direccion direccion) {
+    public Paciente(String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono, Date fechaNacimiento, String correoElectronico, Direccion direccion, Usuario usuario) {
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -32,6 +32,7 @@ public class Paciente extends Usuario {
         this.fechaNacimiento = fechaNacimiento;
         this.correoElectronico = correoElectronico;
         this.direccion = direccion;
+        this.usuario = usuario;
     }
 
     public String getNombrePila() {
