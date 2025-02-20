@@ -84,5 +84,9 @@ public class PacienteNuevoDTO {
         this.direccion = direccion;
     }
 
+    @Override
+    public String toString() {
+        return "PacienteNuevoDTO{" + "nombrePila=" + nombrePila + ", apellidoPaterno=" + apellidoPaterno + ", apellidoMaterno=" + apellidoMaterno + ", correoElectronico=" + correoElectronico + ", numTelefono=" + numTelefono + ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + '}';
+    }
    
 }
