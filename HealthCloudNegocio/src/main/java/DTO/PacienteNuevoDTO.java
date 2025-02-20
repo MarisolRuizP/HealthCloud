@@ -1,6 +1,7 @@
 package DTO;
 
 import Entidades.Direccion;
+import Entidades.Usuario;
 import java.util.Date;
 
 public class PacienteNuevoDTO {
@@ -12,6 +13,7 @@ public class PacienteNuevoDTO {
     private String numTelefono;
     private Date fechaNacimiento;  // Realizar Import
     private Direccion direccion;
+    private Usuario usuario;
 
     // Constructor vacio
     public PacienteNuevoDTO() {
@@ -82,6 +84,14 @@ public class PacienteNuevoDTO {
 
     public void setDireccion(Direccion direccion) {
         this.direccion = direccion;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override
