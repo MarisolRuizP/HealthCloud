@@ -34,10 +34,10 @@ public class Pruebas {
         pacienteNuevo.setNombrePila("Juanito");
         pacienteNuevo.setApellidoMaterno("Perez");
         pacienteNuevo.setApellidoPaterno("lopez");
-        pacienteNuevo.setCorreoElectronico("Elperron64@hotmail.com");
+        pacienteNuevo.setCorreoElectronico("abvd64@hotmail.com");
         pacienteNuevo.setDireccion(direccion);
         pacienteNuevo.setFechaNacimiento(fechaNacimiento);
-        pacienteNuevo.setNumTelefono("6648452455");
+        pacienteNuevo.setNumTelefono("6666666666");
        
 
         try {
