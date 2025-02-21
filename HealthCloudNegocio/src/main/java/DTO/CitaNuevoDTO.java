@@ -7,7 +7,7 @@ import java.time.LocalTime;
 
 public class CitaNuevoDTO {
 
-    private int folioEmergencia;
+    private String folioEmergencia;
     private LocalDate fecha; // Manejar localDate para registrar fecha del sistema (agregar import)
     private LocalTime hora;
     private String motivo;
@@ -19,7 +19,7 @@ public class CitaNuevoDTO {
     }
 
     // Constructor con todo
-    public CitaNuevoDTO(int folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Doctor doctor) {
+    public CitaNuevoDTO(String folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Doctor doctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
         this.hora = hora;
@@ -29,11 +29,11 @@ public class CitaNuevoDTO {
     }
 
     // Getters and Setters
-    public int getFolioEmergencia() {
+    public String getFolioEmergencia() {
         return folioEmergencia;
     }
 
-    public void setFolioEmergencia(int folioEmergencia) {
+    public void setFolioEmergencia(String folioEmergencia) {
         this.folioEmergencia = folioEmergencia;
     }
 
