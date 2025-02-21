@@ -8,6 +8,10 @@ import Conexion.ConexionBD;
 import Conexion.IConexionBD;
 import DAO.IPacienteDAO;
 import DAO.PacienteDAO;
+import Entidades.Direccion;
+import Entidades.Paciente;
+import Entidades.Usuario;
+import Exception.PersistenciaException;
 
 /**
  *
@@ -21,8 +25,16 @@ public class clasePrueba {
     public static void main(String[] args) {
         IConexionBD conexion = new ConexionBD();
         IPacienteDAO pacienteDAO = new PacienteDAO(conexion);
-        
-        
+
+        Usuario usuario = new Usuario("pepepicapapas");
+        Direccion direccion = new Direccion("reborte 12", "El pirata de culiacan", "asi nomas quedo");
+        Paciente paciente = new Paciente(1, "elpiratita", "De Culiacan", "asinomasquedo", "6648371954", "repollo@1223.com", direccion, usuario);
+
+        try {
+            pacienteDAO.editarPaciente(paciente);
+        } catch (PersistenciaException e) {
+            e.printStackTrace();
+        }
     }
-    
+
 }

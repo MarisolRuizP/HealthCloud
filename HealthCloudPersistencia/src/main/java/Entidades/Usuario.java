@@ -18,6 +18,11 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+    
+    
     public Usuario(String identificador, String contrasenia, String tipoDeUsuario) {
         this.identificador = identificador;
         this.contrasenia = contrasenia;

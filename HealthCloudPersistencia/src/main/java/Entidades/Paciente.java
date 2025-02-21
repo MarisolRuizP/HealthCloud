@@ -11,7 +11,8 @@ import java.sql.Date;
  * @author jrasc
  */
 public class Paciente extends Usuario {
-
+    
+    private int idPaciente;
     private String nombrePila;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -33,6 +34,25 @@ public class Paciente extends Usuario {
         this.correoElectronico = correoElectronico;
         this.direccion = direccion;
         this.usuario = usuario;
+    }
+
+    public Paciente(int idPaciente, String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono,String correoElectronico, Direccion direccion, Usuario usuario) {
+        this.idPaciente = idPaciente;
+        this.nombrePila = nombrePila;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.numTelefono = numTelefono;
+        this.correoElectronico = correoElectronico;
+        this.direccion = direccion;
+        this.usuario = usuario;
+    }
+
+    public int getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getNombrePila() {

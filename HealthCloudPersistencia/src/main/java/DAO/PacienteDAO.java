@@ -9,6 +9,7 @@ import Entidades.Direccion;
 import Entidades.Paciente;
 import Entidades.Usuario;
 import Exception.PersistenciaException;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -121,6 +122,36 @@ public class PacienteDAO implements IPacienteDAO {
         } catch (SQLException ex) {
             Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new PersistenciaException("Error al registrar el paciente", ex);
+        }
+        return paciente;
+    }
+    
+    public Paciente editarPaciente(Paciente paciente) throws PersistenciaException {
+        
+        Usuario usuario = paciente.getUsuario();
+        Direccion direccion = paciente.getDireccion();
+        
+        String sentenciaSQLActualizar = "CALL actualizarUnPaciente(?,?,?,?,?,?,?,?,?,?)";
+        
+        try (Connection con = conexion.crearConexion();
+                CallableStatement stm = con.prepareCall(sentenciaSQLActualizar)) {
+            
+            stm.setInt(1, paciente.getIdPaciente());
+            stm.setString(2, usuario.getContrasenia());
+            stm.setString(3, paciente.getNombrePila());
+            stm.setString(4, paciente.getApellidoPaterno());
+            stm.setString(5, paciente.getApellidoMaterno());
+            stm.setString(6, paciente.getNumTelefono());
+            stm.setString(7, paciente.getCorreoElectronico());
+            stm.setString(8, direccion.getCalleYNum());
+            stm.setString(9, direccion.getColonia());
+            stm.setString(10, direccion.getMunicipio());
+            
+            stm.executeUpdate();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PersistenciaException("Error al actualizar al paciente", ex);
         }
         return paciente;
     }
