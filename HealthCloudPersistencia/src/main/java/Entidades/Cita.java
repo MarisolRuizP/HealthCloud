@@ -15,7 +15,7 @@ public class Cita {
     
     
     private int id;
-    private int folioEmergencia;
+    private String folioEmergencia;
     private LocalDate fecha;
     private LocalTime hora;
     private String motivo;
@@ -25,7 +25,7 @@ public class Cita {
     public Cita() {
     }
 
-    public Cita(int folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Doctor doctor) {
+    public Cita(String folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Doctor doctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
         this.hora = hora;
@@ -42,11 +42,11 @@ public class Cita {
         this.id = id;
     }
 
-    public int getFolioEmergencia() {
+    public String getFolioEmergencia() {
         return folioEmergencia;
     }
 
-    public void setFolioEmergencia(int folioEmergencia) {
+    public void setFolioEmergencia(String folioEmergencia) {
         this.folioEmergencia = folioEmergencia;
     }
 

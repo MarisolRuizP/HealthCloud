@@ -10,6 +10,7 @@ package Entidades;
  */
 public class Doctor extends Usuario {
     
+    private int idDoctor;
     private String nombrePila;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -75,6 +76,16 @@ public class Doctor extends Usuario {
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
+
+    public int getIdDoctor() {
+        return idDoctor;
+    }
+
+    public void setIdDoctor(int idDoctor) {
+        this.idDoctor = idDoctor;
+    }
+    
+    
 
     
 }
