@@ -44,10 +44,10 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         LblNombreReg = new javax.swing.JLabel();
         TxtNombreReg = new javax.swing.JTextField();
-        LblApellidosReg = new javax.swing.JLabel();
+        LblApellidoPReg = new javax.swing.JLabel();
         TxtDireccionCalleReg = new javax.swing.JTextField();
         LblDireccionCalleReg = new javax.swing.JLabel();
-        TxtApellidosReg = new javax.swing.JTextField();
+        TxtApellidoPReg = new javax.swing.JTextField();
         DtChFechaNac = new com.toedter.calendar.JDateChooser();
         LblFechaNacReg = new javax.swing.JLabel();
         LblTelefono = new javax.swing.JLabel();
@@ -62,6 +62,8 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         TxtDireccionColoniaReg = new javax.swing.JTextField();
         LblDireccionMunReg = new javax.swing.JLabel();
         TxtDireccionMunReg = new javax.swing.JTextField();
+        LblApellidoMReg = new javax.swing.JLabel();
+        TxtApellidoMReg = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -76,8 +78,8 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         TxtNombreReg.setBackground(new java.awt.Color(255, 255, 255));
         TxtNombreReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(217, 217, 217), 1, true));
 
-        LblApellidosReg.setForeground(new java.awt.Color(0, 0, 0));
-        LblApellidosReg.setText("Apellidos");
+        LblApellidoPReg.setForeground(new java.awt.Color(0, 0, 0));
+        LblApellidoPReg.setText("Apellido Paterno");
 
         TxtDireccionCalleReg.setBackground(new java.awt.Color(255, 255, 255));
         TxtDireccionCalleReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(217, 217, 217), 1, true));
@@ -90,8 +92,8 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
         LblDireccionCalleReg.setForeground(new java.awt.Color(0, 0, 0));
         LblDireccionCalleReg.setText("Calle y No.");
 
-        TxtApellidosReg.setBackground(new java.awt.Color(255, 255, 255));
-        TxtApellidosReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(217, 217, 217), 1, true));
+        TxtApellidoPReg.setBackground(new java.awt.Color(255, 255, 255));
+        TxtApellidoPReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(217, 217, 217), 1, true));
 
         DtChFechaNac.setBackground(new java.awt.Color(255, 255, 255));
         DtChFechaNac.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -165,6 +167,12 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
             }
         });
 
+        LblApellidoMReg.setForeground(new java.awt.Color(0, 0, 0));
+        LblApellidoMReg.setText("Apellido Materno");
+
+        TxtApellidoMReg.setBackground(new java.awt.Color(255, 255, 255));
+        TxtApellidoMReg.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(217, 217, 217), 1, true));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -189,25 +197,32 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(DtChFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(TxtApellidosReg, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
                                     .addComponent(TxtNombreReg)
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addGap(6, 6, 6)
                                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(LblApellidosReg)
                                             .addGroup(jPanel2Layout.createSequentialGroup()
                                                 .addComponent(LblDireccionCalleReg)
                                                 .addGap(58, 58, 58)
                                                 .addComponent(LblDireccionColoniaReg)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                                                 .addComponent(LblDireccionMunReg)
-                                                .addGap(21, 21, 21))))
+                                                .addGap(21, 21, 21))
+                                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                                .addComponent(LblApellidoPReg)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(LblApellidoMReg)
+                                                .addGap(33, 33, 33))))
                                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                                         .addComponent(TxtDireccionCalleReg, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(TxtDireccionColoniaReg, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(TxtDireccionMunReg)))
+                                        .addComponent(TxtDireccionMunReg))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                                        .addComponent(TxtApellidoPReg, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(TxtApellidoMReg, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addComponent(TxtTelefono)
                                 .addComponent(TxtCorreoReg, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(TxtContraReg)))
@@ -236,9 +251,13 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxtNombreReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblApellidosReg)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LblApellidoPReg)
+                    .addComponent(LblApellidoMReg))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtApellidosReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtApellidoPReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtApellidoMReg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(LblDireccionCalleReg)
@@ -297,15 +316,8 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
     private void BtnRegisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegisMouseClicked
         try {
             String nombre = TxtNombreReg.getText();
-            String apellidos = TxtApellidosReg.getText();
-            String [] apellidosArray = apellidos.split(" ", 2);
-            String apellidoPaterno = apellidosArray[0];
-            String apellidoMaterno;
-            if (apellidosArray.length > 1) {
-                apellidoMaterno = apellidosArray[1];
-            } else {
-                apellidoMaterno = null;
-            }
+            String apellidoPaterno = TxtApellidoPReg.getText();
+            String apellidoMaterno = TxtApellidoMReg.getText();
             String telefono = TxtTelefono.getText();
             Date fechaNacimiento = new Date(DtChFechaNac.getDate().getTime());
             String correo = TxtCorreoReg.getText();
@@ -392,7 +404,8 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
     private javax.swing.JButton BtnCancelReg;
     private javax.swing.JButton BtnRegis;
     private com.toedter.calendar.JDateChooser DtChFechaNac;
-    private javax.swing.JLabel LblApellidosReg;
+    private javax.swing.JLabel LblApellidoMReg;
+    private javax.swing.JLabel LblApellidoPReg;
     private javax.swing.JLabel LblContra;
     private javax.swing.JLabel LblCorreo;
     private javax.swing.JLabel LblDireccionCalleReg;
@@ -401,7 +414,8 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel LblFechaNacReg;
     private javax.swing.JLabel LblNombreReg;
     private javax.swing.JLabel LblTelefono;
-    private javax.swing.JTextField TxtApellidosReg;
+    private javax.swing.JTextField TxtApellidoMReg;
+    private javax.swing.JTextField TxtApellidoPReg;
     private javax.swing.JTextField TxtContraReg;
     private javax.swing.JTextField TxtCorreoReg;
     private javax.swing.JTextField TxtDireccionCalleReg;

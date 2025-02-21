@@ -4,9 +4,13 @@
  */
 package GUI;
 
-import java.awt.Color;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
+import BO.UsuarioBO;
+import Conexion.ConexionBD;
+import DAO.IUsuarioDAO;
+import Exception.PersistenciaException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -14,10 +18,13 @@ import javax.swing.border.Border;
  */
 public class FrmIniciarSesion extends javax.swing.JFrame {
 
+    private UsuarioBO usuarioBO;
     /**
      * Creates new form FrmIniciarSesion
      */
     public FrmIniciarSesion() {
+        ConexionBD conexion = new ConexionBD();
+        this.usuarioBO = new UsuarioBO(conexion);
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -175,9 +182,21 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnRegistrarseMouseClicked
 
     private void BtnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseClicked
-        setVisible(false);
-        FrmInicioPaciente frmInicioPaciente = new FrmInicioPaciente();
-        frmInicioPaciente.setVisible(true);
+        try {
+            String identificador = TxtIdInput.getText();
+            char[] pswArray = jPasswordField1.getPassword();
+            String contrasenia = new String(pswArray);
+            String validacion = usuarioBO.iniciarSesion(identificador, contrasenia);
+            if (validacion.equals("Paciente")) {
+                this.dispose();
+                FrmInicioPaciente frmInicioPaciente = new FrmInicioPaciente();
+                frmInicioPaciente.setVisible(true);
+            } else {
+                throw new PersistenciaException("Nuh huh");
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(FrmIniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_BtnIngresarMouseClicked
 
     /**

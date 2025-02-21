@@ -86,19 +86,23 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Component id="DtChFechaNac" min="-2" pref="287" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                          <Component id="TxtApellidosReg" alignment="1" pref="287" max="32767" attributes="0"/>
                                           <Component id="TxtNombreReg" alignment="1" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="6" pref="6" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="LblApellidosReg" min="-2" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="LblDireccionCalleReg" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="58" max="-2" attributes="0"/>
                                                       <Component id="LblDireccionColoniaReg" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace max="32767" attributes="0"/>
+                                                      <EmptySpace pref="48" max="32767" attributes="0"/>
                                                       <Component id="LblDireccionMunReg" min="-2" max="-2" attributes="0"/>
                                                       <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="LblApellidoPReg" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="32767" attributes="0"/>
+                                                      <Component id="LblApellidoMReg" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
@@ -108,6 +112,11 @@
                                               <Component id="TxtDireccionColoniaReg" min="-2" pref="82" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="TxtDireccionMunReg" max="32767" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="TxtApellidoPReg" min="-2" pref="133" max="-2" attributes="0"/>
+                                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                              <Component id="TxtApellidoMReg" min="-2" pref="133" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Component id="TxtTelefono" alignment="1" max="32767" attributes="0"/>
@@ -149,9 +158,15 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="TxtNombreReg" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="LblApellidosReg" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="LblApellidoPReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="LblApellidoMReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="TxtApellidosReg" min="-2" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="TxtApellidoPReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="TxtApellidoMReg" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="LblDireccionCalleReg" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -213,12 +228,12 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="LblApellidosReg">
+            <Component class="javax.swing.JLabel" name="LblApellidoPReg">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="0" green="0" red="0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Apellidos"/>
+                <Property name="text" type="java.lang.String" value="Apellido Paterno"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JTextField" name="TxtDireccionCalleReg">
@@ -246,7 +261,7 @@
                 <Property name="text" type="java.lang.String" value="Calle y No."/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JTextField" name="TxtApellidosReg">
+            <Component class="javax.swing.JTextField" name="TxtApellidoPReg">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -435,6 +450,28 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="TxtDireccionMunRegActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="LblApellidoMReg">
+              <Properties>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="0" green="0" red="0" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Apellido Materno"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JTextField" name="TxtApellidoMReg">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder roundedCorners="true">
+                      <Color PropertyName="color" blue="d9" green="d9" red="d9" type="rgb"/>
+                    </LineBorder>
+                  </Border>
+                </Property>
+              </Properties>
             </Component>
           </SubComponents>
         </Container>

@@ -99,10 +99,6 @@ public class PacienteBO {
         if (pacienteActualizar.getApellidoPaterno() == null || pacienteActualizar.getApellidoPaterno().trim().isEmpty()) {
             throw new NegocioException("Favor de incluir el apellido paterno.");
         }
-
-        if (pacienteActualizar.getApellidoMaterno() == null || pacienteActualizar.getApellidoMaterno().trim().isEmpty()) {
-            throw new NegocioException("Favor de incluir el apellido materno.");
-        }
     
         if (pacienteActualizar.getNumTelefono() == null || pacienteActualizar.getNumTelefono().trim().isEmpty()) {
             throw new NegocioException("El número de teléfono es obligatorio.");
