@@ -7,10 +7,12 @@ package com.mycompany.healthcloudpersistencia;
 import Conexion.ConexionBD;
 import Conexion.IConexionBD;
 import DAO.AgendarCitaDAO;
+import DAO.ConsultaDAO;
 import DAO.IAgendarCitaDAO;
 import DAO.IPacienteDAO;
 import DAO.PacienteDAO;
 import Entidades.Cita;
+import Entidades.Consulta;
 import Entidades.Direccion;
 import Entidades.Doctor;
 import Entidades.Paciente;
@@ -31,7 +33,7 @@ public class clasePrueba {
     public static void main(String[] args) {
         IConexionBD conexion = new ConexionBD();
         // IPacienteDAO pacienteDAO = new PacienteDAO(conexion);
-        IAgendarCitaDAO citaDAO = new AgendarCitaDAO(conexion);
+        // IAgendarCitaDAO citaDAO = new AgendarCitaDAO(conexion);
         /*Usuario usuario = new Usuario("pepepicapapas");
         Direccion direccion = new Direccion("reborte 12", "El pirata de culiacan", "asi nomas quedo");
         Paciente paciente = new Paciente(1, "elpiratita", "De Culiacan", "asinomasquedo", "6648371954", "repollo@1223.com", direccion, usuario);
@@ -41,7 +43,7 @@ public class clasePrueba {
         } catch (PersistenciaException e) {
             e.printStackTrace();
         }*/
-        
+ /*
         Paciente paciente = new Paciente();
         paciente.setIdPaciente(1);
         
@@ -54,9 +56,26 @@ public class clasePrueba {
         citaDAO.agendarCita(citaNueva);    
         } catch (PersistenciaException e){
             e.printStackTrace();
+        }*/
+
+        ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
+
+        Cita cita = new Cita();
+        cita.setId(1);
+
+        Consulta nuevaConsulta = new Consulta();
+        nuevaConsulta.setNotasMedicas("El piratita viene enfermillo");
+        nuevaConsulta.setReceta("Paracetamol hasta que se aliviane");
+        nuevaConsulta.setDiagnostico("Gripe aviar, influenza y covid");
+        nuevaConsulta.setCita(cita);
+
+        try {
+            Consulta consultaRegistrada = consultaDAO.Registrarconsulta(nuevaConsulta);
+
+        }catch(PersistenciaException e){
+            e.printStackTrace();
         }
-        
-        
+
     }
-  
+
 }
