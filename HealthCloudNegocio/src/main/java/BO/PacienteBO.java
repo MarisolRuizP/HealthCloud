@@ -73,4 +73,77 @@ public class PacienteBO {
 
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Cochinero para actualizar los datos de un paciente registrado.
+     * Esta es una preba.
+     */
+
+    public void ValidarPacienteActualizacion (PacienteNuevoDTO pacienteActualizar) throws NegocioException {
+
+        if (pacienteActualizar == null) {
+            throw new NegocioException("Favor de llenar los espacios.");
+        }
+
+        // Validar que el paciente ya este registrado por las risas.
+        if (pacienteActualizar.getIdPaciente() <= 0) {
+            throw new NegocioException("No se encontro al paciente.");
+        }
+    
+        // Mas validaciones pero mejores (verificar que funcionen)
+        if (pacienteActualizar.getNombrePila() == null || pacienteActualizar.getNombrePila().trim().isEmpty()) {
+            throw new NegocioException("Favor de incluir el nombre.");
+        }
+    
+        if (pacienteActualizar.getApellidoPaterno() == null || pacienteActualizar.getApellidoPaterno().trim().isEmpty()) {
+            throw new NegocioException("Favor de incluir el apellido paterno.");
+        }
+
+        if (pacienteActualizar.getApellidoMaterno() == null || pacienteActualizar.getApellidoMaterno().trim().isEmpty()) {
+            throw new NegocioException("Favor de incluir el apellido materno.");
+        }
+    
+        if (pacienteActualizar.getNumTelefono() == null || pacienteActualizar.getNumTelefono().trim().isEmpty()) {
+            throw new NegocioException("El número de teléfono es obligatorio.");
+        }
+    
+        if (pacienteActualizar.getCorreoElectronico() == null || pacienteActualizar.getCorreoElectronico().trim().isEmpty()) {
+            throw new NegocioException("El correo electrónico es obligatorio.");
+        }
+    
+        if (!pacienteActualizar.getCorreoElectronico().contains("@")) {
+            throw new NegocioException("El formato del correo electrónico no es válido.");
+        }
+    
+        if (pacienteActualizar.getDireccion() == null) {
+            throw new NegocioException("La dirección es obligatoria.");
+        }
+    
+    }
+    
+    public String actualizarPaciente(PacienteNuevoDTO pacienteActualizar) throws NegocioException {
+        try {
+        
+            ValidarPacienteActualizacion(pacienteActualizar);
+        
+            PacienteMapper convertidor = new PacienteMapper();
+            Paciente paciente = convertidor.toEntity(pacienteActualizar);
+    
+        
+            Paciente pacienteActualizado = pacienteDAO.editarPaciente(paciente);
+            
+            if (pacienteActualizado != null) {
+                return "Paciente actualizado";
+            } else {
+                throw new NegocioException("No se pudo actualizar el paciente");
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Ha ocurrido un error al registrar el paciente." , ex);
+        }
+    }
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////
+
 }
