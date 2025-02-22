@@ -5,7 +5,8 @@ import Entidades.Usuario;
 import java.util.Date;
 
 public class PacienteNuevoDTO {
-
+    
+    private int idPaciente;
     private String nombrePila;
     private String apellidoPaterno;
     private String apellidoMaterno;
@@ -19,16 +20,37 @@ public class PacienteNuevoDTO {
     public PacienteNuevoDTO() {
     }
 
-    // Constructor con todo
-    public PacienteNuevoDTO(String nombrePila, String apellidoPaterno, String apellidoMaterno, String numTelefono, Date fechaNacimiento, String correoElectronico, Direccion direccion, Usuario usuario) {
+    public PacienteNuevoDTO(String nombrePila, String apellidoPaterno, String apellidoMaterno, String correoElectronico, String numTelefono, Date fechaNacimiento, Direccion direccion, Usuario usuario) {
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
+        this.correoElectronico = correoElectronico;
         this.numTelefono = numTelefono;
         this.fechaNacimiento = fechaNacimiento;
-        this.correoElectronico = correoElectronico;
         this.direccion = direccion;
         this.usuario = usuario;
+    }
+
+    // Constructor con todo
+
+    public PacienteNuevoDTO(int idPaciente, String nombrePila, String apellidoPaterno, String apellidoMaterno, String correoElectronico, Date fechaNacimiento, String numTelefono, Direccion direccion, Usuario usuario) {
+        this.idPaciente = idPaciente;
+        this.nombrePila = nombrePila;
+        this.apellidoPaterno = apellidoPaterno;
+        this.apellidoMaterno = apellidoMaterno;
+        this.correoElectronico = correoElectronico;
+        this.numTelefono = numTelefono;
+        this.fechaNacimiento = fechaNacimiento;
+        this.direccion = direccion;
+        this.usuario = usuario;
+    }
+
+    public int getIdPaciente() {
+        return idPaciente;
+    }
+
+    public void setIdPaciente(int idPaciente) {
+        this.idPaciente = idPaciente;
     }
 
     public String getNombrePila() {

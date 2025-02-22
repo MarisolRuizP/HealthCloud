@@ -4,8 +4,10 @@
     <parent>
         <groupId>com.mycompany</groupId>
         <artifactId>HealthCloud</artifactId>
-        <version>0</version>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+
     <artifactId>HealthCloudNegocio</artifactId>
     <packaging>jar</packaging>
     <properties>
@@ -15,9 +17,10 @@
     <groupId>com.mycompany</groupId>
     <dependencies>
         <dependency>
-            <groupId>${project.groupId}</groupId>
+            <groupId>com.mycompany</groupId>
             <artifactId>HealthCloudPersistencia</artifactId>
-            <version>${project.version}</version>
+            <version>1.0.0</version> 
         </dependency>
     </dependencies>
+    
 </project>

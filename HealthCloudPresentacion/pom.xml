@@ -4,7 +4,8 @@
     <parent>
         <groupId>com.mycompany</groupId>
         <artifactId>HealthCloud</artifactId>
-        <version>0</version>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>HealthCloudPresentacion</artifactId>
     <packaging>jar</packaging>

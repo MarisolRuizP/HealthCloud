@@ -4,7 +4,8 @@
     <parent>
         <groupId>com.mycompany</groupId>
         <artifactId>HealthCloud</artifactId>
-        <version>0</version>
+        <version>1.0.0</version>
+        <relativePath>../pom.xml</relativePath>  <!-- ✅ Agregado para correcta resolución -->
     </parent>
     <groupId>com.mycompany</groupId>
     <artifactId>HealthCloudPersistencia</artifactId>
@@ -13,10 +14,8 @@
         <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
-            <version>0.4</version>
-            <type>jar</type>
+            <version>0.4</version>  <!-- ✅ Versión correcta -->
         </dependency>
-
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>

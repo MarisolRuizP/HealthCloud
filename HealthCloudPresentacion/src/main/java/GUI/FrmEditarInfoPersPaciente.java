@@ -536,9 +536,12 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         try {
             PacienteNuevoDTO pacienteActual = pacienteBO.consultarPacientePorCorreo(identificador);
             
-            PacienteNuevoDTO pacienteModificado = new PacienteNuevoDTO(pacienteActual.getNombrePila(), pacienteActual.getApellidoPaterno(), pacienteActual.getApellidoMaterno(), 
+            System.out.println("ID del paciente actual: " + pacienteActual.getIdPaciente());
+            
+            PacienteNuevoDTO pacienteModificado = new PacienteNuevoDTO(pacienteActual.getIdPaciente(), pacienteActual.getNombrePila(), pacienteActual.getApellidoPaterno(), pacienteActual.getApellidoMaterno(), 
                     pacienteActual.getNumTelefono(), pacienteActual.getFechaNacimiento(), pacienteActual.getCorreoElectronico(), pacienteActual.getDireccion(), pacienteActual.getUsuario());
             
+            System.out.println("ID del paciente actual: " + pacienteActual.getIdPaciente());
             // Obtener valores de la pantalla y comparar con los actuales
             String nombre = TxtNombre.getText().trim();
             if (!nombre.isEmpty() && !nombre.equals(pacienteActual.getNombrePila())) {

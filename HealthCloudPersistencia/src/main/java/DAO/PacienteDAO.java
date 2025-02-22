@@ -15,6 +15,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mindrot.jbcrypt.BCrypt;
@@ -131,10 +132,12 @@ public class PacienteDAO implements IPacienteDAO {
         Usuario usuario = paciente.getUsuario();
         Direccion direccion = paciente.getDireccion();
 
+        System.out.println("pacienet id: " + paciente.getIdPaciente());
         String sentenciaSQLActualizar = "CALL actualizarUnPaciente(?,?,?,?,?,?,?,?,?,?)";
 
         try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLActualizar)) {
 
+            con.setAutoCommit(false);
             stm.setInt(1, paciente.getIdPaciente());
             stm.setString(2, usuario.getContrasenia());
             stm.setString(3, paciente.getNombrePila());
@@ -146,55 +149,67 @@ public class PacienteDAO implements IPacienteDAO {
             stm.setString(9, direccion.getColonia());
             stm.setString(10, direccion.getMunicipio());
 
-            stm.executeUpdate();
+            int filasAfectas = stm.executeUpdate();
+            System.out.println("Filas actualizadas: " + filasAfectas);
+
+            if (filasAfectas == 0) {
+                throw new PersistenciaException("No se encontro el paciente con ID: " + paciente.getIdPaciente());
+            }
+
+            con.commit();
+            return paciente;
 
         } catch (SQLException ex) {
             Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new PersistenciaException("Error al actualizar al paciente", ex);
         }
-        return paciente;
     }
 
     @Override
     public Paciente consultarPacientePorCorreo(String correo) throws PersistenciaException {
-        String sentenciaSQL = "SELECT * FROM pacientes WHERE correoElectronico = ?";
-        String sentenciaSQLDir = "SELECT * FROM direccionpacientes WHERE idDireccion = ?";
-        String sentenciaSQLUsu = "SELECT * FROM usuarios WHERE idUsuario = ?";
+
         Paciente paciente = null;
-        try (Connection con = conexion.crearConexion(); PreparedStatement ps = con.prepareCall(sentenciaSQL)) {
-            ps.setString(1, correo);
-            try (ResultSet rs = ps.executeQuery()) {
+
+        String sql = "CALL consultarPorCorreo(?)";
+
+        try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sql)) {
+
+            stm.setString(1, correo);
+
+            try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     paciente = new Paciente();
+                    paciente.setIdPaciente(rs.getInt("idPaciente"));
                     paciente.setNombrePila(rs.getString("nombrePila"));
                     paciente.setApellidoPaterno(rs.getString("apellidoPaterno"));
                     paciente.setApellidoMaterno(rs.getString("apellidoMaterno"));
                     paciente.setNumTelefono(rs.getString("numTelefono"));
                     paciente.setFechaNacimiento(rs.getDate("fechaNacimiento"));
                     paciente.setCorreoElectronico(rs.getString("correoElectronico"));
-                    try (Connection con2 = conexion.crearConexion(); PreparedStatement ps2 = con.prepareCall(sentenciaSQLDir)) {
-                        ps2.setInt(1, rs.getInt("idDireccion"));
-                        try (ResultSet rs2 = ps2.executeQuery()) {
-                            if (rs2.next()) {
-                                Direccion dir = new Direccion(rs2.getString("calleYNumCasa"), rs2.getString("colonia"), rs2.getString("municipio"));
-                                paciente.setDireccion(dir);
-                            }
-                        }
-                    }
-                    try (Connection con3 = conexion.crearConexion(); PreparedStatement ps3 = con.prepareCall(sentenciaSQLUsu)) {
-                        ps3.setInt(1, rs.getInt("idUsuario"));
-                        try (ResultSet rs3 = ps3.executeQuery()) {
-                            if (rs3.next()) {
-                                Usuario usu = new Usuario(correo, rs3.getString("contrasenia"), rs3.getString("tipoDeUsuario"));
-                                paciente.setUsuario(usu);
-                            }
-                        }
-                    }
+
+                    Direccion direccion = new Direccion(
+                            rs.getString("calleYNumCasa"),
+                            rs.getString("colonia"),
+                            rs.getString("municipio")
+                    );
+                    paciente.setDireccion(direccion);
+
+                    Usuario usuario = new Usuario(
+                            rs.getString("correoElectronico"),
+                            rs.getString("contrasenia"),
+                            rs.getString("tipoDeUsuario")
+                    );
+                    paciente.setUsuario(usuario);
+
+                    System.out.println("ID del paciente: " + paciente.getIdPaciente());
                 }
             }
         } catch (SQLException ex) {
             Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PersistenciaException("Error al obtener el paciente por correo.", ex);
         }
+
         return paciente;
     }
+
 }

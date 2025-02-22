@@ -141,7 +141,7 @@ public class PacienteBO {
         try {
             paciente = pacienteDAO.consultarPacientePorCorreo(correo);
             if(paciente != null) {
-                return new PacienteNuevoDTO(paciente.getNombrePila(), paciente.getApellidoPaterno(), paciente.getApellidoMaterno(), 
+                return new PacienteNuevoDTO(paciente.getIdPaciente(), paciente.getNombrePila(), paciente.getApellidoPaterno(), paciente.getApellidoMaterno(), 
                         paciente.getNumTelefono(), paciente.getFechaNacimiento(), paciente.getCorreoElectronico(), paciente.getDireccion(), paciente.getUsuario());
             }
         } catch (PersistenciaException ex) {
