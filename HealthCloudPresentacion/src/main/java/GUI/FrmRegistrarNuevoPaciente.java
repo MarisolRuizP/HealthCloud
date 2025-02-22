@@ -336,7 +336,7 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
                 dlgRegEx.setVisible(true);
             }
         } catch (NegocioException ex) {
-            DlgResgistroError dlgResgistroError = new DlgResgistroError(this, rootPaneCheckingEnabled);
+            DlgErrorDatos dlgResgistroError = new DlgErrorDatos(this, rootPaneCheckingEnabled);
             dlgResgistroError.setLocationRelativeTo(null);
             dlgResgistroError.setVisible(true);
             Logger.getLogger(FrmRegistrarNuevoPaciente.class.getName()).log(Level.SEVERE, null, ex);

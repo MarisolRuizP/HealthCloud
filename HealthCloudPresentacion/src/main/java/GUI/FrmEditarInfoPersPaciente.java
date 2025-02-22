@@ -10,6 +10,8 @@ package GUI;
  */
 public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
 
+    private String identificador;
+
     /**
      * Creates new form FrmInicioPaciente
      */
@@ -369,19 +371,19 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
 
     private void BtnCancelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCancelEditMouseClicked
         setVisible(false);
-        FrmInfoPersPaciente frmInfoPer = new FrmInfoPersPaciente();
+        FrmInfoPersPaciente frmInfoPer = new FrmInfoPersPaciente(identificador);
         frmInfoPer.setVisible(true);
     }//GEN-LAST:event_BtnCancelEditMouseClicked
 
     private void BtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInicioMouseClicked
         setVisible(false);
-        FrmInicioPaciente frmInicio = new FrmInicioPaciente();
+        FrmInicioPaciente frmInicio = new FrmInicioPaciente(identificador);
         frmInicio.setVisible(true);
     }//GEN-LAST:event_BtnInicioMouseClicked
 
     private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
         setVisible(false);
-        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente();
+        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente(identificador);
         frmInfoPerPac.setVisible(true);
     }//GEN-LAST:event_BtnInfoSideMouseClicked
 
@@ -393,7 +395,7 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorialPaciente frmHistorial = new FrmHistorialPaciente();
+        FrmHistorial frmHistorial = new FrmHistorial();
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 

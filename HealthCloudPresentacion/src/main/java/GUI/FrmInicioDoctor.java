@@ -4,34 +4,17 @@
  */
 package GUI;
 
-import BO.PacienteBO;
-import Conexion.ConexionBD;
-import Conexion.IConexionBD;
-import DTO.PacienteNuevoDTO;
-import Exception.NegocioException;
-import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Maryr
  */
-public class FrmInfoPersPaciente extends javax.swing.JFrame {
-
-    private PacienteBO pacienteBO;
-    private String identificador;
+public class FrmInicioDoctor extends javax.swing.JFrame {
 
     /**
      * Creates new form FrmInicioPaciente
      */
-    public FrmInfoPersPaciente(String identificador) {
-        IConexionBD conexion = new ConexionBD();
-        this.pacienteBO = new PacienteBO(conexion); // Inicializa pacienteBO antes
-        this.identificador = identificador;
+    public FrmInicioDoctor() {
         initComponents();
-        llenarDatosPaciente(identificador);
-        setLocationRelativeTo(null);
     }
 
     /**
@@ -46,10 +29,9 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         BtnCitasSide = new javax.swing.JButton();
-        BtnInfoSide = new javax.swing.JButton();
+        BtnBajaTemporal = new javax.swing.JButton();
         BtnHistorialSide = new javax.swing.JButton();
-        BtnCitaEmSide = new javax.swing.JButton();
-        BtnInicio = new javax.swing.JButton();
+        BtnCerrarSesion = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         LblNombre = new javax.swing.JLabel();
         TxtNomIP = new javax.swing.JTextField();
@@ -76,7 +58,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         BtnCitasSide.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         BtnCitasSide.setForeground(new java.awt.Color(0, 0, 0));
         BtnCitasSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/book_closed_icon_246534.png"))); // NOI18N
-        BtnCitasSide.setText("Citas");
+        BtnCitasSide.setText("Agenda");
         BtnCitasSide.setBorder(null);
         BtnCitasSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
         BtnCitasSide.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -90,16 +72,16 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
             }
         });
 
-        BtnInfoSide.setBackground(new java.awt.Color(58, 109, 140));
-        BtnInfoSide.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        BtnInfoSide.setForeground(new java.awt.Color(0, 0, 0));
-        BtnInfoSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/4092564-about-mobile-ui-profile-ui-user-website_114033.png"))); // NOI18N
-        BtnInfoSide.setText("Información personal");
-        BtnInfoSide.setBorder(null);
-        BtnInfoSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        BtnInfoSide.addActionListener(new java.awt.event.ActionListener() {
+        BtnBajaTemporal.setBackground(new java.awt.Color(58, 109, 140));
+        BtnBajaTemporal.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        BtnBajaTemporal.setForeground(new java.awt.Color(0, 0, 0));
+        BtnBajaTemporal.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/hide_icon_148530.png"))); // NOI18N
+        BtnBajaTemporal.setText("Baja temporal");
+        BtnBajaTemporal.setBorder(null);
+        BtnBajaTemporal.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnBajaTemporal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnInfoSideActionPerformed(evt);
+                BtnBajaTemporalActionPerformed(evt);
             }
         });
 
@@ -121,39 +103,21 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
             }
         });
 
-        BtnCitaEmSide.setBackground(new java.awt.Color(58, 109, 140));
-        BtnCitaEmSide.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        BtnCitaEmSide.setForeground(new java.awt.Color(0, 0, 0));
-        BtnCitaEmSide.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/-weather-lightning_98198.png"))); // NOI18N
-        BtnCitaEmSide.setText("Cita emergencia");
-        BtnCitaEmSide.setBorder(null);
-        BtnCitaEmSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        BtnCitaEmSide.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnCerrarSesion.setBackground(new java.awt.Color(58, 109, 140));
+        BtnCerrarSesion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        BtnCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
+        BtnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ic-back_97586.png"))); // NOI18N
+        BtnCerrarSesion.setText("Cerrar sesión");
+        BtnCerrarSesion.setBorder(null);
+        BtnCerrarSesion.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnCitaEmSideMouseClicked(evt);
+                BtnCerrarSesionMouseClicked(evt);
             }
         });
-        BtnCitaEmSide.addActionListener(new java.awt.event.ActionListener() {
+        BtnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCitaEmSideActionPerformed(evt);
-            }
-        });
-
-        BtnInicio.setBackground(new java.awt.Color(58, 109, 140));
-        BtnInicio.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        BtnInicio.setForeground(new java.awt.Color(0, 0, 0));
-        BtnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/3844470-home-house_110332.png"))); // NOI18N
-        BtnInicio.setBorder(null);
-        BtnInicio.setContentAreaFilled(false);
-        BtnInicio.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        BtnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnInicioMouseClicked(evt);
-            }
-        });
-        BtnInicio.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnInicioActionPerformed(evt);
+                BtnCerrarSesionActionPerformed(evt);
             }
         });
 
@@ -161,32 +125,27 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(42, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BtnCitaEmSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnInfoSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45))
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(BtnInicio)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnBajaTemporal, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(120, Short.MAX_VALUE)
-                .addComponent(BtnInfoSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
-                .addComponent(BtnCitaEmSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
-                .addComponent(BtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(BtnBajaTemporal, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(26, 26, 26)
+                .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(123, 123, 123))
         );
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -333,7 +292,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(53, 53, 53)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(90, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -341,9 +300,9 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnInfoSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInfoSideActionPerformed
+    private void BtnBajaTemporalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBajaTemporalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnInfoSideActionPerformed
+    }//GEN-LAST:event_BtnBajaTemporalActionPerformed
 
     private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed
         // TODO add your handling code here:
@@ -353,13 +312,9 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnHistorialSideActionPerformed
 
-    private void BtnCitaEmSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitaEmSideActionPerformed
+    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCitaEmSideActionPerformed
-
-    private void BtnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnInicioActionPerformed
+    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
     private void BtnEditInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnEditInfoMouseClicked
         setVisible(false);
@@ -367,17 +322,11 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         frmEditInfoPers.setVisible(true);
     }//GEN-LAST:event_BtnEditInfoMouseClicked
 
-    private void BtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInicioMouseClicked
-        setVisible(false);
-        FrmInicioPaciente frmInicio = new FrmInicioPaciente(identificador);
-        frmInicio.setVisible(true);
-    }//GEN-LAST:event_BtnInicioMouseClicked
-
-    private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
+    private void BtnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarSesionMouseClicked
         setVisible(false);
         FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
         frmCitaEm.setVisible(true);
-    }//GEN-LAST:event_BtnCitaEmSideMouseClicked
+    }//GEN-LAST:event_BtnCerrarSesionMouseClicked
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
         setVisible(false);
@@ -390,22 +339,6 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         FrmHistorial frmHistorial = new FrmHistorial();
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
-
-    private void llenarDatosPaciente(String identificador) {
-        try {
-            PacienteNuevoDTO paciente = pacienteBO.consultarPacientePorCorreo(identificador);
-            TxtNomIP.setText(paciente.getNombrePila());
-            TxtApellidos.setText(paciente.getApellidoPaterno() + " " + paciente.getApellidoMaterno());
-            TxtDireccion.setText(paciente.getDireccion().getCalleYNum() + ", " + paciente.getDireccion().getColonia() + ", " + paciente.getDireccion().getMunicipio());
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            TxtFechaNac.setText(sdf.format(paciente.getFechaNacimiento()));
-
-            TxtTelefono.setText(paciente.getNumTelefono());
-            TxtCorreo.setText(paciente.getCorreoElectronico());
-        } catch (NegocioException ex) {
-            Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     /**
      * @param args the command line arguments
@@ -424,32 +357,33 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmInicioDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmInicioDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmInicioDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmInicioDoctor.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                new FrmInicioDoctor().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnCitaEmSide;
+    private javax.swing.JButton BtnBajaTemporal;
+    private javax.swing.JButton BtnCerrarSesion;
     private javax.swing.JButton BtnCitasSide;
     private javax.swing.JButton BtnEditInfo;
     private javax.swing.JButton BtnHistorialSide;
-    private javax.swing.JButton BtnInfoSide;
-    private javax.swing.JButton BtnInicio;
     private javax.swing.JLabel LblApellidos;
     private javax.swing.JLabel LblCorreo;
     private javax.swing.JLabel LblDireccion;

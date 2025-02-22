@@ -142,4 +142,18 @@ public class PacienteBO {
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public PacienteNuevoDTO consultarPacientePorCorreo(String correo) throws NegocioException {
+        Paciente paciente = null;
+        try {
+            paciente = pacienteDAO.consultarPacientePorCorreo(correo);
+            if(paciente != null) {
+                return new PacienteNuevoDTO(paciente.getNombrePila(), paciente.getApellidoPaterno(), paciente.getApellidoMaterno(), 
+                        paciente.getNumTelefono(), paciente.getFechaNacimiento(), paciente.getCorreoElectronico(), paciente.getDireccion(), paciente.getUsuario());
+            }
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new NegocioException("Ha ocurrido un error al registrar el paciente." , ex);
+        }
+        return null;
+    }
 }
