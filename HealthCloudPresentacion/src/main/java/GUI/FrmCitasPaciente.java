@@ -10,6 +10,8 @@ package GUI;
  */
 public class FrmCitasPaciente extends javax.swing.JFrame {
 
+    private String identificador;
+
     /**
      * Creates new form FrmInicioPaciente
      */
@@ -242,13 +244,13 @@ public class FrmCitasPaciente extends javax.swing.JFrame {
 
     private void BtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInicioMouseClicked
         setVisible(false);
-        FrmInicioPaciente frmInicio = new FrmInicioPaciente();
+        FrmInicioPaciente frmInicio = new FrmInicioPaciente(identificador);
         frmInicio.setVisible(true);
     }//GEN-LAST:event_BtnInicioMouseClicked
 
     private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
         setVisible(false);
-        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente();
+        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente(identificador);
         frmInfoPerPac.setVisible(true);
     }//GEN-LAST:event_BtnInfoSideMouseClicked
 
@@ -260,7 +262,7 @@ public class FrmCitasPaciente extends javax.swing.JFrame {
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorialPaciente frmHistorial = new FrmHistorialPaciente();
+        FrmHistorial frmHistorial = new FrmHistorial();
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 

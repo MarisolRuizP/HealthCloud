@@ -4,17 +4,26 @@
  */
 package GUI;
 
+import BO.PacienteBO;
+import DTO.PacienteNuevoDTO;
+import Exception.NegocioException;
+
 /**
  *
  * @author Maryr
  */
 public class FrmInicioPaciente extends javax.swing.JFrame {
 
+    private String identificador;
+    private PacienteBO pacienteBO;
+
     /**
      * Creates new form FrmInicioPaciente
      */
-    public FrmInicioPaciente() {
+    public FrmInicioPaciente(String identificador) {
+        this.identificador = identificador;
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -26,6 +35,7 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         BtnCitasSide = new javax.swing.JButton();
@@ -33,8 +43,10 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         BtnHistorialSide = new javax.swing.JButton();
         BtnCitaEmSide = new javax.swing.JButton();
         BtnCerrarSesion = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
+        LblInicio = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+
+        jLabel1.setText("jLabel1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -122,6 +134,7 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         BtnCerrarSesion.setText("Cerrar sesion");
         BtnCerrarSesion.setBorder(null);
         BtnCerrarSesion.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
         BtnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnCerrarSesionMouseClicked(evt);
@@ -163,12 +176,11 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
                 .addGap(64, 64, 64))
         );
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
+        LblInicio.setFont(new java.awt.Font("Cooper Black", 1, 36)); // NOI18N
+        LblInicio.setForeground(new java.awt.Color(58, 109, 140));
+        LblInicio.setText("Bienvenido a HealthCloud!");
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Logo Farmacia Minimalista Circular Azul (1).png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -176,16 +188,23 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(92, 92, 92)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(91, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(LblInicio)
+                        .addGap(85, 85, 85))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(224, 224, 224))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(167, 167, 167)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(105, 105, 105)
+                .addComponent(LblInicio)
+                .addGap(40, 40, 40)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -194,39 +213,19 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnInfoSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInfoSideActionPerformed
+    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnInfoSideActionPerformed
+    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
-    private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCitasSideActionPerformed
-
-    private void BtnHistorialSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHistorialSideActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_BtnHistorialSideActionPerformed
+    private void BtnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarSesionMouseClicked
+        FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion();
+        frmIniciarSesion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnCerrarSesionMouseClicked
 
     private void BtnCitaEmSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitaEmSideActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnCitaEmSideActionPerformed
-
-    private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
-        setVisible(false);
-        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente();
-        frmInfoPerPac.setVisible(true);
-    }//GEN-LAST:event_BtnInfoSideMouseClicked
-
-    private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
-        setVisible(false);
-        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
-        frmCitas.setVisible(true);
-    }//GEN-LAST:event_BtnCitasSideMouseClicked
-
-    private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
-        setVisible(false);
-        FrmHistorialPaciente frmHistorial = new FrmHistorialPaciente();
-        frmHistorial.setVisible(true);
-    }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
     private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
         setVisible(false);
@@ -234,15 +233,36 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         frmCitaEm.setVisible(true);
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
 
-    private void BtnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarSesionMouseClicked
-        setVisible(false);
-        FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion();
-        frmIniciarSesion.setVisible(true);
-    }//GEN-LAST:event_BtnCerrarSesionMouseClicked
-
-    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
+    private void BtnHistorialSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHistorialSideActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
+    }//GEN-LAST:event_BtnHistorialSideActionPerformed
+
+    private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
+        setVisible(false);
+        FrmHistorial frmHistorial = new FrmHistorial();
+        frmHistorial.setVisible(true);
+    }//GEN-LAST:event_BtnHistorialSideMouseClicked
+
+    private void BtnInfoSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInfoSideActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnInfoSideActionPerformed
+
+    private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
+        setVisible(false);
+        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente(identificador);
+        frmInfoPerPac.setVisible(true);
+    }//GEN-LAST:event_BtnInfoSideMouseClicked
+
+    private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnCitasSideActionPerformed
+
+    private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
+        setVisible(false);
+        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
+        frmCitas.setVisible(true);
+    }//GEN-LAST:event_BtnCitasSideMouseClicked
+
 
     /**
      * @param args the command line arguments
@@ -274,7 +294,7 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmInicioPaciente().setVisible(true);
+
             }
         });
     }
@@ -285,9 +305,10 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
     private javax.swing.JButton BtnCitasSide;
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JButton BtnInfoSide;
-    private javax.swing.JList<String> jList1;
+    private javax.swing.JLabel LblInicio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

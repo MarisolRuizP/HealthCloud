@@ -7,6 +7,7 @@ package GUI;
 import BO.UsuarioBO;
 import Conexion.ConexionBD;
 import DAO.IUsuarioDAO;
+import Exception.NegocioException;
 import Exception.PersistenciaException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -92,7 +93,6 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
         jPasswordField1.setForeground(new java.awt.Color(217, 217, 217));
-        jPasswordField1.setText("jPasswordField1");
         jPasswordField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -189,12 +189,15 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
             String validacion = usuarioBO.iniciarSesion(identificador, contrasenia);
             if (validacion.equals("Paciente")) {
                 this.dispose();
-                FrmInicioPaciente frmInicioPaciente = new FrmInicioPaciente();
+                FrmInicioPaciente frmInicioPaciente = new FrmInicioPaciente(identificador);
                 frmInicioPaciente.setVisible(true);
             } else {
                 throw new PersistenciaException("Nuh huh");
             }
-        } catch (PersistenciaException ex) {
+        } catch (PersistenciaException | NegocioException ex) {
+            DlgErrorDatos dlgResgistroError = new DlgErrorDatos(this, rootPaneCheckingEnabled);
+            dlgResgistroError.setLocationRelativeTo(null);
+            dlgResgistroError.setVisible(true);
             Logger.getLogger(FrmIniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_BtnIngresarMouseClicked
