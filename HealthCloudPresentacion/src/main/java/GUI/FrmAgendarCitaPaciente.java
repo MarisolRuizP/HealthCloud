@@ -388,7 +388,7 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
 
     private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
         setVisible(false);
-        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
+        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
 

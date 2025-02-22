@@ -315,17 +315,17 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
 
     private void BtnRegisMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnRegisMouseClicked
         try {
-            String nombre = TxtNombreReg.getText();
-            String apellidoPaterno = TxtApellidoPReg.getText();
-            String apellidoMaterno = TxtApellidoMReg.getText();
-            String telefono = TxtTelefono.getText();
+            String nombre = TxtNombreReg.getText().trim();
+            String apellidoPaterno = TxtApellidoPReg.getText().trim();
+            String apellidoMaterno = TxtApellidoMReg.getText().trim();
+            String telefono = TxtTelefono.getText().trim();
             Date fechaNacimiento = new Date(DtChFechaNac.getDate().getTime());
-            String correo = TxtCorreoReg.getText();
-            String calleYNum = TxtDireccionCalleReg.getText();
-            String colonia = TxtDireccionColoniaReg.getText();
-            String municipio = TxtDireccionMunReg.getText();
+            String correo = TxtCorreoReg.getText().trim();
+            String calleYNum = TxtDireccionCalleReg.getText().trim();
+            String colonia = TxtDireccionColoniaReg.getText().trim();
+            String municipio = TxtDireccionMunReg.getText().trim();
             Direccion direccion = new Direccion(calleYNum, colonia, municipio);
-            String contrasenia = TxtContraReg.getText();
+            String contrasenia = TxtContraReg.getText().trim();
             Usuario usuario = new Usuario(correo, contrasenia, "Paciente");
             
             PacienteNuevoDTO pacienteNuevo = new PacienteNuevoDTO(nombre, apellidoPaterno, apellidoMaterno, telefono, fechaNacimiento, correo, direccion, usuario);

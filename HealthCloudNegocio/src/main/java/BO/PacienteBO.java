@@ -37,6 +37,10 @@ public class PacienteBO {
         if (pacienteNuevo.getNumTelefono().isEmpty()) {
             throw new NegocioException("Favor de ingresar el numero de telefono del paciente.");
         }
+        
+        if (pacienteNuevo.getNumTelefono().matches("^\\d{10}$")) {
+            throw new NegocioException("Favor de ingresar el numero de telefono valido");
+        }
 
         if (pacienteNuevo.getFechaNacimiento() == null) {
             throw new NegocioException("Favor de introducir la fecha de nacimiento del paciente.");
@@ -46,7 +50,7 @@ public class PacienteBO {
             throw new NegocioException("Favor de agregar el correo del paciente.");
         }
         
-        if (!pacienteNuevo.getCorreoElectronico().contains("@")) {
+        if (!pacienteNuevo.getCorreoElectronico().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             throw new NegocioException("Correo no valido.");
         }
 
@@ -73,22 +77,10 @@ public class PacienteBO {
 
     }
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * Cochinero para actualizar los datos de un paciente registrado.
-     * Esta es una preba.
-     */
-
     public void ValidarPacienteActualizacion (PacienteNuevoDTO pacienteActualizar) throws NegocioException {
 
         if (pacienteActualizar == null) {
             throw new NegocioException("Favor de llenar los espacios.");
-        }
-
-        // Validar que el paciente ya este registrado por las risas.
-        if (pacienteActualizar.getIdPaciente() <= 0) {
-            throw new NegocioException("No se encontro al paciente.");
         }
     
         // Mas validaciones pero mejores (verificar que funcionen)
@@ -103,12 +95,16 @@ public class PacienteBO {
         if (pacienteActualizar.getNumTelefono() == null || pacienteActualizar.getNumTelefono().trim().isEmpty()) {
             throw new NegocioException("El número de teléfono es obligatorio.");
         }
+        
+        if (!pacienteActualizar.getNumTelefono().matches("^\\d{10}$")) {
+            throw new NegocioException("El número de teléfono es invalido.");
+        }            
     
         if (pacienteActualizar.getCorreoElectronico() == null || pacienteActualizar.getCorreoElectronico().trim().isEmpty()) {
             throw new NegocioException("El correo electrónico es obligatorio.");
         }
     
-        if (!pacienteActualizar.getCorreoElectronico().contains("@")) {
+        if (!pacienteActualizar.getCorreoElectronico().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
             throw new NegocioException("El formato del correo electrónico no es válido.");
         }
     
@@ -139,8 +135,6 @@ public class PacienteBO {
             throw new NegocioException("Ha ocurrido un error al registrar el paciente." , ex);
         }
     }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public PacienteNuevoDTO consultarPacientePorCorreo(String correo) throws NegocioException {
         Paciente paciente = null;

@@ -18,6 +18,7 @@ import Entidades.Doctor;
 import Entidades.Paciente;
 import Entidades.Usuario;
 import Exception.PersistenciaException;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -58,23 +59,26 @@ public class clasePrueba {
             e.printStackTrace();
         }*/
 
-        ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
+//        ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
+//
+//        Cita cita = new Cita();
+//        cita.setId(1);
+//
+//        Consulta nuevaConsulta = new Consulta();
+//        nuevaConsulta.setNotasMedicas("El piratita viene enfermillo");
+//        nuevaConsulta.setReceta("Paracetamol hasta que se aliviane");
+//        nuevaConsulta.setDiagnostico("Gripe aviar, influenza y covid");
+//        nuevaConsulta.setCita(cita);
+//
+//        try {
+//            Consulta consultaRegistrada = consultaDAO.Registrarconsulta(nuevaConsulta);
+//
+//        }catch(PersistenciaException e){
+//            e.printStackTrace();
+//        }
 
-        Cita cita = new Cita();
-        cita.setId(1);
-
-        Consulta nuevaConsulta = new Consulta();
-        nuevaConsulta.setNotasMedicas("El piratita viene enfermillo");
-        nuevaConsulta.setReceta("Paracetamol hasta que se aliviane");
-        nuevaConsulta.setDiagnostico("Gripe aviar, influenza y covid");
-        nuevaConsulta.setCita(cita);
-
-        try {
-            Consulta consultaRegistrada = consultaDAO.Registrarconsulta(nuevaConsulta);
-
-        }catch(PersistenciaException e){
-            e.printStackTrace();
-        }
+        PacienteDAO paciente = new PacienteDAO(conexion);
+        //Paciente  pacienteAct = new Paciente("marisol", "ruiz", "pacheco", "1234567899", new Date(2005, 5, 20), );
 
     }
 
