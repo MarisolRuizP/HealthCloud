@@ -2,8 +2,6 @@ package Mapper;
 
 import DTO.PacienteNuevoDTO;
 import Entidades.Paciente;
-import Entidades.Usuario;
-import java.sql.Date;
 
 public class PacienteMapper {
 
