@@ -92,7 +92,7 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
         });
 
         jPasswordField1.setBackground(new java.awt.Color(255, 255, 255));
-        jPasswordField1.setForeground(new java.awt.Color(217, 217, 217));
+        jPasswordField1.setForeground(new java.awt.Color(0, 0, 0));
         jPasswordField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -191,6 +191,10 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
                 this.dispose();
                 FrmInicioPaciente frmInicioPaciente = new FrmInicioPaciente(identificador);
                 frmInicioPaciente.setVisible(true);
+            } else if (validacion.equals("Doctor")) {
+                this.dispose();
+                FrmInicioDoctor frmInicioDoctor = new FrmInicioDoctor(identificador);
+                frmInicioDoctor.setVisible(true);
             } else {
                 throw new PersistenciaException("Nuh huh");
             }

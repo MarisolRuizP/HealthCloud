@@ -14,7 +14,7 @@ public class FrmCitaEmergencia extends javax.swing.JFrame {
     /**
      * Creates new form FrmInicioPaciente
      */
-    public FrmCitaEmergencia() {
+    public FrmCitaEmergencia(String identificador) {
         initComponents();
     }
 
@@ -347,7 +347,7 @@ public class FrmCitaEmergencia extends javax.swing.JFrame {
 
     private void BtnEditInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnEditInfoMouseClicked
         setVisible(false);
-        FrmEditarInfoPersPaciente frmEditInfoPers = new FrmEditarInfoPersPaciente();
+        FrmEditarInfoPersPaciente frmEditInfoPers = new FrmEditarInfoPersPaciente(identificador);
         frmEditInfoPers.setVisible(true);
     }//GEN-LAST:event_BtnEditInfoMouseClicked
 
@@ -359,7 +359,7 @@ public class FrmCitaEmergencia extends javax.swing.JFrame {
 
     private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
         setVisible(false);
-        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
+        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
 
@@ -408,7 +408,7 @@ public class FrmCitaEmergencia extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmCitaEmergencia().setVisible(true);
+                
             }
         });
     }

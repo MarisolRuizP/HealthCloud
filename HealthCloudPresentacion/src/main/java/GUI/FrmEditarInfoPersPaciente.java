@@ -4,18 +4,34 @@
  */
 package GUI;
 
+import BO.PacienteBO;
+import Conexion.ConexionBD;
+import Conexion.IConexionBD;
+import DTO.PacienteNuevoDTO;
+import Entidades.Paciente;
+import Exception.NegocioException;
+import Mapper.PacienteMapper;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Maryr
  */
 public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
 
+    private PacienteBO pacienteBO;
     private String identificador;
 
     /**
      * Creates new form FrmInicioPaciente
      */
-    public FrmEditarInfoPersPaciente() {
+    public FrmEditarInfoPersPaciente(String identificador) {
+        IConexionBD conexion = new ConexionBD();
+        this.pacienteBO = new PacienteBO(conexion);
+        this.identificador = identificador;
         initComponents();
     }
 
@@ -37,19 +53,27 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         BtnInicio = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         LblNombre = new javax.swing.JLabel();
-        TxtNomIP = new javax.swing.JTextField();
-        LblApellidos = new javax.swing.JLabel();
-        TxtApellidos = new javax.swing.JTextField();
-        LblDireccion = new javax.swing.JLabel();
-        TxtDireccion = new javax.swing.JTextField();
         LblFechaNac = new javax.swing.JLabel();
         LblTelefono = new javax.swing.JLabel();
-        TxtTelefono = new javax.swing.JTextField();
         LblCorreo = new javax.swing.JLabel();
-        TxtCorreo = new javax.swing.JTextField();
         BtnConfirmEdit = new javax.swing.JButton();
         BtnCancelEdit = new javax.swing.JButton();
         DtChNacimiento = new com.toedter.calendar.JDateChooser();
+        LblApellidoPReg = new javax.swing.JLabel();
+        TxtApellidoPat = new javax.swing.JTextField();
+        LblApellidoMReg = new javax.swing.JLabel();
+        TxtApellidoMat = new javax.swing.JTextField();
+        LblDireccionCalleReg = new javax.swing.JLabel();
+        TxtDireccionCalle = new javax.swing.JTextField();
+        LblDireccionColoniaReg = new javax.swing.JLabel();
+        TxtDireccionColonia = new javax.swing.JTextField();
+        LblDireccionMunReg = new javax.swing.JLabel();
+        TxtDireccionMun = new javax.swing.JTextField();
+        TxtContrasenia = new javax.swing.JTextField();
+        LblContra = new javax.swing.JLabel();
+        TxtNombre = new javax.swing.JTextField();
+        TxtTelefono = new javax.swing.JTextField();
+        TxtCorreo = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -186,23 +210,6 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         LblNombre.setForeground(new java.awt.Color(0, 0, 0));
         LblNombre.setText("Nombre");
 
-        TxtNomIP.setBackground(new java.awt.Color(255, 255, 255));
-        TxtNomIP.setEnabled(false);
-
-        LblApellidos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblApellidos.setForeground(new java.awt.Color(0, 0, 0));
-        LblApellidos.setText("Apellidos");
-
-        TxtApellidos.setBackground(new java.awt.Color(255, 255, 255));
-        TxtApellidos.setEnabled(false);
-
-        LblDireccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblDireccion.setForeground(new java.awt.Color(0, 0, 0));
-        LblDireccion.setText("Dirección");
-
-        TxtDireccion.setBackground(new java.awt.Color(255, 255, 255));
-        TxtDireccion.setEnabled(false);
-
         LblFechaNac.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         LblFechaNac.setForeground(new java.awt.Color(0, 0, 0));
         LblFechaNac.setText("Fecha de nacimiento");
@@ -211,21 +218,20 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         LblTelefono.setForeground(new java.awt.Color(0, 0, 0));
         LblTelefono.setText("Número celular");
 
-        TxtTelefono.setBackground(new java.awt.Color(255, 255, 255));
-        TxtTelefono.setEnabled(false);
-
         LblCorreo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         LblCorreo.setForeground(new java.awt.Color(0, 0, 0));
         LblCorreo.setText("Correo electronico");
-
-        TxtCorreo.setBackground(new java.awt.Color(255, 255, 255));
-        TxtCorreo.setEnabled(false);
 
         BtnConfirmEdit.setBackground(new java.awt.Color(58, 109, 140));
         BtnConfirmEdit.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         BtnConfirmEdit.setForeground(new java.awt.Color(0, 0, 0));
         BtnConfirmEdit.setText("Confirmar");
         BtnConfirmEdit.setBorder(null);
+        BtnConfirmEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnConfirmEditMouseClicked(evt);
+            }
+        });
 
         BtnCancelEdit.setBackground(new java.awt.Color(58, 109, 140));
         BtnCancelEdit.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -246,79 +252,188 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         DtChNacimiento.setBackground(new java.awt.Color(255, 255, 255));
         DtChNacimiento.setForeground(new java.awt.Color(0, 0, 0));
 
+        LblApellidoPReg.setForeground(new java.awt.Color(0, 0, 0));
+        LblApellidoPReg.setText("Apellido Paterno");
+
+        TxtApellidoPat.setBackground(new java.awt.Color(255, 255, 255));
+        TxtApellidoPat.setForeground(new java.awt.Color(0, 0, 0));
+        TxtApellidoPat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        LblApellidoMReg.setForeground(new java.awt.Color(0, 0, 0));
+        LblApellidoMReg.setText("Apellido Materno");
+
+        TxtApellidoMat.setBackground(new java.awt.Color(255, 255, 255));
+        TxtApellidoMat.setForeground(new java.awt.Color(0, 0, 0));
+        TxtApellidoMat.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        LblDireccionCalleReg.setForeground(new java.awt.Color(0, 0, 0));
+        LblDireccionCalleReg.setText("Calle y No.");
+
+        TxtDireccionCalle.setBackground(new java.awt.Color(255, 255, 255));
+        TxtDireccionCalle.setForeground(new java.awt.Color(0, 0, 0));
+        TxtDireccionCalle.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        TxtDireccionCalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtDireccionCalleActionPerformed(evt);
+            }
+        });
+
+        LblDireccionColoniaReg.setForeground(new java.awt.Color(0, 0, 0));
+        LblDireccionColoniaReg.setText("Colonia");
+
+        TxtDireccionColonia.setBackground(new java.awt.Color(255, 255, 255));
+        TxtDireccionColonia.setForeground(new java.awt.Color(0, 0, 0));
+        TxtDireccionColonia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        TxtDireccionColonia.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtDireccionColoniaActionPerformed(evt);
+            }
+        });
+
+        LblDireccionMunReg.setForeground(new java.awt.Color(0, 0, 0));
+        LblDireccionMunReg.setText("Municipio");
+
+        TxtDireccionMun.setBackground(new java.awt.Color(255, 255, 255));
+        TxtDireccionMun.setForeground(new java.awt.Color(0, 0, 0));
+        TxtDireccionMun.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        TxtDireccionMun.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TxtDireccionMunActionPerformed(evt);
+            }
+        });
+
+        TxtContrasenia.setBackground(new java.awt.Color(255, 255, 255));
+        TxtContrasenia.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        LblContra.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblContra.setForeground(new java.awt.Color(0, 0, 0));
+        LblContra.setText("Contraseña");
+
+        TxtNombre.setBackground(new java.awt.Color(255, 255, 255));
+        TxtNombre.setForeground(new java.awt.Color(0, 0, 0));
+        TxtNombre.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        TxtTelefono.setBackground(new java.awt.Color(255, 255, 255));
+        TxtTelefono.setForeground(new java.awt.Color(0, 0, 0));
+        TxtTelefono.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
+        TxtCorreo.setBackground(new java.awt.Color(255, 255, 255));
+        TxtCorreo.setForeground(new java.awt.Color(0, 0, 0));
+        TxtCorreo.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(LblNombre))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(TxtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                            .addComponent(TxtNomIP, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                            .addComponent(TxtDireccion, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                            .addComponent(TxtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                            .addComponent(TxtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
-                            .addComponent(DtChNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(LblFechaNac))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(LblCorreo))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(LblApellidos))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(LblDireccion))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(42, 42, 42)
-                        .addComponent(LblTelefono)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(51, 51, 51)
                 .addComponent(BtnCancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addComponent(BtnConfirmEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(56, 56, 56))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(LblNombre))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(15, 15, 15)
+                                .addComponent(LblFechaNac))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addComponent(LblCorreo))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(17, 17, 17)
+                                .addComponent(LblTelefono))
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(TxtTelefono, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(DtChNacimiento, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                                        .addComponent(TxtCorreo)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                            .addGap(6, 6, 6)
+                                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addComponent(LblDireccionCalleReg)
+                                                    .addGap(58, 58, 58)
+                                                    .addComponent(LblDireccionColoniaReg)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(LblDireccionMunReg)
+                                                    .addGap(21, 21, 21))
+                                                .addGroup(jPanel3Layout.createSequentialGroup()
+                                                    .addComponent(LblApellidoPReg)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(LblApellidoMReg)
+                                                    .addGap(33, 33, 33))))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                            .addComponent(TxtDireccionCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(TxtDireccionColonia, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(TxtDireccionMun, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
+                                            .addComponent(TxtApellidoPat, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                            .addComponent(TxtApellidoMat, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(49, 49, 49)
+                        .addComponent(LblContra)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addContainerGap()
                 .addComponent(LblNombre)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtNomIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblApellidos)
+                .addComponent(TxtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LblApellidoPReg)
+                    .addComponent(LblApellidoMReg))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblDireccion)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtApellidoPat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtApellidoMat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12, 12, 12)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(LblDireccionCalleReg)
+                    .addComponent(LblDireccionColoniaReg)
+                    .addComponent(LblDireccionMunReg))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TxtDireccionCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtDireccionColonia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(TxtDireccionMun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(LblFechaNac)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(DtChNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12)
                 .addComponent(LblTelefono)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LblCorreo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(LblContra)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(TxtContrasenia, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BtnConfirmEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnCancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -334,10 +449,10 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -401,9 +516,96 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
 
     private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
         setVisible(false);
-        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
+        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
+
+    private void TxtDireccionCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDireccionCalleActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtDireccionCalleActionPerformed
+
+    private void TxtDireccionColoniaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDireccionColoniaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtDireccionColoniaActionPerformed
+
+    private void TxtDireccionMunActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDireccionMunActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_TxtDireccionMunActionPerformed
+
+    private void BtnConfirmEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnConfirmEditMouseClicked
+        try {
+            PacienteNuevoDTO pacienteActual = pacienteBO.consultarPacientePorCorreo(identificador);
+            
+            PacienteNuevoDTO pacienteModificado = new PacienteNuevoDTO(pacienteActual.getNombrePila(), pacienteActual.getApellidoPaterno(), pacienteActual.getApellidoMaterno(), 
+                    pacienteActual.getNumTelefono(), pacienteActual.getFechaNacimiento(), pacienteActual.getCorreoElectronico(), pacienteActual.getDireccion(), pacienteActual.getUsuario());
+            
+            // Obtener valores de la pantalla y comparar con los actuales
+            String nombre = TxtNombre.getText().trim();
+            if (!nombre.isEmpty() && !nombre.equals(pacienteActual.getNombrePila())) {
+                pacienteModificado.setNombrePila(nombre);
+            }
+            
+            String apellidoPaterno = TxtApellidoPat.getText().trim();
+            if (!apellidoPaterno.isEmpty() && !apellidoPaterno.equals(pacienteActual.getApellidoPaterno())) {
+                pacienteModificado.setApellidoPaterno(apellidoPaterno);
+            }
+            
+            String apellidoMaterno = TxtApellidoMat.getText().trim();
+            if (!apellidoMaterno.isEmpty() && !apellidoMaterno.equals(pacienteActual.getApellidoMaterno())) {
+                pacienteModificado.setApellidoMaterno(apellidoMaterno);
+            }
+            
+            String numTelefono = TxtTelefono.getText().trim();
+            if (!numTelefono.isEmpty() && !numTelefono.equals(pacienteActual.getNumTelefono())) {
+                pacienteModificado.setNumTelefono(numTelefono);
+            }
+            
+            String correo = TxtCorreo.getText().trim();
+            if (!correo.isEmpty() && !correo.equals(pacienteActual.getCorreoElectronico())) {
+                pacienteModificado.setCorreoElectronico(correo);
+            }
+            
+            String contra = TxtContrasenia.getText().trim();
+            if (!contra.isEmpty() && !contra.equals(pacienteActual.getUsuario().getContrasenia())) {
+                pacienteModificado.getUsuario().setContrasenia(contra);
+            }
+            
+            String calleYNum = TxtDireccionCalle.getText().trim();
+            if (!calleYNum.isEmpty() && !calleYNum.equals(pacienteActual.getDireccion().getCalleYNum())) {
+                pacienteModificado.getDireccion().setCalleYNum(calleYNum);
+            }
+            
+            String colonia = TxtDireccionColonia.getText().trim();
+            if (!colonia.isEmpty() && !colonia.equals(pacienteActual.getDireccion().getColonia())) {
+                pacienteModificado.getDireccion().setColonia(colonia);
+            }
+            
+            String municipio = TxtDireccionMun.getText().trim();
+            if (!municipio.isEmpty() && !municipio.equals(pacienteActual.getDireccion().getMunicipio())) {
+                pacienteModificado.getDireccion().setMunicipio(municipio);
+            }
+            
+            Date fechaNac = DtChNacimiento.getDate();
+            if (fechaNac != null) {
+                Date fechaNacimiento = fechaNac;
+                if (!fechaNacimiento.equals(pacienteActual.getFechaNacimiento())) {
+                    pacienteModificado.setFechaNacimiento(fechaNacimiento);
+                }
+            }
+            
+            if (pacienteActual.equals(pacienteModificado)) {
+                JOptionPane.showMessageDialog(this, "No hay cambios que actualizar.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
+                return;
+            }
+            
+            String mensaje = pacienteBO.actualizarPaciente(pacienteModificado);
+            
+            JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmEditarInfoPersPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_BtnConfirmEditMouseClicked
 
     /**
      * @param args the command line arguments
@@ -438,7 +640,7 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmEditarInfoPersPaciente().setVisible(true);
+                
             }
         });
     }
@@ -452,16 +654,24 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
     private javax.swing.JButton BtnInfoSide;
     private javax.swing.JButton BtnInicio;
     private com.toedter.calendar.JDateChooser DtChNacimiento;
-    private javax.swing.JLabel LblApellidos;
+    private javax.swing.JLabel LblApellidoMReg;
+    private javax.swing.JLabel LblApellidoPReg;
+    private javax.swing.JLabel LblContra;
     private javax.swing.JLabel LblCorreo;
-    private javax.swing.JLabel LblDireccion;
+    private javax.swing.JLabel LblDireccionCalleReg;
+    private javax.swing.JLabel LblDireccionColoniaReg;
+    private javax.swing.JLabel LblDireccionMunReg;
     private javax.swing.JLabel LblFechaNac;
     private javax.swing.JLabel LblNombre;
     private javax.swing.JLabel LblTelefono;
-    private javax.swing.JTextField TxtApellidos;
+    private javax.swing.JTextField TxtApellidoMat;
+    private javax.swing.JTextField TxtApellidoPat;
+    private javax.swing.JTextField TxtContrasenia;
     private javax.swing.JTextField TxtCorreo;
-    private javax.swing.JTextField TxtDireccion;
-    private javax.swing.JTextField TxtNomIP;
+    private javax.swing.JTextField TxtDireccionCalle;
+    private javax.swing.JTextField TxtDireccionColonia;
+    private javax.swing.JTextField TxtDireccionMun;
+    private javax.swing.JTextField TxtNombre;
     private javax.swing.JTextField TxtTelefono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

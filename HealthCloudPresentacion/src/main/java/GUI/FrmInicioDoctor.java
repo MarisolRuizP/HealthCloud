@@ -10,10 +10,11 @@ package GUI;
  */
 public class FrmInicioDoctor extends javax.swing.JFrame {
 
+    private String identificador;
     /**
      * Creates new form FrmInicioPaciente
      */
-    public FrmInicioDoctor() {
+    public FrmInicioDoctor(String identificador) {
         initComponents();
     }
 
@@ -318,13 +319,13 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
 
     private void BtnEditInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnEditInfoMouseClicked
         setVisible(false);
-        FrmEditarInfoPersPaciente frmEditInfoPers = new FrmEditarInfoPersPaciente();
+        FrmEditarInfoPersPaciente frmEditInfoPers = new FrmEditarInfoPersPaciente(identificador);
         frmEditInfoPers.setVisible(true);
     }//GEN-LAST:event_BtnEditInfoMouseClicked
 
     private void BtnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarSesionMouseClicked
         setVisible(false);
-        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia();
+        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
     }//GEN-LAST:event_BtnCerrarSesionMouseClicked
 
@@ -373,7 +374,7 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmInicioDoctor().setVisible(true);
+                
             }
         });
     }
