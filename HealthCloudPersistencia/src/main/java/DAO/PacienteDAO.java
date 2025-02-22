@@ -143,8 +143,8 @@ public class PacienteDAO implements IPacienteDAO {
             stm.setString(3, paciente.getNombrePila());
             stm.setString(4, paciente.getApellidoPaterno());
             stm.setString(5, paciente.getApellidoMaterno());
-            stm.setString(6, paciente.getNumTelefono());
-            stm.setString(7, paciente.getCorreoElectronico());
+            stm.setString(6, paciente.getCorreoElectronico());
+            stm.setString(7, paciente.getNumTelefono());
             stm.setString(8, direccion.getCalleYNum());
             stm.setString(9, direccion.getColonia());
             stm.setString(10, direccion.getMunicipio());
