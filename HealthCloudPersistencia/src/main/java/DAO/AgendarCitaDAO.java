@@ -12,8 +12,13 @@ import Exception.PersistenciaException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -55,5 +60,29 @@ public class AgendarCitaDAO implements IAgendarCitaDAO {
             throw new PersistenciaException("Error al actualizar al paciente", ex);
         }
         return cita;
+    }
+    
+    public List<Cita> historialCitas (Paciente paciente) throws PersistenciaException{
+        
+        List<Cita> historialCita = new ArrayList<>();
+        
+        String sentenciaSQLHistorial = "CALL obtenerHistorialCitas(?)";
+        
+        try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLHistorial)){
+        
+            stm.setInt(1, paciente.getIdPaciente());
+            
+            ResultSet rs = stm.executeQuery();
+            
+            while(rs.next()){
+                Cita cita = new Cita(rs.getString("folioEmergencia"), rs.getDate("fecha").toLocalDate(),  rs.getTime("hora").toLocalTime(), rs.getString("motivo"), rs.getString("estadoCita"));
+                historialCita.add(cita);
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(AgendarCitaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return historialCita;
     }
 }

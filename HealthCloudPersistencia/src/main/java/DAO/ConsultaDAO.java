@@ -50,4 +50,6 @@ public class ConsultaDAO implements IConsulta {
         }
         return consulta;
     }
+    
+    
 }

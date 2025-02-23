@@ -5,7 +5,9 @@
 package DAO;
 
 import Entidades.Cita;
+import Entidades.Paciente;
 import Exception.PersistenciaException;
+import java.util.List;
 
 /**
  *
@@ -14,5 +16,6 @@ import Exception.PersistenciaException;
 public interface IAgendarCitaDAO {
     
     public Cita agendarCita(Cita cita) throws PersistenciaException;
+    public List<Cita> historialCitas (Paciente paciente) throws PersistenciaException;
         
 }

@@ -19,12 +19,24 @@ public class Cita {
     private LocalDate fecha;
     private LocalTime hora;
     private String motivo;
+    private String estadoCita;
     private Paciente paciente;
     private Doctor doctor;
 
     public Cita() {
     }
 
+    //constructor para el historial de citas
+
+    public Cita(String folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, String estadoCita) {
+        this.folioEmergencia = folioEmergencia;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.motivo = motivo;
+        this.estadoCita = estadoCita;
+    }
+
+    
     public Cita(String folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Doctor doctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
@@ -88,6 +100,14 @@ public class Cita {
 
     public void setDoctor(Doctor doctor) {
         this.doctor = doctor;
+    }
+
+    public String getEstadoCita() {
+        return estadoCita;
+    }
+
+    public void setEstadoCita(String estadoCita) {
+        this.estadoCita = estadoCita;
     }
     
     
