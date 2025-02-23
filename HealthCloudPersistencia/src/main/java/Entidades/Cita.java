@@ -4,10 +4,8 @@
  */
 package Entidades;
 
-import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Date;
 
 /**
  *
@@ -23,23 +21,23 @@ public class Cita {
     private String estadoCita;
     private Paciente paciente;
     private String nombreDoctor;
+    private String nombrePaciente;
     private String especialidad;
     private Doctor doctor;
 
     public Cita() {
     }
 
-// Constructor que utiliza nombre y apellido del paciente
-    public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombrePaciente, String apellidoPaciente) {
+    public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombrePaciente) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
         this.hora = hora;
         this.motivo = motivo;
         this.estadoCita = estadoCita;
-        this.nombrePaciente = nombrePaciente + " " + apellidoPaciente;
+        this.nombrePaciente = nombrePaciente;
     }
 
-
+    //constructor para el historial de citas
     public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombreDoctor, String especialidad) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
@@ -65,6 +63,14 @@ public class Cita {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
     }
 
     public String getFolioEmergencia() {
@@ -131,14 +137,6 @@ public class Cita {
         this.nombreDoctor = nombreDoctor;
     }
 
-    public String getNombrePaciente() {
-        return nombrePaciente;
-    }
-
-    public void setNombrePaciente(String nombrePaciente) {
-        this.nombrePaciente = nombrePaciente;
-    }
-
     public String getEspecialidad() {
         return especialidad;
     }
@@ -146,4 +144,5 @@ public class Cita {
     public void setEspecialidad(String especialidad) {
         this.especialidad = especialidad;
     }
+
 }

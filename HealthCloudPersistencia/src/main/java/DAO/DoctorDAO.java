@@ -60,7 +60,7 @@ public class DoctorDAO implements IDoctorDAO {
     @Override
     public void darBajaTemporal(int idDoctor) throws PersistenciaException {
 
-        String sql = "UPDATE Doctores SET activo = false WHERE idDoctor = ?";
+        String sql = "UPDATE Doctores SET estado = 'Inactivo' WHERE idDoctor = ?";
 
         try (Connection con = conexion.crearConexion(); PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -68,19 +68,19 @@ public class DoctorDAO implements IDoctorDAO {
             int filasAfectadas = stmt.executeUpdate();
 
             if (filasAfectadas == 0) {
-                throw new PersistenciaException("No se encontro el ID.");
+                throw new PersistenciaException("No se encontro al doctor");
             }
 
         } catch (SQLException ex) {
             logger.log(Level.SEVERE, "Ocurrio un error al dar de baja al doctor", ex);
-            throw new PersistenciaException("Otro error", ex);
+            throw new PersistenciaException("Ocurrio un error en el proceso de baja", ex);
         }
     }
 
     // Para verificar que el doctor este activo
     @Override
     public boolean estaActivo(int idDoctor) throws PersistenciaException {
-        String sql = "SELECT activo FROM Doctores WHERE idDoctor = ?";
+        String sql = "SELECT estado FROM Doctores WHERE idDoctor = ?";
 
         try (Connection con = conexion.crearConexion(); PreparedStatement stmt = con.prepareStatement(sql)) {
 
@@ -88,7 +88,8 @@ public class DoctorDAO implements IDoctorDAO {
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getBoolean("Activo.");
+                    String estado = rs.getString("estado");
+                    return estado.equals("Activo");
                 }
                 throw new PersistenciaException("Doctor no encontrado.");
             }

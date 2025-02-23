@@ -62,10 +62,10 @@ public class Pruebas {
 
         HistorialCitaBO historialCitaBO = new HistorialCitaBO(conexion);
 
-        // Identificador del paciente (por ejemplo, correo electrónico)
+        /*
         String identificador = "sol@sol.com";
 
-        // Probar obtener historial de citas
+        
         try {
             List<Cita> historialCitas = historialCitaBO.obtenerHistorialCitas(identificador);
             if (historialCitas.isEmpty()) {
@@ -83,8 +83,21 @@ public class Pruebas {
             }
         } catch (NegocioException e) {
             Logger.getLogger(Pruebas.class.getName()).log(Level.SEVERE, "Error al obtener el historial de citas.", e);
-        }
+        }*/
 
+        int idDoctor = 2;
+
+        try {
+            System.out.println("Solicitando baja temporal para el doctor con ID: " + idDoctor);
+            doctorBO.solicitarBajaTemporal(idDoctor);
+            System.out.println("Baja temporal realizada con éxito para el doctor con ID: " + idDoctor);
+
+        } catch (NegocioException ex) {
+            System.out.println("Error al solicitar baja temporal: " + ex.getMessage());
+            ex.printStackTrace();
+        }
     }
 
 }
+
+
