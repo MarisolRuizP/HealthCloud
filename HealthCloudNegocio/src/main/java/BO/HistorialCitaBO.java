@@ -40,4 +40,18 @@ public class HistorialCitaBO {
         }
     }
 
+
+
+    public List<Cita> obtenerCitasDoctor(int idDoctor) throws NegocioException {
+        try {
+            List<Cita> citas = historialCita.obtenerCitasDoctor(idDoctor);
+            if (citas.isEmpty()) {
+                throw new NegocioException("El doctor con ID: " + idDoctor + "No tiene citas programadas");
+            }
+            return citas;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al obtener las citas del doctor", e);
+        }
+    }
+
 }

@@ -38,26 +38,25 @@ public class CitaDAO implements ICitaDAO {
         Doctor doctor = cita.getDoctor();
 
         String sentenciaSQLAgendarCita = "CALL agendarCita (?,?,?,?,?,?)";
-        
-        try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLAgendarCita)){
-            
+
+        try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLAgendarCita)) {
+
             stm.setString(1, cita.getFolioEmergencia());
             stm.setDate(2, cita.getFecha());
             stm.setTime(3, cita.getHora());
             stm.setString(4, cita.getMotivo());
             stm.setInt(5, paciente.getIdPaciente());
             stm.setInt(6, doctor.getIdDoctor());
-            
+
             stm.executeUpdate();
-            
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
             throw new PersistenciaException("Error al actualizar al paciente", ex);
         }
         return cita;
     }
-    
+
     @Override
     public List<Cita> obtenerHistorialCitas(int idPaciente) throws PersistenciaException {
     List<Cita> citas = new ArrayList<>();
@@ -83,5 +82,33 @@ public class CitaDAO implements ICitaDAO {
     }
     return citas;
 }
+    
+    @Override
+    public List<Cita> obtenerCitasDoctor(int idDoctor) throws PersistenciaException {
+        String sentenciaSQLObtenerCitas = "CALL obtenerCitasDoctor(?)";
+        List<Cita> citas = new ArrayList<>();
+
+        try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sentenciaSQLObtenerCitas)) {
+            stmt.setInt(1, idDoctor);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Cita cita = new Cita(
+                            rs.getString("folioEmergencia"),
+                            rs.getDate("fecha"),
+                            rs.getTime("hora"),
+                            rs.getString("motivo"),
+                            rs.getString("estadoCita"),
+                            rs.getString("nombrePaciente"),
+                            rs.getString("apellidoPaciente")
+                    );
+                    citas.add(cita);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException("Error al obtener el historial de citas del paciente", ex);
+        }
+        return citas;
+    }
 
 }
