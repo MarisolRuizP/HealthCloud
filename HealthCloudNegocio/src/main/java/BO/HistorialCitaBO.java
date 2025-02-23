@@ -23,15 +23,15 @@ public class HistorialCitaBO {
     private PacienteBO pacienteBO;
 
     public HistorialCitaBO(IConexionBD conexion) {
-        this.historialCita = new CitaDAO(conexion); 
+        this.historialCita = new CitaDAO(conexion);
         pacienteBO = new PacienteBO(conexion);
     }
 
     public List<Cita> obtenerHistorialCitas(String identificador) throws NegocioException {
         try {
             PacienteNuevoDTO paciente = pacienteBO.consultarPacientePorCorreo(identificador);
-            if(paciente != null) {
-            return historialCita.obtenerHistorialCitas(paciente.getIdPaciente());
+            if (paciente != null) {
+                return historialCita.obtenerHistorialCitas(paciente.getIdPaciente());
             } else {
                 throw new NegocioException("No se encontró el paciente");
             }
@@ -39,5 +39,16 @@ public class HistorialCitaBO {
             throw new NegocioException("Error al ver las citas", e);
         }
     }
-}
 
+    public List<Cita> obtenerCitasDoctor(int idDoctor) throws NegocioException {
+        try {
+            List<Cita> citas = historialCita.obtenerCitasDoctor(idDoctor);
+            if (citas.isEmpty()) {
+                throw new NegocioException("El doctor con ID: " + idDoctor + "No tiene citas programadas");
+            }
+            return citas;
+        } catch (PersistenciaException e) {
+            throw new NegocioException("Error al obtener las citas del doctor", e);
+        }
+    }
+}
