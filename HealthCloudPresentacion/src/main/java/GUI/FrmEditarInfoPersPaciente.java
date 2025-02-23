@@ -549,6 +549,11 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
             pacienteModificado.setApellidoMaterno(TxtApellidoMat.getText().trim());
             pacienteModificado.setNumTelefono(TxtTelefono.getText().trim());
             pacienteModificado.setCorreoElectronico(TxtCorreo.getText().trim());
+            Direccion direccionAct = new Direccion();
+            direccionAct.setCalleYNum(TxtDireccionCalle.getText().trim());
+            direccionAct.setColonia(TxtDireccionColonia.getText().trim());
+            direccionAct.setMunicipio(TxtDireccionMun.getText().trim());
+            pacienteModificado.setDireccion(direccionAct);
             String contra = TxtContrasenia.getText().trim();
             Usuario usuarioAct = new Usuario();
             usuarioAct.setIdentificador(pacienteModificado.getCorreoElectronico());
@@ -560,8 +565,6 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
             }
             usuarioAct.setTipoDeUsuario("Paciente");
             pacienteModificado.setUsuario(usuarioAct);
-            Direccion direccionAct = new Direccion(TxtDireccionCalle.getText().trim(), TxtDireccionColonia.getText().trim(), TxtDireccionMun.getText().trim());
-            pacienteModificado.setDireccion(direccionAct);
             pacienteModificado.setFechaNacimiento(DtChNacimiento.getDate());
 
             String mensaje = pacienteBO.actualizarPaciente(pacienteModificado);

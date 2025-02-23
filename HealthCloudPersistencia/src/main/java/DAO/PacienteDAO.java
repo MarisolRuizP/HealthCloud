@@ -129,7 +129,7 @@ public class PacienteDAO implements IPacienteDAO {
     @Override
     public Paciente actualizarPaciente(Paciente paciente) throws PersistenciaException {
         String sentenciaSQLActualizarUsuario = "UPDATE Usuarios SET identificador = ?, contrasenia = ?, tipoDeUsuario = ? WHERE idUsuario = ?";
-        String sentenciaSQLActualizarDireccion = "UPDATE DireccionPacientes SET calleYNumCasa = ?, colonia = ?, municipio = ? WHERE idDireccion = ?";
+        String sentenciaSQLActualizarDireccion = "UPDATE DireccionPacientes SET calleYNumCasa = ?, colonia = ?, municipio = ? WHERE idDireccion = (SELECT idDireccion FROM pacientes WHERE idPaciente = ?)";
         String sentenciaSQLActualizarPaciente = "UPDATE Pacientes SET nombrePila = ?, apellidoPaterno = ?, apellidoMaterno = ?, numTelefono = ?, fechaNacimiento = ?, correoElectronico = ? WHERE idPaciente = ?";
 
         try (Connection con = conexion.crearConexion()) {
@@ -153,7 +153,7 @@ public class PacienteDAO implements IPacienteDAO {
                 psDireccion.setString(1, direccion.getCalleYNum());
                 psDireccion.setString(2, direccion.getColonia());
                 psDireccion.setString(3, direccion.getMunicipio());
-                psDireccion.setInt(4, pacAux.getDireccion().getId());
+                psDireccion.setInt(4, pacAux.getIdPaciente());
                 psDireccion.executeUpdate();
             }
 

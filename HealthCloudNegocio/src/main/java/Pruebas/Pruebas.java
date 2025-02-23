@@ -78,6 +78,7 @@ public class Pruebas {
                 System.out.println("Motivo: " + cita.getMotivo());
                 System.out.println("Estado: " + cita.getEstadoCita());
                 System.out.println("Doctor: " + cita.getNombreDoctor());
+                System.out.println("Especialidad: " + cita.getEspecialidad());
                 System.out.println("-------------------------------");
             }
         } catch (NegocioException e) {

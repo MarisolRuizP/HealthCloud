@@ -40,6 +40,8 @@ public class HistorialCitaBO {
         }
     }
 
+
+
     public List<Cita> obtenerCitasDoctor(int idDoctor) throws NegocioException {
         try {
             List<Cita> citas = historialCita.obtenerCitasDoctor(idDoctor);
@@ -51,4 +53,5 @@ public class HistorialCitaBO {
             throw new NegocioException("Error al obtener las citas del doctor", e);
         }
     }
+
 }

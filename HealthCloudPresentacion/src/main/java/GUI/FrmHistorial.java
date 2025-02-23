@@ -8,10 +8,13 @@ import BO.HistorialCitaBO;
 import Conexion.ConexionBD;
 import Entidades.Cita;
 import Exception.NegocioException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -52,6 +55,13 @@ public class FrmHistorial extends javax.swing.JFrame {
         BtnInicio = new javax.swing.JButton();
         scrollPaneHistorialCitas = new javax.swing.JScrollPane();
         listaHistorialCitas = new javax.swing.JList<>();
+        dateChooserInicio = new com.toedter.calendar.JDateChooser();
+        comboBoxEspecialidades = new javax.swing.JComboBox<>();
+        dateChooserFin = new com.toedter.calendar.JDateChooser();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        btnFiltrar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -190,6 +200,40 @@ public class FrmHistorial extends javax.swing.JFrame {
         });
         scrollPaneHistorialCitas.setViewportView(listaHistorialCitas);
 
+        dateChooserInicio.setBackground(new java.awt.Color(255, 255, 255));
+        dateChooserInicio.setForeground(new java.awt.Color(0, 0, 0));
+
+        comboBoxEspecialidades.setBackground(new java.awt.Color(255, 255, 255));
+        comboBoxEspecialidades.setForeground(new java.awt.Color(0, 0, 0));
+        comboBoxEspecialidades.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cardiología", "Dermatología", "Pediatría", "Neurología", "Gastroenterología", "Ortopedia" }));
+
+        dateChooserFin.setBackground(new java.awt.Color(255, 255, 255));
+        dateChooserFin.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel1.setText("Fecha inicio:");
+
+        jLabel2.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel2.setText("Fecha fin:");
+
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
+        jLabel3.setText("Especialidad:");
+
+        btnFiltrar.setBackground(new java.awt.Color(58, 109, 140));
+        btnFiltrar.setForeground(new java.awt.Color(0, 0, 0));
+        btnFiltrar.setText("Filtrar");
+        btnFiltrar.setBorder(null);
+        btnFiltrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnFiltrarMouseClicked(evt);
+            }
+        });
+        btnFiltrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltrarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanelCitasLayout = new javax.swing.GroupLayout(jPanelCitas);
         jPanelCitas.setLayout(jPanelCitasLayout);
         jPanelCitasLayout.setHorizontalGroup(
@@ -197,7 +241,23 @@ public class FrmHistorial extends javax.swing.JFrame {
             .addGroup(jPanelCitasLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
-                .addComponent(scrollPaneHistorialCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel2)
+                        .addGroup(jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelCitasLayout.createSequentialGroup()
+                                .addComponent(dateChooserFin, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnFiltrar, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(scrollPaneHistorialCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanelCitasLayout.createSequentialGroup()
+                        .addGroup(jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dateChooserInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(50, 50, 50)
+                        .addGroup(jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(comboBoxEspecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(72, 72, 72))
         );
         jPanelCitasLayout.setVerticalGroup(
@@ -205,6 +265,22 @@ public class FrmHistorial extends javax.swing.JFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCitasLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCitasLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(dateChooserInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCitasLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(1, 1, 1)
+                        .addComponent(comboBoxEspecialidades, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(1, 1, 1)
+                .addComponent(jLabel2)
+                .addGap(1, 1, 1)
+                .addGroup(jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnFiltrar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dateChooserFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(14, 14, 14)
                 .addComponent(scrollPaneHistorialCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(104, 104, 104))
         );
@@ -283,6 +359,52 @@ public class FrmHistorial extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnInicioActionPerformed
 
+    private void btnFiltrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnFiltrarActionPerformed
+
+    private void btnFiltrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFiltrarMouseClicked
+        filtrarHistorial(evt);
+    }//GEN-LAST:event_btnFiltrarMouseClicked
+
+    private void filtrarHistorial(java.awt.event.MouseEvent evt) {
+        String especialidadSeleccionada = (String) comboBoxEspecialidades.getSelectedItem();
+        Date fechaInicio = dateChooserInicio.getDate();
+        Date fechaFin = dateChooserFin.getDate();
+
+        try {
+            List<Cita> historialCitas = historialCitaBO.obtenerHistorialCitas(identificador);
+
+            // Filtrar el historial en la interfaz
+            List<Cita> citasFiltradas = historialCitas.stream()
+                    .filter(cita -> (especialidadSeleccionada.equals("Todas") || cita.getEspecialidad().equals(especialidadSeleccionada)))
+                    .filter(cita -> (fechaInicio == null || !cita.getFecha().before(fechaInicio)))
+                    .filter(cita -> (fechaFin == null || !cita.getFecha().after(fechaFin)))
+                    .collect(Collectors.toList());
+
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            if (citasFiltradas.isEmpty()) {
+                listModel.addElement("No se encontraron citas para los criterios seleccionados.");
+            } else {
+                for (Cita cita : citasFiltradas) {
+                    listModel.addElement("Folio Emergencia: " + (cita.getFolioEmergencia() != null ? cita.getFolioEmergencia() : "N/A"));
+                    listModel.addElement("Fecha: " + cita.getFecha());
+                    listModel.addElement("Hora: " + cita.getHora());
+                    listModel.addElement("Motivo: " + cita.getMotivo());
+                    listModel.addElement("Estado: " + cita.getEstadoCita());
+                    listModel.addElement("Doctor: " + cita.getNombreDoctor());
+                    listModel.addElement("Especialidad: " + cita.getEspecialidad());
+                    listModel.addElement("-------------------------------");
+                }
+            }
+            listaHistorialCitas.setModel(listModel);
+
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmInicioPaciente.class.getName()).log(Level.SEVERE, "Error al filtrar el historial de citas.", ex);
+            JOptionPane.showMessageDialog(this, "Error al filtrar el historial de citas: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
     public void llenarHistorialCitas(String identificador) {
         try {
             List<Cita> historialCitas = historialCitaBO.obtenerHistorialCitas(identificador);
@@ -297,6 +419,7 @@ public class FrmHistorial extends javax.swing.JFrame {
                     listModel.addElement("Motivo: " + cita.getMotivo());
                     listModel.addElement("Estado: " + cita.getEstadoCita());
                     listModel.addElement("Doctor: " + cita.getNombreDoctor());
+                    listModel.addElement("Especialidad: " + cita.getEspecialidad());
                     listModel.addElement("-------------------------------");
                 }
             }
@@ -348,6 +471,13 @@ public class FrmHistorial extends javax.swing.JFrame {
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JButton BtnInfoSide;
     private javax.swing.JButton BtnInicio;
+    private javax.swing.JButton btnFiltrar;
+    private javax.swing.JComboBox<String> comboBoxEspecialidades;
+    private com.toedter.calendar.JDateChooser dateChooserFin;
+    private com.toedter.calendar.JDateChooser dateChooserInicio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanelCitas;
     private javax.swing.JList<String> listaHistorialCitas;
