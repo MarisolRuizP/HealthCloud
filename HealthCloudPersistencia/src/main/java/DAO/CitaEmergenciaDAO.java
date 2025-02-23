@@ -1,12 +1,8 @@
 package DAO;
 
 import Conexion.IConexionBD;
-import Entidades.Cita;
-import Entidades.Doctor;
 import Exception.PersistenciaException;
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
