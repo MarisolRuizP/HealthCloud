@@ -24,6 +24,7 @@ public class Cita {
     private String estadoCita;
     private Paciente paciente;
     private String nombreDoctor;
+    private String especialidad;
     private Doctor doctor;
 
     public Cita() {
@@ -31,13 +32,14 @@ public class Cita {
 
     //constructor para el historial de citas
 
-    public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombreDoctor) {
+    public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombreDoctor, String especialidad) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
         this.hora = hora;
         this.motivo = motivo;
         this.estadoCita = estadoCita;
         this.nombreDoctor = nombreDoctor;
+        this.especialidad = especialidad;
     }
 
     
@@ -121,5 +123,15 @@ public class Cita {
     public void setNombreDoctor(String nombreDoctor) {
         this.nombreDoctor = nombreDoctor;
     }    
+
+    public String getEspecialidad() {
+        return especialidad;
+    }
+
+    public void setEspecialidad(String especialidad) {
+        this.especialidad = especialidad;
+    }
+
+    
 
 }
