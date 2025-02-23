@@ -55,7 +55,7 @@ public class DoctorDAO implements IDoctorDAO {
     * 
     */
     @Override
-    public darBajaTemporal (int idDoctor) throws PersistenciaException {
+    public void darBajaTemporal (int idDoctor) throws PersistenciaException {
 
         String sql = "UPDATE Doctores SET activo = false WHERE idDoctor = ?";
         
