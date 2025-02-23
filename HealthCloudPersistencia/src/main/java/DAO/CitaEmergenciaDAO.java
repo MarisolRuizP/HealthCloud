@@ -45,58 +45,58 @@ public class CitaEmergenciaDAO implements ICitaEmergenciaDAO {
         }
     }
 
-    @Override
-    public Cita registrarCitaEmergencia(String especialidad) throws PersistenciaException {
-        String sentenciaSQL = "{CALL buscarDoctorDisponible(?)}";
-        
-        try (Connection con = conexion.crearConexion()) {
-
-            // Cochinero para encontrar a un doctor disponible
-            Doctor doctorDisponible;
-            LocalDate fecha;
-            LocalTime hora;
-            
-            try (CallableStatement stmt = con.prepareCall(sentenciaSQL)) {
-                stmt.setString(1, especialidad);
-                ResultSet rs = stmt.executeQuery();
-                
-                // ps uqe no hay
-                if (!rs.next()) {
-                    throw new PersistenciaException("No hay doctores disponibles para esta especialidad en este momento.");
-                }
-                
-                doctorDisponible = new Doctor();
-                doctorDisponible.setIdDoctor(rs.getInt("idDoctor"));
-                doctorDisponible.setNombrePila(rs.getString("nombrePila"));
-                doctorDisponible.setApellidoPaterno(rs.getString("apellidoPaterno"));
-                doctorDisponible.setApellidoMaterno(rs.getString("apellidoMaterno"));
-                doctorDisponible.setEspecialidad(rs.getString("especialidad"));
-                doctorDisponible.setCedulaProfesional(rs.getString("cedulaProfesional"));
-                
-                fecha = LocalDate.now();
-                hora = LocalTime.of(rs.getInt("hora_disponible"), 0); 
-            }
-            
-            // Cochinero para generar y registrar la cita de emergencia
-            String folio = generarFolioUnico();
-            
-            try (CallableStatement stmt = con.prepareCall("INSERT INTO Citas (folioEmergencia, fecha, hora, motivo, idDoctor) VALUES (?, ?, ?, ?, ?)")) {
-                stmt.setString(1, folio);
-                stmt.setDate(2, Date.valueOf(fecha));
-                stmt.setTime(3, Time.valueOf(hora));
-                stmt.setString(4, "Emergencia: " + especialidad);
-                stmt.setInt(5, doctorDisponible.getIdDoctor());
-                
-                stmt.executeUpdate();
-            }
-            
-            return new Cita(folio, fecha, hora, "Emergencia:" + especialidad, null, doctorDisponible);
-            
-        } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Hubo un error al registrar cita de emergencia", ex);
-            throw new PersistenciaException("Hubo un error al registrar la cita de emergencia", ex);
-        }
-    }
+//    @Override
+//    public Cita registrarCitaEmergencia(String especialidad) throws PersistenciaException {
+//        String sentenciaSQL = "{CALL buscarDoctorDisponible(?)}";
+//        
+//        try (Connection con = conexion.crearConexion()) {
+//
+//            // Cochinero para encontrar a un doctor disponible
+//            Doctor doctorDisponible;
+//            LocalDate fecha;
+//            LocalTime hora;
+//            
+//            try (CallableStatement stmt = con.prepareCall(sentenciaSQL)) {
+//                stmt.setString(1, especialidad);
+//                ResultSet rs = stmt.executeQuery();
+//                
+//                // ps uqe no hay
+//                if (!rs.next()) {
+//                    throw new PersistenciaException("No hay doctores disponibles para esta especialidad en este momento.");
+//                }
+//                
+//                doctorDisponible = new Doctor();
+//                doctorDisponible.setIdDoctor(rs.getInt("idDoctor"));
+//                doctorDisponible.setNombrePila(rs.getString("nombrePila"));
+//                doctorDisponible.setApellidoPaterno(rs.getString("apellidoPaterno"));
+//                doctorDisponible.setApellidoMaterno(rs.getString("apellidoMaterno"));
+//                doctorDisponible.setIdEspecialidad(rs.getInt("especialidad"));
+//                doctorDisponible.setCedulaProfesional(rs.getString("cedulaProfesional"));
+//                
+//                fecha = LocalDate.now();
+//                hora = LocalTime.of(rs.getInt("hora_disponible"), 0); 
+//            }
+//            
+//            // Cochinero para generar y registrar la cita de emergencia
+//            String folio = generarFolioUnico();
+//            
+//            try (CallableStatement stmt = con.prepareCall("INSERT INTO Citas (folioEmergencia, fecha, hora, motivo, idDoctor) VALUES (?, ?, ?, ?, ?)")) {
+//                stmt.setString(1, folio);
+//                stmt.setDate(2, Date.valueOf(fecha));
+//                stmt.setTime(3, Time.valueOf(hora));
+//                stmt.setString(4, "Emergencia: " + especialidad);
+//                stmt.setInt(5, doctorDisponible.getIdDoctor());
+//                
+//                stmt.executeUpdate();
+//            }
+//            
+//            return new Cita(folio, fecha, hora, "Emergencia:" + especialidad, null, doctorDisponible);
+//            
+//        } catch (SQLException ex) {
+//            logger.log(Level.SEVERE, "Hubo un error al registrar cita de emergencia", ex);
+//            throw new PersistenciaException("Hubo un error al registrar la cita de emergencia", ex);
+//        }
+//    }
     
     private String generarFolioUnico() {
         Random random = new Random();

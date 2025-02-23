@@ -38,7 +38,7 @@ public class PacienteBO {
             throw new NegocioException("Favor de ingresar el numero de telefono del paciente.");
         }
         
-        if (pacienteNuevo.getNumTelefono().matches("^\\d{10}$")) {
+        if (!pacienteNuevo.getNumTelefono().matches("^\\d{10}$")) {
             throw new NegocioException("Favor de ingresar el numero de telefono valido");
         }
 
@@ -50,7 +50,7 @@ public class PacienteBO {
             throw new NegocioException("Favor de agregar el correo del paciente.");
         }
         
-        if (!pacienteNuevo.getCorreoElectronico().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        if (!pacienteNuevo.getCorreoElectronico().contains("@")) {
             throw new NegocioException("Correo no valido.");
         }
 
@@ -104,7 +104,7 @@ public class PacienteBO {
             throw new NegocioException("El correo electrónico es obligatorio.");
         }
     
-        if (!pacienteActualizar.getCorreoElectronico().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
+        if (!pacienteActualizar.getCorreoElectronico().contains("@")) {
             throw new NegocioException("El formato del correo electrónico no es válido.");
         }
     
@@ -123,7 +123,7 @@ public class PacienteBO {
             Paciente paciente = convertidor.toEntity(pacienteActualizar);
     
         
-            Paciente pacienteActualizado = pacienteDAO.editarPaciente(paciente);
+            Paciente pacienteActualizado = pacienteDAO.actualizarPaciente(paciente);
             
             if (pacienteActualizado != null) {
                 return "Paciente actualizado";
@@ -137,12 +137,11 @@ public class PacienteBO {
     }
 
     public PacienteNuevoDTO consultarPacientePorCorreo(String correo) throws NegocioException {
-        Paciente paciente = null;
         try {
-            paciente = pacienteDAO.consultarPacientePorCorreo(correo);
+            Paciente  paciente = pacienteDAO.consultarPacientePorCorreo(correo);
             if(paciente != null) {
                 return new PacienteNuevoDTO(paciente.getIdPaciente(), paciente.getNombrePila(), paciente.getApellidoPaterno(), paciente.getApellidoMaterno(), 
-                        paciente.getNumTelefono(), paciente.getFechaNacimiento(), paciente.getCorreoElectronico(), paciente.getDireccion(), paciente.getUsuario());
+                        paciente.getCorreoElectronico(), paciente.getFechaNacimiento(), paciente.getNumTelefono(), paciente.getDireccion(), paciente.getUsuario());
             }
         } catch (PersistenciaException ex) {
             Logger.getLogger(PacienteBO.class.getName()).log(Level.SEVERE, null, ex);

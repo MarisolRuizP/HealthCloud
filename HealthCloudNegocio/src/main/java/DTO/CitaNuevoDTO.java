@@ -2,14 +2,16 @@ package DTO;
 
 import Entidades.Doctor;
 import Entidades.Paciente;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Date;
 
 public class CitaNuevoDTO {
 
     private String folioEmergencia;
-    private LocalDate fecha; // Manejar localDate para registrar fecha del sistema (agregar import)
-    private LocalTime hora;
+    private Date fecha; // Manejar localDate para registrar fecha del sistema (agregar import)
+    private Time hora;
     private String motivo;
     private Paciente paciente; // Agregar dependencias
     private Doctor doctor; // Agregar dependencias
@@ -19,7 +21,7 @@ public class CitaNuevoDTO {
     }
 
     // Constructor con todo
-    public CitaNuevoDTO(String folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Doctor doctor) {
+    public CitaNuevoDTO(String folioEmergencia, Date fecha, Time hora, String motivo, Paciente paciente, Doctor doctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
         this.hora = hora;
@@ -37,19 +39,19 @@ public class CitaNuevoDTO {
         this.folioEmergencia = folioEmergencia;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public LocalTime getHora() {
+    public Time getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(Time hora) {
         this.hora = hora;
     }
 

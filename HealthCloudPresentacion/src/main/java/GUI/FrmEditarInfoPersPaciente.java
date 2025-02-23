@@ -8,13 +8,18 @@ import BO.PacienteBO;
 import Conexion.ConexionBD;
 import Conexion.IConexionBD;
 import DTO.PacienteNuevoDTO;
+import DTO.UsuarioDTO;
+import Entidades.Direccion;
 import Entidades.Paciente;
+import Entidades.Usuario;
 import Exception.NegocioException;
 import Mapper.PacienteMapper;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -33,6 +38,8 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
         this.pacienteBO = new PacienteBO(conexion);
         this.identificador = identificador;
         initComponents();
+        setLocationRelativeTo(null);
+        llenarDatosPaciente(identificador);
     }
 
     /**
@@ -510,7 +517,7 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorial frmHistorial = new FrmHistorial();
+        FrmHistorial frmHistorial = new FrmHistorial(identificador);
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
@@ -535,81 +542,56 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
     private void BtnConfirmEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnConfirmEditMouseClicked
         try {
             PacienteNuevoDTO pacienteActual = pacienteBO.consultarPacientePorCorreo(identificador);
-            
-            System.out.println("ID del paciente actual: " + pacienteActual.getIdPaciente());
-            
-            PacienteNuevoDTO pacienteModificado = new PacienteNuevoDTO(pacienteActual.getIdPaciente(), pacienteActual.getNombrePila(), pacienteActual.getApellidoPaterno(), pacienteActual.getApellidoMaterno(), 
-                    pacienteActual.getNumTelefono(), pacienteActual.getFechaNacimiento(), pacienteActual.getCorreoElectronico(), pacienteActual.getDireccion(), pacienteActual.getUsuario());
-            
-            System.out.println("ID del paciente actual: " + pacienteActual.getIdPaciente());
+            PacienteNuevoDTO pacienteModificado = new PacienteNuevoDTO();
             // Obtener valores de la pantalla y comparar con los actuales
-            String nombre = TxtNombre.getText().trim();
-            if (!nombre.isEmpty() && !nombre.equals(pacienteActual.getNombrePila())) {
-                pacienteModificado.setNombrePila(nombre);
-            }
-            
-            String apellidoPaterno = TxtApellidoPat.getText().trim();
-            if (!apellidoPaterno.isEmpty() && !apellidoPaterno.equals(pacienteActual.getApellidoPaterno())) {
-                pacienteModificado.setApellidoPaterno(apellidoPaterno);
-            }
-            
-            String apellidoMaterno = TxtApellidoMat.getText().trim();
-            if (!apellidoMaterno.isEmpty() && !apellidoMaterno.equals(pacienteActual.getApellidoMaterno())) {
-                pacienteModificado.setApellidoMaterno(apellidoMaterno);
-            }
-            
-            String numTelefono = TxtTelefono.getText().trim();
-            if (!numTelefono.isEmpty() && !numTelefono.equals(pacienteActual.getNumTelefono())) {
-                pacienteModificado.setNumTelefono(numTelefono);
-            }
-            
-            String correo = TxtCorreo.getText().trim();
-            if (!correo.isEmpty() && !correo.equals(pacienteActual.getCorreoElectronico())) {
-                pacienteModificado.setCorreoElectronico(correo);
-            }
-            
+            pacienteModificado.setNombrePila(TxtNombre.getText().trim());
+            pacienteModificado.setApellidoPaterno(TxtApellidoPat.getText().trim());
+            pacienteModificado.setApellidoMaterno(TxtApellidoMat.getText().trim());
+            pacienteModificado.setNumTelefono(TxtTelefono.getText().trim());
+            pacienteModificado.setCorreoElectronico(TxtCorreo.getText().trim());
             String contra = TxtContrasenia.getText().trim();
-            if (!contra.isEmpty() && !contra.equals(pacienteActual.getUsuario().getContrasenia())) {
-                pacienteModificado.getUsuario().setContrasenia(contra);
+            Usuario usuarioAct = new Usuario();
+            usuarioAct.setIdentificador(pacienteModificado.getCorreoElectronico());
+            if (!contra.isEmpty() && !BCrypt.checkpw(contra, pacienteActual.getUsuario().getContrasenia())) {
+                String contraHashed = BCrypt.hashpw(contra, BCrypt.gensalt());
+                usuarioAct.setContrasenia(contraHashed);
+            } else {
+                usuarioAct.setContrasenia(pacienteActual.getUsuario().getContrasenia());
             }
-            
-            String calleYNum = TxtDireccionCalle.getText().trim();
-            if (!calleYNum.isEmpty() && !calleYNum.equals(pacienteActual.getDireccion().getCalleYNum())) {
-                pacienteModificado.getDireccion().setCalleYNum(calleYNum);
-            }
-            
-            String colonia = TxtDireccionColonia.getText().trim();
-            if (!colonia.isEmpty() && !colonia.equals(pacienteActual.getDireccion().getColonia())) {
-                pacienteModificado.getDireccion().setColonia(colonia);
-            }
-            
-            String municipio = TxtDireccionMun.getText().trim();
-            if (!municipio.isEmpty() && !municipio.equals(pacienteActual.getDireccion().getMunicipio())) {
-                pacienteModificado.getDireccion().setMunicipio(municipio);
-            }
-            
-            Date fechaNac = DtChNacimiento.getDate();
-            if (fechaNac != null) {
-                Date fechaNacimiento = fechaNac;
-                if (!fechaNacimiento.equals(pacienteActual.getFechaNacimiento())) {
-                    pacienteModificado.setFechaNacimiento(fechaNacimiento);
-                }
-            }
-            
-            if (pacienteActual.equals(pacienteModificado)) {
-                JOptionPane.showMessageDialog(this, "No hay cambios que actualizar.", "Aviso", JOptionPane.INFORMATION_MESSAGE);
-                return;
-            }
-            
+            usuarioAct.setTipoDeUsuario("Paciente");
+            pacienteModificado.setUsuario(usuarioAct);
+            Direccion direccionAct = new Direccion(TxtDireccionCalle.getText().trim(), TxtDireccionColonia.getText().trim(), TxtDireccionMun.getText().trim());
+            pacienteModificado.setDireccion(direccionAct);
+            pacienteModificado.setFechaNacimiento(DtChNacimiento.getDate());
+
             String mensaje = pacienteBO.actualizarPaciente(pacienteModificado);
             
             JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            FrmInfoPersPaciente frmInfoPac = new FrmInfoPersPaciente(identificador);
+            frmInfoPac.setVisible(true);
+            this.dispose();
         } catch (NegocioException ex) {
             Logger.getLogger(FrmEditarInfoPersPaciente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_BtnConfirmEditMouseClicked
 
+    private void llenarDatosPaciente(String identificador) {
+        try {
+            PacienteNuevoDTO paciente = pacienteBO.consultarPacientePorCorreo(identificador);
+            TxtNombre.setText(paciente.getNombrePila());
+            TxtApellidoPat.setText(paciente.getApellidoPaterno());
+            TxtApellidoMat.setText(paciente.getApellidoMaterno());
+            TxtDireccionCalle.setText(paciente.getDireccion().getCalleYNum());
+            TxtDireccionColonia.setText(paciente.getDireccion().getColonia());
+            TxtDireccionMun.setText(paciente.getDireccion().getMunicipio());
+            DtChNacimiento.setDate(paciente.getFechaNacimiento());
+            TxtTelefono.setText(paciente.getNumTelefono());
+            TxtCorreo.setText(paciente.getCorreoElectronico());
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmInfoPersPaciente.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     /**
      * @param args the command line arguments
      */

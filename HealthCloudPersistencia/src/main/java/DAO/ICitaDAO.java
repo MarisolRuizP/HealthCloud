@@ -13,9 +13,9 @@ import java.util.List;
  *
  * @author jrasc
  */
-public interface IAgendarCitaDAO {
+public interface ICitaDAO {
     
     public Cita agendarCita(Cita cita) throws PersistenciaException;
-    public List<Cita> historialCitas (Paciente paciente) throws PersistenciaException;
+    public List<Cita> obtenerHistorialCitas (int idPaciente) throws PersistenciaException;
         
 }

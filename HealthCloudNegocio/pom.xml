@@ -17,10 +17,9 @@
     <groupId>com.mycompany</groupId>
     <dependencies>
         <dependency>
-            <groupId>com.mycompany</groupId>
+            <groupId>${project.groupId}</groupId>
             <artifactId>HealthCloudPersistencia</artifactId>
-            <version>1.0.0</version> 
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
-    
 </project>

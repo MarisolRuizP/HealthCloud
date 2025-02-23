@@ -2,13 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Entidades;
+package DTO;
+
+import Entidades.Usuario;
 
 /**
  *
- * @author jrasc
+ * @author Maryr
  */
-public class Doctor extends Usuario {
+public class DoctorDTO {
 
     private int idDoctor;
     private String nombrePila;
@@ -19,10 +21,11 @@ public class Doctor extends Usuario {
     private String estado;
     private Usuario usuario;
 
-    public Doctor() {
+    public DoctorDTO() {
     }
 
-    public Doctor(String nombrePila, String apellidoPaterno, String apellidoMaterno, int idEspecialidad, String cedulaProfesional, String estado, Usuario usuario) {
+    public DoctorDTO(int idDoctor, String nombrePila, String apellidoPaterno, String apellidoMaterno, int idEspecialidad, String cedulaProfesional, String estado, Usuario usuario) {
+        this.idDoctor = idDoctor;
         this.nombrePila = nombrePila;
         this.apellidoPaterno = apellidoPaterno;
         this.apellidoMaterno = apellidoMaterno;
@@ -68,8 +71,8 @@ public class Doctor extends Usuario {
         return idEspecialidad;
     }
 
-    public void setIdEspecialidad(int especialidad) {
-        this.idEspecialidad = especialidad;
+    public void setIdEspecialidad(int idEspecialidad) {
+        this.idEspecialidad = idEspecialidad;
     }
 
     public String getCedulaProfesional() {
