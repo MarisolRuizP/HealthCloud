@@ -84,7 +84,8 @@ public class CitaDAO implements ICitaDAO {
         }
         return citas;
     }
-
+    
+    @Override
     public List<Cita> obtenerCitasDoctor(int idDoctor) throws PersistenciaException {
         String sentenciaSQLObtenerCitas = "CALL obtenerCitasDoctor(?)";
         List<Cita> citas = new ArrayList<>();
