@@ -14,8 +14,7 @@ import java.time.LocalTime;
  * @author jrasc
  */
 public class Cita {
-    
-    
+
     private int id;
     private String folioEmergencia;
     private Date fecha;
@@ -24,13 +23,24 @@ public class Cita {
     private String estadoCita;
     private Paciente paciente;
     private String nombreDoctor;
+    private String nombrePaciente;
+    private String apellidoPaciente;
     private Doctor doctor;
 
     public Cita() {
     }
 
-    //constructor para el historial de citas
+// Constructor que utiliza nombre y apellido del paciente
+    public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombrePaciente, String apellidoPaciente) {
+        this.folioEmergencia = folioEmergencia;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.motivo = motivo;
+        this.estadoCita = estadoCita;
+        this.nombrePaciente = nombrePaciente + " " + apellidoPaciente;
+    }
 
+// Constructor para historial de citas con el doctor
     public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombreDoctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
@@ -40,7 +50,6 @@ public class Cita {
         this.nombreDoctor = nombreDoctor;
     }
 
-    
     public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, Paciente paciente, Doctor doctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
@@ -120,6 +129,22 @@ public class Cita {
 
     public void setNombreDoctor(String nombreDoctor) {
         this.nombreDoctor = nombreDoctor;
-    }    
+    }
 
+    public String getNombrePaciente() {
+        return nombrePaciente;
+    }
+
+    public void setNombrePaciente(String nombrePaciente) {
+        this.nombrePaciente = nombrePaciente;
+    }
+
+    public String getApellidoPaciente() {
+        return apellidoPaciente;
+    }
+
+    public void setApellidoPaciente(String apellidoPaciente) {
+        this.apellidoPaciente = apellidoPaciente;
+    }
+    
 }

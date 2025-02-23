@@ -25,7 +25,24 @@ public class clasePrueba {
         IConexionBD conexion = new ConexionBD();
         PacienteDAO paciente = new PacienteDAO(conexion);
         CitaDAO citas = new CitaDAO(conexion);
-        //            // Crear y agregar doctores
+
+        try {
+            int idDoctor = 1;
+            List<Cita> listacitas = citas.obtenerCitasDoctor(idDoctor);
+            for (Cita cita : listacitas) {
+                System.out.println("Folio: " + cita.getFolioEmergencia());
+                System.out.println("Fecha: " + cita.getFecha());
+                System.out.println("Hora: " + cita.getHora());
+                System.out.println("Motivo: " + cita.getMotivo());
+                System.out.println("Estado: " + cita.getEstadoCita());
+                System.out.println("Paciente: " + cita.getNombrePaciente());
+            }
+        } catch (PersistenciaException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+//            // Crear y agregar doctores
 //            Usuario usuario1 = new Usuario();
 //            usuario1.setContrasenia("contraseniaEncriptada1"); // Asegúrate de encriptar la contraseña
 //            usuario1.setTipoDeUsuario("Medico");
@@ -96,7 +113,7 @@ public class clasePrueba {
 //        } catch (PersistenciaException e) {
 //            e.printStackTrace();
 //        }
-//// Probar consultar horario de atención
+    //// Probar consultar horario de atención
 //        try {
 //            List<horarioAtencion> horarios = doctorDAO.consultarHorarioAtencion(1);
 //            for (horarioAtencion horario : horarios) {
@@ -119,25 +136,28 @@ public class clasePrueba {
 //        } catch (PersistenciaException e) {
 //            e.printStackTrace();
 //        }
-        int idPaciente = 1;
+       /* int idPaciente = 1;
 
-        // Probar obtener historial de citas
+    // Probar obtener historial de citas
+    
         try {
             List<Cita> historialCitas = citas.obtenerHistorialCitas(idPaciente);
-            for (Cita cita : historialCitas) {
-                System.out.println("Folio Emergencia: " + (cita.getFolioEmergencia() != null ? cita.getFolioEmergencia() : "N/A"));
-                System.out.println("Fecha: " + cita.getFecha());
-                System.out.println("Hora: " + cita.getHora());
-                System.out.println("Motivo: " + cita.getMotivo());
-                System.out.println("Estado: " + cita.getEstadoCita());
-                System.out.println("Doctor: " + cita.getNombreDoctor());
-                System.out.println("-------------------------------");
-            }
-
-        } catch (PersistenciaException e) {
-            e.printStackTrace();
+        for (Cita cita : historialCitas) {
+            System.out.println("Folio Emergencia: " + (cita.getFolioEmergencia() != null ? cita.getFolioEmergencia() : "N/A"));
+            System.out.println("Fecha: " + cita.getFecha());
+            System.out.println("Hora: " + cita.getHora());
+            System.out.println("Motivo: " + cita.getMotivo());
+            System.out.println("Estado: " + cita.getEstadoCita());
+            System.out.println("Doctor: " + cita.getNombreDoctor());
+            System.out.println("-------------------------------");
         }
 
     }
+    catch (PersistenciaException e) {
+            e.printStackTrace();
+    } */
 
 }
+
+
+
