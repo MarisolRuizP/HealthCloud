@@ -15,8 +15,6 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -26,12 +24,12 @@ import java.util.logging.Logger;
  *
  * @author jrasc
  */
-public class AgendarCitaDAO implements IAgendarCitaDAO {
+public class CitaDAO implements ICitaDAO {
 
     private final IConexionBD conexion;
     private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
 
-    public AgendarCitaDAO(IConexionBD conexion) {
+    public CitaDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
 
@@ -46,8 +44,8 @@ public class AgendarCitaDAO implements IAgendarCitaDAO {
         try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLAgendarCita)){
             
             stm.setString(1, cita.getFolioEmergencia());
-            stm.setDate(2, Date.valueOf(cita.getFecha()));
-            stm.setTime(3, Time.valueOf(cita.getHora()));
+            stm.setDate(2, cita.getFecha());
+            stm.setTime(3, cita.getHora());
             stm.setString(4, cita.getMotivo());
             stm.setInt(5, paciente.getIdPaciente());
             stm.setInt(6, doctor.getIdDoctor());
@@ -62,27 +60,29 @@ public class AgendarCitaDAO implements IAgendarCitaDAO {
         return cita;
     }
     
-    public List<Cita> historialCitas (Paciente paciente) throws PersistenciaException{
-        
-        List<Cita> historialCita = new ArrayList<>();
-        
-        String sentenciaSQLHistorial = "CALL obtenerHistorialCitas(?)";
-        
-        try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLHistorial)){
-        
-            stm.setInt(1, paciente.getIdPaciente());
-            
-            ResultSet rs = stm.executeQuery();
-            
-            while(rs.next()){
-                Cita cita = new Cita(rs.getString("folioEmergencia"), rs.getDate("fecha").toLocalDate(),  rs.getTime("hora").toLocalTime(), rs.getString("motivo"), rs.getString("estadoCita"));
-                historialCita.add(cita);
+    @Override
+    public List<Cita> obtenerHistorialCitas(int idPaciente) throws PersistenciaException {
+        String sql = "{CALL obtenerHistorialCitas(?)}";
+        List<Cita> citas = new ArrayList<>();
+
+        try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
+            stmt.setInt(1, idPaciente);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Cita cita = new Cita(
+                            rs.getString("folioEmergencia"),
+                            rs.getDate("fecha"),
+                            rs.getTime("hora"),
+                            rs.getString("motivo"),
+                            rs.getString("estadoCita"),
+                            rs.getString("nombreDoctor") + " " + rs.getString("apellidoDoctor")
+                    );
+                    citas.add(cita);
+                }
             }
-            
-            
         } catch (SQLException ex) {
-            Logger.getLogger(AgendarCitaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            throw new PersistenciaException("Error al obtener el historial de citas del paciente", ex);
         }
-        return historialCita;
+        return citas;
     }
 }

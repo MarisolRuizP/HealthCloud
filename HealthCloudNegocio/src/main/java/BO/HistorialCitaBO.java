@@ -5,7 +5,8 @@
 package BO;
 
 import Conexion.IConexionBD;
-import DAO.AgendarCitaDAO;
+import DAO.CitaDAO;
+import DTO.PacienteNuevoDTO;
 import Entidades.Cita;
 import Entidades.Paciente;
 import Exception.NegocioException;
@@ -18,19 +19,22 @@ import java.util.List;
  */
 public class HistorialCitaBO {
 
-    private final AgendarCitaDAO historialCita;
+    private final CitaDAO historialCita;
+    private PacienteBO pacienteBO;
 
     public HistorialCitaBO(IConexionBD conexion) {
-        this.historialCita = new AgendarCitaDAO(conexion); // Se inicializa correctamente
+        this.historialCita = new CitaDAO(conexion); 
+        pacienteBO = new PacienteBO(conexion);
     }
 
-    public List<Cita> obtenerHistorialCitas(Paciente paciente) throws NegocioException {
+    public List<Cita> obtenerHistorialCitas(String identificador) throws NegocioException {
         try {
-            if (paciente.getIdPaciente() <= 0) {
-                throw new NegocioException("El paciente no existe");
+            PacienteNuevoDTO paciente = pacienteBO.consultarPacientePorCorreo(identificador);
+            if(paciente != null) {
+            return historialCita.obtenerHistorialCitas(paciente.getIdPaciente());
+            } else {
+                throw new NegocioException("No se encontró el paciente");
             }
-            return historialCita.historialCitas(paciente);
-
         } catch (PersistenciaException e) {
             throw new NegocioException("Error al ver las citas", e);
         }

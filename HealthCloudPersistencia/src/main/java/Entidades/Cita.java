@@ -4,6 +4,8 @@
  */
 package Entidades;
 
+import java.sql.Date;
+import java.sql.Time;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -16,11 +18,12 @@ public class Cita {
     
     private int id;
     private String folioEmergencia;
-    private LocalDate fecha;
-    private LocalTime hora;
+    private Date fecha;
+    private Time hora;
     private String motivo;
     private String estadoCita;
     private Paciente paciente;
+    private String nombreDoctor;
     private Doctor doctor;
 
     public Cita() {
@@ -28,16 +31,17 @@ public class Cita {
 
     //constructor para el historial de citas
 
-    public Cita(String folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, String estadoCita) {
+    public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombreDoctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
         this.hora = hora;
         this.motivo = motivo;
         this.estadoCita = estadoCita;
+        this.nombreDoctor = nombreDoctor;
     }
 
     
-    public Cita(String folioEmergencia, LocalDate fecha, LocalTime hora, String motivo, Paciente paciente, Doctor doctor) {
+    public Cita(String folioEmergencia, Date fecha, Time hora, String motivo, Paciente paciente, Doctor doctor) {
         this.folioEmergencia = folioEmergencia;
         this.fecha = fecha;
         this.hora = hora;
@@ -62,19 +66,19 @@ public class Cita {
         this.folioEmergencia = folioEmergencia;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
-    public LocalTime getHora() {
+    public Time getHora() {
         return hora;
     }
 
-    public void setHora(LocalTime hora) {
+    public void setHora(Time hora) {
         this.hora = hora;
     }
 
@@ -109,7 +113,13 @@ public class Cita {
     public void setEstadoCita(String estadoCita) {
         this.estadoCita = estadoCita;
     }
-    
-    
+
+    public String getNombreDoctor() {
+        return nombreDoctor;
+    }
+
+    public void setNombreDoctor(String nombreDoctor) {
+        this.nombreDoctor = nombreDoctor;
+    }    
 
 }

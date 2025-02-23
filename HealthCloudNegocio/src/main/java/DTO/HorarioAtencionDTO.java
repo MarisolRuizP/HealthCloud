@@ -2,28 +2,25 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Entidades;
+package DTO;
 
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  *
- * @author jrasc
+ * @author Maryr
  */
-public class horarioAtencion {
-
+public class HorarioAtencionDTO {
     private int id;
     private String dia;
     private Time horaEntrada;
     private Time horaSalida;
     private int idDoctor;
 
-    public horarioAtencion() {
+    public HorarioAtencionDTO() {
     }
 
-    public horarioAtencion(String dia, Time horaEntrada, Time horaSalida, int idDoctor) {
+    public HorarioAtencionDTO(String dia, Time horaEntrada, Time horaSalida, int idDoctor) {
         this.dia = dia;
         this.horaEntrada = horaEntrada;
         this.horaSalida = horaSalida;
@@ -62,12 +59,12 @@ public class horarioAtencion {
         this.horaSalida = horaSalida;
     }
 
-    public int getDoctor() {
+    public int getIdDoctor() {
         return idDoctor;
     }
 
-    public void setDoctor(int idDoctor) {
+    public void setIdDoctor(int idDoctor) {
         this.idDoctor = idDoctor;
     }
-
+    
 }

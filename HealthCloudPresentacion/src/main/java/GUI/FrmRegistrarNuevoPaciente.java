@@ -328,7 +328,7 @@ public class FrmRegistrarNuevoPaciente extends javax.swing.JFrame {
             String contrasenia = TxtContraReg.getText().trim();
             Usuario usuario = new Usuario(correo, contrasenia, "Paciente");
             
-            PacienteNuevoDTO pacienteNuevo = new PacienteNuevoDTO(nombre, apellidoPaterno, apellidoMaterno, telefono, correo, fechaNacimiento, direccion, usuario);
+            PacienteNuevoDTO pacienteNuevo = new PacienteNuevoDTO(nombre, apellidoPaterno, apellidoMaterno, correo, telefono, fechaNacimiento, direccion, usuario);
             String registrado = pacienteBO.registrarPaciente(pacienteNuevo);
             if(registrado.equals("Paciente registrado")) {
                 DlgResgistroExitoso dlgRegEx = new DlgResgistroExitoso(this, rootPaneCheckingEnabled);

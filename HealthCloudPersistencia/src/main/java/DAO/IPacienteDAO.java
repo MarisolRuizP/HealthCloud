@@ -14,6 +14,6 @@ import Exception.PersistenciaException;
 public interface IPacienteDAO {
     
     public Paciente registrarPaciente(Paciente paciente) throws PersistenciaException;
-    public Paciente editarPaciente(Paciente paciente) throws PersistenciaException;
+    public Paciente actualizarPaciente(Paciente paciente) throws PersistenciaException;
     public Paciente consultarPacientePorCorreo(String correo) throws PersistenciaException;
  }

@@ -2,6 +2,7 @@ package Mapper;
 
 import DTO.CitaNuevoDTO;
 import Entidades.Cita;
+import java.sql.Date;
 
 public class CitaMapper {
 
@@ -12,7 +13,7 @@ public class CitaMapper {
      */
 
     public Cita toEntity (CitaNuevoDTO citaNuevo) {
-        Cita cita = new Cita(citaNuevo.getFolioEmergencia(), citaNuevo.getFecha(), citaNuevo.getHora(), citaNuevo.getMotivo(),
+        Cita cita = new Cita(citaNuevo.getFolioEmergencia(), (Date) citaNuevo.getFecha(), citaNuevo.getHora(), citaNuevo.getMotivo(),
         citaNuevo.getPaciente(), citaNuevo.getDoctor());
         return cita;
     }

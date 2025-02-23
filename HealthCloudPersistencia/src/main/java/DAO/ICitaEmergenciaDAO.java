@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ICitaEmergenciaDAO {
 
-    Cita registrarCitaEmergencia(String especialidad) throws PersistenciaException;
+//    Cita registrarCitaEmergencia(String especialidad) throws PersistenciaException;
     List<String> obtenerEspecialidades() throws PersistenciaException;
 
 }

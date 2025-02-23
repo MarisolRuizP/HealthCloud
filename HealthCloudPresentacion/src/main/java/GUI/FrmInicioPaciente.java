@@ -21,8 +21,8 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
      * Creates new form FrmInicioPaciente
      */
     public FrmInicioPaciente(String identificador) {
-        this.identificador = identificador;
         initComponents();
+        this.identificador = identificador;
         setLocationRelativeTo(null);
     }
 
@@ -239,7 +239,7 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorial frmHistorial = new FrmHistorial();
+        FrmHistorial frmHistorial = new FrmHistorial(identificador);
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
@@ -248,9 +248,9 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnInfoSideActionPerformed
 
     private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
-        setVisible(false);
         FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente(identificador);
         frmInfoPerPac.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnInfoSideMouseClicked
 
     private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed

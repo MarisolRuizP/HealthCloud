@@ -127,41 +127,54 @@ public class PacienteDAO implements IPacienteDAO {
     }
 
     @Override
-    public Paciente editarPaciente(Paciente paciente) throws PersistenciaException {
+    public Paciente actualizarPaciente(Paciente paciente) throws PersistenciaException {
+        String sentenciaSQLActualizarUsuario = "UPDATE Usuarios SET identificador = ?, contrasenia = ?, tipoDeUsuario = ? WHERE idUsuario = ?";
+        String sentenciaSQLActualizarDireccion = "UPDATE DireccionPacientes SET calleYNumCasa = ?, colonia = ?, municipio = ? WHERE idDireccion = ?";
+        String sentenciaSQLActualizarPaciente = "UPDATE Pacientes SET nombrePila = ?, apellidoPaterno = ?, apellidoMaterno = ?, numTelefono = ?, fechaNacimiento = ?, correoElectronico = ? WHERE idPaciente = ?";
 
-        Usuario usuario = paciente.getUsuario();
-        Direccion direccion = paciente.getDireccion();
+        try (Connection con = conexion.crearConexion()) {
+            con.setAutoCommit(false);  // Iniciar la transacción
 
-        System.out.println("pacienet id: " + paciente.getIdPaciente());
-        String sentenciaSQLActualizar = "CALL actualizarUnPaciente(?,?,?,?,?,?,?,?,?,?)";
-
-        try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLActualizar)) {
-
-            con.setAutoCommit(false);
-            stm.setInt(1, paciente.getIdPaciente());
-            stm.setString(2, usuario.getContrasenia());
-            stm.setString(3, paciente.getNombrePila());
-            stm.setString(4, paciente.getApellidoPaterno());
-            stm.setString(5, paciente.getApellidoMaterno());
-            stm.setString(6, paciente.getCorreoElectronico());
-            stm.setString(7, paciente.getNumTelefono());
-            stm.setString(8, direccion.getCalleYNum());
-            stm.setString(9, direccion.getColonia());
-            stm.setString(10, direccion.getMunicipio());
-
-            int filasAfectas = stm.executeUpdate();
-            System.out.println("Filas actualizadas: " + filasAfectas);
-
-            if (filasAfectas == 0) {
-                throw new PersistenciaException("No se encontro el paciente con ID: " + paciente.getIdPaciente());
+            Paciente pacAux = consultarPacientePorCorreo(paciente.getCorreoElectronico());
+            // Actualizar el Usuario
+            Usuario usuario = paciente.getUsuario();
+            String hashedPswd = BCrypt.hashpw(usuario.getContrasenia(), BCrypt.gensalt());
+            try (PreparedStatement psUsuario = con.prepareStatement(sentenciaSQLActualizarUsuario)) {
+                psUsuario.setString(1, usuario.getIdentificador());
+                psUsuario.setString(2, hashedPswd);
+                psUsuario.setString(3, usuario.getTipoDeUsuario());
+                psUsuario.setInt(4, pacAux.getUsuario().getId());
+                psUsuario.executeUpdate();
             }
 
-            con.commit();
-            return paciente;
+            // Actualizar la Dirección
+            Direccion direccion = paciente.getDireccion();
+            try (PreparedStatement psDireccion = con.prepareStatement(sentenciaSQLActualizarDireccion)) {
+                psDireccion.setString(1, direccion.getCalleYNum());
+                psDireccion.setString(2, direccion.getColonia());
+                psDireccion.setString(3, direccion.getMunicipio());
+                psDireccion.setInt(4, pacAux.getDireccion().getId());
+                psDireccion.executeUpdate();
+            }
 
+            // Actualizar el Paciente
+            try (PreparedStatement psPaciente = con.prepareStatement(sentenciaSQLActualizarPaciente)) {
+                psPaciente.setString(1, paciente.getNombrePila());
+                psPaciente.setString(2, paciente.getApellidoPaterno());
+                psPaciente.setString(3, paciente.getApellidoMaterno());
+                psPaciente.setString(4, paciente.getNumTelefono());
+                psPaciente.setDate(5, paciente.getFechaNacimiento());
+                psPaciente.setString(6, paciente.getCorreoElectronico());
+                psPaciente.setInt(7, pacAux.getIdPaciente());
+                psPaciente.executeUpdate();
+            }
+
+            con.commit();  // Confirmar la transacción
+
+           return paciente;
         } catch (SQLException ex) {
-            Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new PersistenciaException("Error al actualizar al paciente", ex);
+            logger.log(Level.SEVERE, "Error al actualizar el paciente", ex);
+            throw new PersistenciaException("Error al actualizar el paciente", ex);
         }
     }
 
@@ -194,6 +207,7 @@ public class PacienteDAO implements IPacienteDAO {
                     );
                     paciente.setDireccion(direccion);
 
+                    
                     Usuario usuario = new Usuario(
                             rs.getString("correoElectronico"),
                             rs.getString("contrasenia"),
@@ -211,5 +225,5 @@ public class PacienteDAO implements IPacienteDAO {
 
         return paciente;
     }
-    
+
 }

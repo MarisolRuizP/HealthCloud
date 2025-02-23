@@ -183,20 +183,22 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
 
     private void BtnIngresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnIngresarMouseClicked
         try {
-            String identificador = TxtIdInput.getText();
+            String identificador = TxtIdInput.getText().trim();
             char[] pswArray = jPasswordField1.getPassword();
             String contrasenia = new String(pswArray);
             String validacion = usuarioBO.iniciarSesion(identificador, contrasenia);
-            if (validacion.equals("Paciente")) {
-                this.dispose();
-                FrmInicioPaciente frmInicioPaciente = new FrmInicioPaciente(identificador);
-                frmInicioPaciente.setVisible(true);
-            } else if (validacion.equals("Doctor")) {
-                this.dispose();
-                FrmInicioDoctor frmInicioDoctor = new FrmInicioDoctor(identificador);
-                frmInicioDoctor.setVisible(true);
-            } else {
-                throw new PersistenciaException("Nuh huh");
+            switch (validacion) {
+                case "Paciente" -> {
+                    this.dispose();
+                    FrmInicioPaciente frmInicioPaciente = new FrmInicioPaciente(identificador);
+                    frmInicioPaciente.setVisible(true);
+                }
+                case "Medico" -> {
+                    this.dispose();
+                    FrmInicioDoctor frmInicioDoctor = new FrmInicioDoctor(identificador);
+                    frmInicioDoctor.setVisible(true);
+                }
+                default -> throw new PersistenciaException("Usuario no encontrado o algo");
             }
         } catch (PersistenciaException | NegocioException ex) {
             DlgErrorDatos dlgResgistroError = new DlgErrorDatos(this, rootPaneCheckingEnabled);

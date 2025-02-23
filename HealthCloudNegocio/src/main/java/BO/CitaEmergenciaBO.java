@@ -24,18 +24,18 @@ public class CitaEmergenciaBO {
         this.citaEmergenciaDAO = new CitaEmergenciaDAO(conexion);
     }
     
-    public Cita registrarCitaEmergencia(String especialidad) throws NegocioException {
-        try {
-
-            validarEspecialidad(especialidad);
-            
-            return citaEmergenciaDAO.registrarCitaEmergencia(especialidad);
-            
-        } catch (PersistenciaException ex) {
-            logger.log(Level.SEVERE, "Hubo un error al registrar cita de emergencia.", ex);
-            throw new NegocioException("No se pudo registrar la cita de emergencia,", ex);
-        }
-    }
+//    public Cita registrarCitaEmergencia(String especialidad) throws NegocioException {
+//        try {
+//
+//            validarEspecialidad(especialidad);
+//            
+//            return citaEmergenciaDAO.registrarCitaEmergencia(especialidad);
+//            
+//        } catch (PersistenciaException ex) {
+//            logger.log(Level.SEVERE, "Hubo un error al registrar cita de emergencia.", ex);
+//            throw new NegocioException("No se pudo registrar la cita de emergencia,", ex);
+//        }
+//    }
     
     public void validarEspecialidad(String especialidad) throws NegocioException, PersistenciaException {
 

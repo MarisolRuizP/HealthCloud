@@ -4,6 +4,16 @@
  */
 package GUI;
 
+import BO.DoctorBO;
+import Conexion.ConexionBD;
+import Conexion.IConexionBD;
+import DTO.DoctorDTO;
+import Entidades.horarioAtencion;
+import Exception.NegocioException;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author Maryr
@@ -11,11 +21,17 @@ package GUI;
 public class FrmInicioDoctor extends javax.swing.JFrame {
 
     private String identificador;
+    DoctorBO doctorBO;
+
     /**
      * Creates new form FrmInicioPaciente
      */
     public FrmInicioDoctor(String identificador) {
+        IConexionBD conexion = new ConexionBD();
+        this.doctorBO = new DoctorBO(conexion);
+        this.identificador = identificador;
         initComponents();
+        llenarDatos(identificador);
     }
 
     /**
@@ -38,15 +54,13 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
         TxtNomIP = new javax.swing.JTextField();
         LblApellidos = new javax.swing.JLabel();
         TxtApellidos = new javax.swing.JTextField();
-        LblDireccion = new javax.swing.JLabel();
-        TxtDireccion = new javax.swing.JTextField();
+        LblCedula = new javax.swing.JLabel();
+        TxtCedula = new javax.swing.JTextField();
         LblFechaNac = new javax.swing.JLabel();
-        TxtFechaNac = new javax.swing.JTextField();
-        LblTelefono = new javax.swing.JLabel();
-        TxtTelefono = new javax.swing.JTextField();
-        LblCorreo = new javax.swing.JLabel();
-        TxtCorreo = new javax.swing.JTextField();
-        BtnEditInfo = new javax.swing.JButton();
+        TxtEspec = new javax.swing.JTextField();
+        LblHorarios = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtHorarios = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -138,7 +152,7 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(139, Short.MAX_VALUE)
                 .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(31, 31, 31)
                 .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -155,52 +169,49 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
         LblNombre.setForeground(new java.awt.Color(0, 0, 0));
         LblNombre.setText("Nombre");
 
+        TxtNomIP.setEditable(false);
         TxtNomIP.setBackground(new java.awt.Color(255, 255, 255));
+        TxtNomIP.setForeground(new java.awt.Color(0, 0, 0));
         TxtNomIP.setEnabled(false);
 
         LblApellidos.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         LblApellidos.setForeground(new java.awt.Color(0, 0, 0));
         LblApellidos.setText("Apellidos");
 
+        TxtApellidos.setEditable(false);
         TxtApellidos.setBackground(new java.awt.Color(255, 255, 255));
+        TxtApellidos.setForeground(new java.awt.Color(0, 0, 0));
         TxtApellidos.setEnabled(false);
 
-        LblDireccion.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblDireccion.setForeground(new java.awt.Color(0, 0, 0));
-        LblDireccion.setText("Dirección");
+        LblCedula.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblCedula.setForeground(new java.awt.Color(0, 0, 0));
+        LblCedula.setText("Cedula profesional");
 
-        TxtDireccion.setBackground(new java.awt.Color(255, 255, 255));
-        TxtDireccion.setEnabled(false);
+        TxtCedula.setEditable(false);
+        TxtCedula.setBackground(new java.awt.Color(255, 255, 255));
+        TxtCedula.setForeground(new java.awt.Color(0, 0, 0));
+        TxtCedula.setEnabled(false);
 
         LblFechaNac.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         LblFechaNac.setForeground(new java.awt.Color(0, 0, 0));
-        LblFechaNac.setText("Fecha de nacimiento");
+        LblFechaNac.setText("Especialidad");
 
-        TxtFechaNac.setBackground(new java.awt.Color(255, 255, 255));
-        TxtFechaNac.setEnabled(false);
+        TxtEspec.setEditable(false);
+        TxtEspec.setBackground(new java.awt.Color(255, 255, 255));
+        TxtEspec.setForeground(new java.awt.Color(0, 0, 0));
+        TxtEspec.setEnabled(false);
 
-        LblTelefono.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblTelefono.setForeground(new java.awt.Color(0, 0, 0));
-        LblTelefono.setText("Número celular");
+        LblHorarios.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblHorarios.setForeground(new java.awt.Color(0, 0, 0));
+        LblHorarios.setText("Horarios de atención");
 
-        TxtTelefono.setBackground(new java.awt.Color(255, 255, 255));
-        TxtTelefono.setEnabled(false);
-
-        LblCorreo.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        LblCorreo.setForeground(new java.awt.Color(0, 0, 0));
-        LblCorreo.setText("Correo electronico");
-
-        TxtCorreo.setBackground(new java.awt.Color(255, 255, 255));
-        TxtCorreo.setEnabled(false);
-
-        BtnEditInfo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/edit_icon_128873.png"))); // NOI18N
-        BtnEditInfo.setBorder(null);
-        BtnEditInfo.setContentAreaFilled(false);
-        BtnEditInfo.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnEditInfoMouseClicked(evt);
-            }
-        });
+        txtHorarios.setEditable(false);
+        txtHorarios.setBackground(new java.awt.Color(255, 255, 255));
+        txtHorarios.setColumns(20);
+        txtHorarios.setForeground(new java.awt.Color(0, 0, 0));
+        txtHorarios.setRows(5);
+        txtHorarios.setEnabled(false);
+        jScrollPane1.setViewportView(txtHorarios);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -208,50 +219,36 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(LblNombre)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(BtnEditInfo))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(25, 25, 25)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtNomIP, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(40, 40, 40)
-                                .addComponent(LblFechaNac))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(LblCorreo))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(41, 41, 41)
-                                .addComponent(LblApellidos))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(42, 42, 42)
-                                .addComponent(LblDireccion)))
-                        .addGap(0, 23, Short.MAX_VALUE)))
-                .addContainerGap())
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(42, 42, 42)
-                .addComponent(LblTelefono)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(40, 40, 40)
+                        .addComponent(LblNombre))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(TxtApellidos, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                            .addComponent(TxtNomIP, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                            .addComponent(TxtCedula, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                            .addComponent(TxtEspec, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1)))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(LblFechaNac))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(LblApellidos))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(LblCedula))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(LblHorarios)))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(LblNombre, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(BtnEditInfo)
-                        .addGap(4, 4, 4)))
+                .addGap(23, 23, 23)
+                .addComponent(LblNombre)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxtNomIP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -259,22 +256,18 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxtApellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblDireccion)
+                .addComponent(LblCedula)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LblFechaNac)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtFechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TxtEspec, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblTelefono)
+                .addComponent(LblHorarios)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(LblCorreo)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -283,17 +276,17 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(73, 73, 73))
+                .addGap(74, 74, 74))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(53, 53, 53)
+                .addGap(29, 29, 29)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(90, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -317,29 +310,45 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnCerrarSesionActionPerformed
 
-    private void BtnEditInfoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnEditInfoMouseClicked
-        setVisible(false);
-        FrmEditarInfoPersPaciente frmEditInfoPers = new FrmEditarInfoPersPaciente(identificador);
-        frmEditInfoPers.setVisible(true);
-    }//GEN-LAST:event_BtnEditInfoMouseClicked
-
     private void BtnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarSesionMouseClicked
         setVisible(false);
-        FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
-        frmCitaEm.setVisible(true);
+        FrmIniciarSesion frmInicio = new FrmIniciarSesion();
+        frmInicio.setVisible(true);
     }//GEN-LAST:event_BtnCerrarSesionMouseClicked
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
         setVisible(false);
-        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
-        frmCitas.setVisible(true);
+
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorial frmHistorial = new FrmHistorial();
+        FrmHistorial frmHistorial = new FrmHistorial(identificador);
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
+
+    public void llenarDatos(String identificador) {
+        try {
+            DoctorDTO doctor = doctorBO.obtenerDoctorPorCedula(identificador);
+            TxtNomIP.setText(doctor.getNombrePila());
+            TxtApellidos.setText(doctor.getApellidoPaterno() + " " + doctor.getApellidoMaterno());
+            TxtCedula.setText(doctor.getCedulaProfesional());
+
+            // Consultar especialidad
+            String especialidad = doctorBO.consultarEspecialidad(doctor.getIdDoctor());
+            TxtEspec.setText(especialidad);
+
+            // Consultar horario de atención
+            List<horarioAtencion> horarios = doctorBO.consultarHorarioAtencion(doctor.getIdDoctor());
+            txtHorarios.setText(""); // Limpiar el JTextArea antes de añadir nuevo texto
+            for (horarioAtencion horario : horarios) {
+                txtHorarios.append(horario.getDia() + ": " + horario.getHoraEntrada() + " - " + horario.getHoraSalida() + "\n");
+            }
+
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmInicioDoctor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -374,7 +383,7 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }
@@ -383,22 +392,20 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
     private javax.swing.JButton BtnBajaTemporal;
     private javax.swing.JButton BtnCerrarSesion;
     private javax.swing.JButton BtnCitasSide;
-    private javax.swing.JButton BtnEditInfo;
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JLabel LblApellidos;
-    private javax.swing.JLabel LblCorreo;
-    private javax.swing.JLabel LblDireccion;
+    private javax.swing.JLabel LblCedula;
     private javax.swing.JLabel LblFechaNac;
+    private javax.swing.JLabel LblHorarios;
     private javax.swing.JLabel LblNombre;
-    private javax.swing.JLabel LblTelefono;
     private javax.swing.JTextField TxtApellidos;
-    private javax.swing.JTextField TxtCorreo;
-    private javax.swing.JTextField TxtDireccion;
-    private javax.swing.JTextField TxtFechaNac;
+    private javax.swing.JTextField TxtCedula;
+    private javax.swing.JTextField TxtEspec;
     private javax.swing.JTextField TxtNomIP;
-    private javax.swing.JTextField TxtTelefono;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea txtHorarios;
     // End of variables declaration//GEN-END:variables
 }

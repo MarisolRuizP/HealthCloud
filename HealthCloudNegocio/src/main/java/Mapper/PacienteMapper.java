@@ -1,3 +1,4 @@
+
 package Mapper;
 
 import DTO.PacienteNuevoDTO;
@@ -12,7 +13,6 @@ public class PacienteMapper {
                 pacienteNuevo.getApellidoMaterno(), pacienteNuevo.getNumTelefono(), new java.sql.Date(pacienteNuevo.getFechaNacimiento().getTime()), pacienteNuevo.getCorreoElectronico(),
                 pacienteNuevo.getDireccion(), pacienteNuevo.getUsuario());
         
-        System.out.println("Id del paciente: " + paciente.getIdPaciente());
         return paciente; 
     }
 

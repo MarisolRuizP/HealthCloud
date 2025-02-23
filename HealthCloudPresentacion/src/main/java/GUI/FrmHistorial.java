@@ -6,13 +6,12 @@ package GUI;
 
 import BO.HistorialCitaBO;
 import Conexion.ConexionBD;
-import Conexion.IConexionBD;
 import Entidades.Cita;
-import Entidades.Paciente;
 import Exception.NegocioException;
-import java.awt.List;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 
 /**
  *
@@ -20,43 +19,19 @@ import javax.swing.table.DefaultTableModel;
  */
 public class FrmHistorial extends javax.swing.JFrame {
 
+    String identificador;
+    HistorialCitaBO historialCitaBO;
+
     /**
      * Creates new form FrmHistorialPaciente
      */
-    public FrmHistorial() {
+    public FrmHistorial(String identificador) {
+        ConexionBD conexion = new ConexionBD();
+        this.identificador = identificador;
+        this.historialCitaBO = new HistorialCitaBO(conexion);
         initComponents();
-
-        HistorialCitaBO historialCitaBO;
-
-        IConexionBD conexion = new ConexionBD(); // Conexión a la BD
-        historialCitaBO = new HistorialCitaBO(conexion);
-
-        cargarHistorialCitas();
-    }
-
-    private void cargarHistorialCitas() {
-        DefaultTableModel modeloTabla = (DefaultTableModel) jTable1.getModel();
-
-        modeloTabla.setRowCount(0);
-
-        try {
-            
-            List<Cita> historial = historialCitaBO.obtenerHistorialCitas(paciente);
-
-            for (Cita cita : historial) {
-                modeloTabla.addRow(new Object[]{
-                    cita.getFolioEmergencia(),
-                    cita.getFecha(),
-                    cita.getHora(),
-                    cita.getMotivo(),
-                    cita.getEstadoCita()
-                });
-            }
-
-        } catch (NegocioException e) {
-            JOptionPane.showMessageDialog(this, "Error al cargar las citas, " + e.getMessage(),
-                    "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        setLocationRelativeTo(null);
+        llenarHistorialCitas(identificador);
     }
 
     /**
@@ -68,19 +43,19 @@ public class FrmHistorial extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelCitas = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         BtnCitasSide = new javax.swing.JButton();
         BtnInfoSide = new javax.swing.JButton();
         BtnHistorialSide = new javax.swing.JButton();
         BtnCitaEmSide = new javax.swing.JButton();
         BtnInicio = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        scrollPaneHistorialCitas = new javax.swing.JScrollPane();
+        listaHistorialCitas = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(106, 154, 176));
+        jPanelCitas.setBackground(new java.awt.Color(106, 154, 176));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -194,7 +169,7 @@ public class FrmHistorial extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(120, Short.MAX_VALUE)
                 .addComponent(BtnInfoSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -206,46 +181,53 @@ public class FrmHistorial extends javax.swing.JFrame {
                 .addComponent(BtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {
-                "Folio", "Fecha", "Hora", "Motivo", "Estado"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        listaHistorialCitas.setBackground(new java.awt.Color(255, 255, 255));
+        listaHistorialCitas.setForeground(new java.awt.Color(0, 0, 0));
+        listaHistorialCitas.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        scrollPaneHistorialCitas.setViewportView(listaHistorialCitas);
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelCitasLayout = new javax.swing.GroupLayout(jPanelCitas);
+        jPanelCitas.setLayout(jPanelCitasLayout);
+        jPanelCitasLayout.setHorizontalGroup(
+            jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelCitasLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
+                .addComponent(scrollPaneHistorialCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(72, 72, 72))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelCitasLayout.setVerticalGroup(
+            jPanelCitasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelCitasLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(scrollPaneHistorialCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(104, 104, 104))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanelCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(423, Short.MAX_VALUE))
+            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanelCitas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         pack();
@@ -273,7 +255,7 @@ public class FrmHistorial extends javax.swing.JFrame {
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorial frmHistorial = new FrmHistorial();
+        FrmHistorial frmHistorial = new FrmHistorial(identificador);
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
@@ -300,6 +282,29 @@ public class FrmHistorial extends javax.swing.JFrame {
     private void BtnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BtnInicioActionPerformed
+
+    public void llenarHistorialCitas(String identificador) {
+        try {
+            List<Cita> historialCitas = historialCitaBO.obtenerHistorialCitas(identificador);
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            if (historialCitas.isEmpty()) {
+                listModel.addElement("No se encontraron citas para el paciente con identificador: " + identificador);
+            } else {
+                for (Cita cita : historialCitas) {
+                    listModel.addElement("Folio Emergencia: " + (cita.getFolioEmergencia() != null ? cita.getFolioEmergencia() : "N/A"));
+                    listModel.addElement("Fecha: " + cita.getFecha());
+                    listModel.addElement("Hora: " + cita.getHora());
+                    listModel.addElement("Motivo: " + cita.getMotivo());
+                    listModel.addElement("Estado: " + cita.getEstadoCita());
+                    listModel.addElement("Doctor: " + cita.getNombreDoctor());
+                    listModel.addElement("-------------------------------");
+                }
+            }
+            listaHistorialCitas.setModel(listModel);
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmInicioDoctor.class.getName()).log(Level.SEVERE, "Error al obtener el historial de citas.", ex);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -332,7 +337,7 @@ public class FrmHistorial extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmHistorial().setVisible(true);
+
             }
         });
     }
@@ -343,9 +348,9 @@ public class FrmHistorial extends javax.swing.JFrame {
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JButton BtnInfoSide;
     private javax.swing.JButton BtnInicio;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JPanel jPanelCitas;
+    private javax.swing.JList<String> listaHistorialCitas;
+    private javax.swing.JScrollPane scrollPaneHistorialCitas;
     // End of variables declaration//GEN-END:variables
 }

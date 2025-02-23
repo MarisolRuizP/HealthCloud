@@ -30,8 +30,8 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         this.pacienteBO = new PacienteBO(conexion);
         this.identificador = identificador;
         initComponents();
-        llenarDatosPaciente(identificador);
         setLocationRelativeTo(null);
+        llenarDatosPaciente(identificador);
     }
 
     /**
@@ -195,6 +195,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         LblNombre.setForeground(new java.awt.Color(0, 0, 0));
         LblNombre.setText("Nombre");
 
+        TxtNomIP.setEditable(false);
         TxtNomIP.setBackground(new java.awt.Color(255, 255, 255));
         TxtNomIP.setForeground(new java.awt.Color(0, 0, 0));
         TxtNomIP.setEnabled(false);
@@ -203,6 +204,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         LblApellidos.setForeground(new java.awt.Color(0, 0, 0));
         LblApellidos.setText("Apellidos");
 
+        TxtApellidos.setEditable(false);
         TxtApellidos.setBackground(new java.awt.Color(255, 255, 255));
         TxtApellidos.setForeground(new java.awt.Color(0, 0, 0));
         TxtApellidos.setEnabled(false);
@@ -211,6 +213,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         LblDireccion.setForeground(new java.awt.Color(0, 0, 0));
         LblDireccion.setText("Dirección");
 
+        TxtDireccion.setEditable(false);
         TxtDireccion.setBackground(new java.awt.Color(255, 255, 255));
         TxtDireccion.setForeground(new java.awt.Color(0, 0, 0));
         TxtDireccion.setEnabled(false);
@@ -219,6 +222,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         LblFechaNac.setForeground(new java.awt.Color(0, 0, 0));
         LblFechaNac.setText("Fecha de nacimiento");
 
+        TxtFechaNac.setEditable(false);
         TxtFechaNac.setBackground(new java.awt.Color(255, 255, 255));
         TxtFechaNac.setForeground(new java.awt.Color(0, 0, 0));
         TxtFechaNac.setEnabled(false);
@@ -227,6 +231,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         LblTelefono.setForeground(new java.awt.Color(0, 0, 0));
         LblTelefono.setText("Número celular");
 
+        TxtTelefono.setEditable(false);
         TxtTelefono.setBackground(new java.awt.Color(255, 255, 255));
         TxtTelefono.setForeground(new java.awt.Color(0, 0, 0));
         TxtTelefono.setEnabled(false);
@@ -235,6 +240,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         LblCorreo.setForeground(new java.awt.Color(0, 0, 0));
         LblCorreo.setText("Correo electronico");
 
+        TxtCorreo.setEditable(false);
         TxtCorreo.setBackground(new java.awt.Color(255, 255, 255));
         TxtCorreo.setForeground(new java.awt.Color(0, 0, 0));
         TxtCorreo.setEnabled(false);
@@ -393,7 +399,7 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
         setVisible(false);
-        FrmHistorial frmHistorial = new FrmHistorial();
+        FrmHistorial frmHistorial = new FrmHistorial(identificador);
         frmHistorial.setVisible(true);
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
@@ -405,7 +411,6 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
             TxtDireccion.setText(paciente.getDireccion().getCalleYNum() + ", " + paciente.getDireccion().getColonia() + ", " + paciente.getDireccion().getMunicipio());
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             TxtFechaNac.setText(sdf.format(paciente.getFechaNacimiento()));
-
             TxtTelefono.setText(paciente.getNumTelefono());
             TxtCorreo.setText(paciente.getCorreoElectronico());
         } catch (NegocioException ex) {
