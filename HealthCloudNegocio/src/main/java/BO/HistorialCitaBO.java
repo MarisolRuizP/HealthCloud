@@ -6,9 +6,10 @@ package BO;
 
 import Conexion.IConexionBD;
 import DAO.CitaDAO;
+import DTO.DoctorDTO;
 import DTO.PacienteNuevoDTO;
 import Entidades.Cita;
-import Entidades.Paciente;
+import Entidades.Doctor;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
 import java.util.List;
@@ -21,10 +22,12 @@ public class HistorialCitaBO {
 
     private final CitaDAO historialCita;
     private PacienteBO pacienteBO;
+    private DoctorBO doctorBO;
 
     public HistorialCitaBO(IConexionBD conexion) {
         this.historialCita = new CitaDAO(conexion);
         pacienteBO = new PacienteBO(conexion);
+        doctorBO = new DoctorBO(conexion);
     }
 
     public List<Cita> obtenerHistorialCitas(String identificador) throws NegocioException {
@@ -42,11 +45,12 @@ public class HistorialCitaBO {
 
 
 
-    public List<Cita> obtenerCitasDoctor(int idDoctor) throws NegocioException {
+    public List<Cita> obtenerCitasDoctor(String identificador) throws NegocioException {
         try {
-            List<Cita> citas = historialCita.obtenerCitasDoctor(idDoctor);
+            DoctorDTO docAux = doctorBO.obtenerDoctorPorCedula(identificador);
+            List<Cita> citas = historialCita.obtenerCitasDoctor(docAux.getIdDoctor());
             if (citas.isEmpty()) {
-                throw new NegocioException("El doctor con ID: " + idDoctor + "No tiene citas programadas");
+                throw new NegocioException("El doctor con ID: " + docAux.getIdDoctor() + "No tiene citas programadas");
             }
             return citas;
         } catch (PersistenciaException e) {
