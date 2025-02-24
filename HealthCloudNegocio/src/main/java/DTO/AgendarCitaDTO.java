@@ -4,12 +4,14 @@ import java.sql.Time;
 import java.sql.Date;
 
 public class AgendarCitaDTO {
+
     private String especialidad;
     private int idDoctor;
     private Date fecha;
     private Time hora;
     private String notasParaDoctor;
-    private int idPaciente;  
+    private int idPaciente;
+    private String folioEmergencia;
 
     // Constructor con todo.
     public AgendarCitaDTO(String especialidad, int idDoctor, Date fecha, Time hora, String notasParaDoctor, int idPaciente) {
@@ -69,6 +71,12 @@ public class AgendarCitaDTO {
         this.idPaciente = idPaciente;
     }
 
+    public String getFolioEmergencia() {
+        return folioEmergencia;
+    }
 
+    public void setFolioEmergencia(String folioEmergencia) {
+        this.folioEmergencia = folioEmergencia;
+    }
 
 }

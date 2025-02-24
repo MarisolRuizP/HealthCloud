@@ -1,7 +1,10 @@
 package Mapper;
 
+import DTO.AgendarCitaDTO;
 import DTO.CitaNuevoDTO;
 import Entidades.Cita;
+import Entidades.Doctor;
+import Entidades.Paciente;
 import java.sql.Date;
 
 public class CitaMapper {
@@ -23,5 +26,24 @@ public class CitaMapper {
         cita.getPaciente(), cita.getDoctor());
         return citaDTO;
     }
+    
+    public Cita toEntity(AgendarCitaDTO agendarCitaDTO) {
+        Cita cita = new Cita();
+        cita.setFolioEmergencia(agendarCitaDTO.getFolioEmergencia());
+        cita.setFecha(agendarCitaDTO.getFecha());
+        cita.setHora(agendarCitaDTO.getHora());
+        cita.setMotivo(agendarCitaDTO.getNotasParaDoctor());
+
+        Doctor doctor = new Doctor();
+        doctor.setIdDoctor(agendarCitaDTO.getIdDoctor());
+        cita.setDoctor(doctor);
+
+        Paciente paciente = new Paciente();
+        paciente.setIdPaciente(agendarCitaDTO.getIdPaciente());
+        cita.setPaciente(paciente);
+
+        return cita;
+}
+
 
 }

@@ -23,8 +23,7 @@ public class CitaBO {
 
     public CitaBO(IConexionBD conexion) {
         this.citaDAO = new CitaDAO(conexion);
-        this.doctorBO = new DoctorBO(conexion);
-
+        this.doctorBO = new DoctorBO(conexion, null);
     }
 
     public void agendarCita(CitaNuevoDTO citaDTO, String identificador) throws NegocioException {
@@ -36,15 +35,9 @@ public class CitaBO {
             if (citaDTO.getHora() == null) {
                 throw new NegocioException("La hora es obligatoria.");
             }
-
-            // Llamar al DAO para registrar la cita en la base de datos
             CitaMapper mapper = new CitaMapper();
             Cita cita = mapper.toEntity(citaDTO);
             citaDAO.agendarCita(cita);
-
-            // Log y mensaje de éxito
-            logger.log(Level.INFO, "Cita agendada exitosamente: {0}", cita);
-
         } catch (PersistenciaException ex) {
             logger.log(Level.SEVERE, "Error al agendar la cita", ex);
             throw new NegocioException("Error al agendar la cita: " + ex.getMessage(), ex);
