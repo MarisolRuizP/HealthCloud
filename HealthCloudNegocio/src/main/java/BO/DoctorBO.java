@@ -2,6 +2,7 @@ package BO;
 
 import Conexion.IConexionBD;
 import DAO.DoctorDAO;
+import DAO.ICitaDAO;
 import DAO.IDoctorDAO;
 import DTO.DoctorDTO;
 import DTO.HorarioAtencionDTO;
@@ -9,6 +10,8 @@ import Entidades.Doctor;
 import Entidades.horarioAtencion;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
+import java.sql.Time;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -16,10 +19,12 @@ import java.util.logging.Logger;
 public class DoctorBO {
 
     private final IDoctorDAO doctorDAO;
+    private final ICitaDAO citaDAO;
     private static final Logger logger = Logger.getLogger(DoctorBO.class.getName());
 
-    public DoctorBO(IConexionBD conexion) {
+    public DoctorBO(IConexionBD conexion, DAO.ICitaDAO citaDAO) {
         this.doctorDAO = new DoctorDAO(conexion);
+        this.citaDAO = citaDAO;
     }
 
     public void solicitarBajaTemporal(int idDoctor) throws NegocioException {
@@ -80,4 +85,21 @@ public class DoctorBO {
             throw new NegocioException("Error al consultar el horario de atención del doctor.", ex);
         }
     }
+
+    public boolean estaActivo(int idDoctor) throws NegocioException {
+        try {
+            return doctorDAO.estaActivo(idDoctor);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al verificar el estado del doctor.", ex);
+        }
+    }
+
+    public boolean doctorTieneCitaEnHorario(int idDoctor, Date fecha, Time hora) throws NegocioException {
+        try {
+            return citaDAO.doctorTieneCitaEnHorario(idDoctor, (java.sql.Date) fecha, hora);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al verificar la disponibilidad del doctor.", ex);
+        }
+    }
+
 }

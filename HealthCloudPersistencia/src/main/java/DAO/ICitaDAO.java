@@ -7,6 +7,8 @@ package DAO;
 import Entidades.Cita;
 import Entidades.Paciente;
 import Exception.PersistenciaException;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 
 /**
@@ -18,4 +20,5 @@ public interface ICitaDAO {
     public Cita agendarCita(Cita cita) throws PersistenciaException;
     public List<Cita> obtenerHistorialCitas (int idPaciente) throws PersistenciaException;
     public List<Cita> obtenerCitasDoctor(int idDoctor) throws PersistenciaException;
+    public boolean doctorTieneCitaEnHorario(int idDoctor, Date fecha, Time hora) throws PersistenciaException;
 }

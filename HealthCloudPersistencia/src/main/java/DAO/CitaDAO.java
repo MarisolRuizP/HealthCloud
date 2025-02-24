@@ -11,8 +11,11 @@ import Entidades.Paciente;
 import Exception.PersistenciaException;
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -109,6 +112,28 @@ public class CitaDAO implements ICitaDAO {
             throw new PersistenciaException("Error al obtener el historial de citas del paciente", ex);
         }
         return citas;
+    }
+    
+    @Override
+    public boolean doctorTieneCitaEnHorario(int idDoctor, Date fecha, Time hora) throws PersistenciaException {
+        String sql = "SELECT COUNT(*) AS total FROM Citas WHERE idDoctor = ? AND fecha = ? AND hora = ?";
+        try (Connection con = conexion.crearConexion(); PreparedStatement stmt = con.prepareStatement(sql)) {
+
+            stmt.setInt(1, idDoctor);
+            stmt.setDate(2, fecha);
+            stmt.setTime(3, hora);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    int count = rs.getInt("total");
+                    return count > 0;
+                }
+            }
+        } catch (SQLException ex) {
+            logger.log(Level.SEVERE, "Error al verificar el horario del doctor", ex);
+            throw new PersistenciaException("Error al verificar la cita del doctor en ese horario", ex);
+        }
+        return false;
     }
     
 }
