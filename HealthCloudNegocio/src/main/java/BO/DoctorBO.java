@@ -6,7 +6,7 @@ import DAO.IDoctorDAO;
 import DTO.DoctorDTO;
 import DTO.HorarioAtencionDTO;
 import Entidades.Doctor;
-import Entidades.horarioAtencion;
+import Entidades.HorarioAtencion;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
 import java.util.List;
@@ -72,7 +72,7 @@ public class DoctorBO {
         }
     }
 
-    public List<horarioAtencion> consultarHorarioAtencion(int idDoctor) throws NegocioException {
+    public List<HorarioAtencion> consultarHorarioAtencion(int idDoctor) throws NegocioException {
         try {
             return doctorDAO.consultarHorarioAtencion(idDoctor);
         } catch (PersistenciaException ex) {

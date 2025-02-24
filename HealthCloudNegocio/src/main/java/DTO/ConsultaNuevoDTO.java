@@ -7,12 +7,12 @@ public class ConsultaNuevoDTO {
     private String notasMedicas;
     private String receta;
     private String diagnostico; 
-    private Cita cita;
+    private CitaNuevoDTO cita;
 
     public ConsultaNuevoDTO() {
     }
 
-    public ConsultaNuevoDTO(String notasMedicas, String receta, String diagnostico, Cita cita) {
+    public ConsultaNuevoDTO(String notasMedicas, String receta, String diagnostico, CitaNuevoDTO cita) {
         this.notasMedicas = notasMedicas;
         this.receta = receta;
         this.diagnostico = diagnostico;
@@ -43,11 +43,11 @@ public class ConsultaNuevoDTO {
         this.diagnostico = diagnostico;
     }
 
-    public Cita getCita() {
+    public CitaNuevoDTO getCita() {
         return cita;
     }
 
-    public void setCita(Cita cita) {
+    public void setCita(CitaNuevoDTO cita) {
         this.cita = cita;
     }
 

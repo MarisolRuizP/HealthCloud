@@ -17,7 +17,7 @@ import DAO.ConsultaDAO;
 import DTO.DoctorDTO;
 import Entidades.Cita;
 import Entidades.Consulta;
-import Entidades.horarioAtencion;
+import Entidades.HorarioAtencion;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
 import java.util.List;
@@ -43,7 +43,7 @@ public class Pruebas {
 //            
 //            // Probar consultar horario de atención
 //            List<horarioAtencion> horarios = doctorBO.consultarHorarioAtencion(1);
-//            for (horarioAtencion horario : horarios) {
+//            for (HorarioAtencion horario : horarios) {
 //                System.out.println("Día: " + horario.getDia());
 //                System.out.println("Hora de Entrada: " + horario.getHoraEntrada());
 //                System.out.println("Hora de Salida: " + horario.getHoraSalida());

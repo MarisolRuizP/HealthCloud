@@ -3,8 +3,6 @@ package DTO;
 import Entidades.Doctor;
 import Entidades.Paciente;
 import java.sql.Time;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Date;
 
 public class CitaNuevoDTO {
@@ -15,6 +13,9 @@ public class CitaNuevoDTO {
     private String motivo;
     private Paciente paciente; // Agregar dependencias
     private Doctor doctor; // Agregar dependencias
+    private String estadoCita;
+    private String nombreDoctor;
+    private String especialidad;
 
     // Constructor vacio
     public CitaNuevoDTO(){
@@ -28,6 +29,16 @@ public class CitaNuevoDTO {
         this.motivo = motivo;
         this.paciente = paciente;
         this.doctor = doctor;
+    }
+    
+    public CitaNuevoDTO(String folioEmergencia, Date fecha, Time hora, String motivo, String estadoCita, String nombreDoctor, String especialidad) {
+        this.folioEmergencia = folioEmergencia;
+        this.fecha = fecha;
+        this.hora = hora;
+        this.motivo = motivo;
+        this.estadoCita = estadoCita;
+        this.nombreDoctor = nombreDoctor;
+        this.especialidad = especialidad;
     }
 
     // Getters and Setters
