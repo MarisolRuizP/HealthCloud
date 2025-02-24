@@ -4,6 +4,16 @@
  */
 package GUI;
 
+import BO.HistorialCitaBO;
+import Conexion.ConexionBD;
+import Entidades.Cita;
+import Exception.NegocioException;
+import java.util.Date;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
+
 /**
  *
  * @author Maryr
@@ -11,13 +21,17 @@ package GUI;
 public class FrmCitasDoctor extends javax.swing.JFrame {
 
     String identificador;
+    HistorialCitaBO historialCitaBO;
     /**
      * Creates new form FrmCitasDoctor
      */
     public FrmCitasDoctor(String identificador) {
-        setLocationRelativeTo(null);
+        ConexionBD conexion = new ConexionBD();
         this.identificador = identificador;
+        this.historialCitaBO = new HistorialCitaBO(conexion);
         initComponents();
+        setLocationRelativeTo(null);
+        llenarHistorialCitas(identificador);
     }
 
     /**
@@ -29,7 +43,7 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jPanelFondo = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         BtnCitasSide = new javax.swing.JButton();
         BtnBajaTemporal = new javax.swing.JButton();
@@ -41,7 +55,7 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(106, 154, 176));
+        jPanelFondo.setBackground(new java.awt.Color(106, 154, 176));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -162,26 +176,26 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
             }
         });
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout jPanelFondoLayout = new javax.swing.GroupLayout(jPanelFondo);
+        jPanelFondo.setLayout(jPanelFondoLayout);
+        jPanelFondoLayout.setHorizontalGroup(
+            jPanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelFondoLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFondoLayout.createSequentialGroup()
                         .addGap(99, 99, 99)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(101, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFondoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnRegisConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(121, 121, 121))))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        jPanelFondoLayout.setVerticalGroup(
+            jPanelFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFondoLayout.createSequentialGroup()
                 .addContainerGap(73, Short.MAX_VALUE)
                 .addComponent(btnRegisConsulta, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -195,20 +209,20 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 800, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 500, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
-        setVisible(false);
+
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 
     private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed
@@ -220,9 +234,9 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnBajaTemporalActionPerformed
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
-        setVisible(false);
         FrmHistorialDoctor frmHistorial = new FrmHistorialDoctor(identificador);
         frmHistorial.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
     private void BtnHistorialSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHistorialSideActionPerformed
@@ -230,9 +244,9 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHistorialSideActionPerformed
 
     private void BtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInicioMouseClicked
-        setVisible(false);
         FrmInicioDoctor frmInicio = new FrmInicioDoctor(identificador);
         frmInicio.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnInicioMouseClicked
 
     private void BtnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioActionPerformed
@@ -240,12 +254,42 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnInicioActionPerformed
 
     private void btnRegisConsultaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegisConsultaMouseClicked
-        // TODO add your handling code here:
+        FrmRegistrarConsulta frmRegCon = new FrmRegistrarConsulta(identificador);
+        frmRegCon.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnRegisConsultaMouseClicked
 
-    /**
-     * @param args the command line arguments
-     */
+    public void llenarHistorialCitas(String identificador) {
+        try {
+            List<Cita> historialCitas = historialCitaBO.obtenerCitasDoctor(identificador);
+            DefaultListModel<String> listModel = new DefaultListModel<>();
+            Date hoy = new Date(); // Fecha actual
+
+            if (historialCitas.isEmpty()) {
+                listModel.addElement("No se encontraron citas para el paciente con identificador: " + identificador);
+            } else {
+                for (Cita cita : historialCitas) {
+                    if (cita.getFecha().after(hoy) || (cita.getFecha().equals(hoy) && cita.getEstadoCita().equals("Pendiendte"))) {
+                        listModel.addElement("Folio Emergencia: " + (cita.getFolioEmergencia() != null ? cita.getFolioEmergencia() : "N/A"));
+                        listModel.addElement("Fecha: " + cita.getFecha());
+                        listModel.addElement("Hora: " + cita.getHora());
+                        listModel.addElement("Motivo: " + cita.getMotivo());
+                        listModel.addElement("Estado: " + cita.getEstadoCita());
+                        listModel.addElement("Paciente: " + cita.getNombreDoctor());
+                        listModel.addElement("Especialidad: " + cita.getEspecialidad());
+                        listModel.addElement("-------------------------------");
+                    }
+                }
+            }
+            lstCItas.setModel(listModel);
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmInicioDoctor.class.getName()).log(Level.SEVERE, "Error al obtener el historial de citas.", ex);
+        }
+    }
+        /**
+             * @param args the command line arguments
+             */
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -273,7 +317,7 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }
@@ -284,8 +328,8 @@ public class FrmCitasDoctor extends javax.swing.JFrame {
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JButton BtnInicio;
     private javax.swing.JButton btnRegisConsulta;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanelFondo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JList<String> lstCItas;
     // End of variables declaration//GEN-END:variables

@@ -15,5 +15,5 @@ public interface IUsuarioDAO {
     
     public String iniciarSesion(String identificador, String contrasenia) throws PersistenciaException;
     
-    public Usuario consultarUSuarioPorIdentificador(String identificador) throws PersistenciaException; 
+    public Usuario consultarUsuarioPorIdentificador(String identificador) throws PersistenciaException; 
 }

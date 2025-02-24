@@ -1,112 +1,91 @@
 package DAO;
 
 import Conexion.IConexionBD;
+import Entidades.Doctor;
 import Exception.PersistenciaException;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CitaEmergenciaDAO implements ICitaEmergenciaDAO {
-    
+
     private final IConexionBD conexion;
     private static final Logger logger = Logger.getLogger(CitaEmergenciaDAO.class.getName());
 
-    public CitaEmergenciaDAO (IConexionBD conexion) {
+    public CitaEmergenciaDAO(IConexionBD conexion) {
         this.conexion = conexion;
     }
-    
+
     @Override
-    public List<String> obtenerEspecialidades () throws PersistenciaException {
+    public Doctor buscarDoctorConEspacioLibreMasPronto(String especialidad) throws PersistenciaException {
+        String sql = "CALL buscarDoctorConEspacioLibreMasPronto(?)";
 
-        String sentenciaSQL = "SELECT DISTINCT especialidad FROM Doctores";
-        List<String> especialidades = new ArrayList<>();
-        
-        try (Connection con = conexion.crearConexion();
-             PreparedStatement stmt = con.prepareStatement(sentenciaSQL);
-             ResultSet rs = stmt.executeQuery()) {
-            
-            while (rs.next()) {
+        try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
 
-                especialidades.add(rs.getString("especialidad"));
+            stmt.setString(1, especialidad);
 
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    Doctor doctor = new Doctor();
+                    doctor.setIdDoctor(rs.getInt("idDoctor"));
+                    doctor.setNombrePila(rs.getString("nombrePila"));
+                    doctor.setApellidoPaterno(rs.getString("apellidoPaterno"));
+                    doctor.setApellidoMaterno(rs.getString("apellidoMaterno"));
+                    doctor.setIdEspecialidad(rs.getInt("idEspecialidad"));
+                    doctor.setCedulaProfesional(rs.getString("cedulaProfesional"));
+
+                    LocalDate fechaDisponible = rs.getDate("fechaDisponible").toLocalDate();
+                    LocalTime horaDisponible = rs.getTime("horaDisponible").toLocalTime();
+
+                    logger.log(Level.INFO, "Doctor con espacio libre: {0} {1}, Disponibilidad: {2} {3}",
+                            new Object[]{doctor.getNombrePila(), doctor.getApellidoPaterno(), fechaDisponible, horaDisponible});
+
+                    return doctor;
+                } else {
+                    throw new PersistenciaException("No hay doctores con espacios libres para la especialidad: " + especialidad);
+                }
             }
-            return especialidades;
-            
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Hubo un error al obtener las especialidades", ex);
-            throw new PersistenciaException("Hubo un error al consultar especialidades disponibles", ex);
+            logger.log(Level.SEVERE, "Error al buscar doctor con espacio libre más pronto", ex);
+            throw new PersistenciaException("Error al buscar doctor con espacio libre más pronto", ex);
         }
     }
 
-//    @Override
-//    public Cita registrarCitaEmergencia(String especialidad) throws PersistenciaException {
-//        String sentenciaSQL = "{CALL buscarDoctorDisponible(?)}";
-//        
-//        try (Connection con = conexion.crearConexion()) {
-//
-//            // Cochinero para encontrar a un doctor disponible
-//            Doctor doctorDisponible;
-//            LocalDate fecha;
-//            LocalTime hora;
-//            
-//            try (CallableStatement stmt = con.prepareCall(sentenciaSQL)) {
-//                stmt.setString(1, especialidad);
-//                ResultSet rs = stmt.executeQuery();
-//                
-//                // ps uqe no hay
-//                if (!rs.next()) {
-//                    throw new PersistenciaException("No hay doctores disponibles para esta especialidad en este momento.");
-//                }
-//                
-//                doctorDisponible = new Doctor();
-//                doctorDisponible.setIdDoctor(rs.getInt("idDoctor"));
-//                doctorDisponible.setNombrePila(rs.getString("nombrePila"));
-//                doctorDisponible.setApellidoPaterno(rs.getString("apellidoPaterno"));
-//                doctorDisponible.setApellidoMaterno(rs.getString("apellidoMaterno"));
-//                doctorDisponible.setIdEspecialidad(rs.getInt("especialidad"));
-//                doctorDisponible.setCedulaProfesional(rs.getString("cedulaProfesional"));
-//                
-//                fecha = LocalDate.now();
-//                hora = LocalTime.of(rs.getInt("hora_disponible"), 0); 
-//            }
-//            
-//            // Cochinero para generar y registrar la cita de emergencia
-//            String folio = generarFolioUnico();
-//            
-//            try (CallableStatement stmt = con.prepareCall("INSERT INTO Citas (folioEmergencia, fecha, hora, motivo, idDoctor) VALUES (?, ?, ?, ?, ?)")) {
-//                stmt.setString(1, folio);
-//                stmt.setDate(2, Date.valueOf(fecha));
-//                stmt.setTime(3, Time.valueOf(hora));
-//                stmt.setString(4, "Emergencia: " + especialidad);
-//                stmt.setInt(5, doctorDisponible.getIdDoctor());
-//                
-//                stmt.executeUpdate();
-//            }
-//            
-//            return new Cita(folio, fecha, hora, "Emergencia:" + especialidad, null, doctorDisponible);
-//            
-//        } catch (SQLException ex) {
-//            logger.log(Level.SEVERE, "Hubo un error al registrar cita de emergencia", ex);
-//            throw new PersistenciaException("Hubo un error al registrar la cita de emergencia", ex);
-//        }
-//    }
-    
-    private String generarFolioUnico() {
+    @Override
+    public boolean verificarFolioEnBD(String folio) throws PersistenciaException {
+        String sql = "SELECT COUNT(*) FROM Citas WHERE folioEmergencia = ?";
+
+        try (Connection con = conexion.crearConexion(); PreparedStatement stmt = con.prepareStatement(sql)) {
+            stmt.setString(1, folio);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0; 
+                }
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException("Error al verificar la existencia del folio en la base de datos", ex);
+        }
+        return false;
+    }
+
+    @Override
+    public String generarFolioUnico() throws PersistenciaException {
         Random random = new Random();
-        StringBuilder folio = new StringBuilder();
-        
-        // folio unico de 8 caracteres randoms
         String caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-        for (int i = 0; i < 8; i++) {
-            folio.append(caracteres.charAt(random.nextInt(caracteres.length())));
-        }
-        
-        return folio.toString();
+        String folio;
+        boolean existe;
+        do {
+            StringBuilder folioBuilder = new StringBuilder();
+            for (int i = 0; i < 8; i++) {
+                folioBuilder.append(caracteres.charAt(random.nextInt(caracteres.length())));
+            }
+            folio = folioBuilder.toString();
+            existe = verificarFolioEnBD(folio);
+        } while (existe); 
 
+        return folio;
     }
-
-    
 }

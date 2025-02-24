@@ -20,10 +20,10 @@ import java.util.logging.Logger;
  *
  * @author jrasc
  */
-public class ConsultaDAO implements IConsulta {
+public class ConsultaDAO implements IConsultaDAO {
 
     private final IConexionBD conexion;
-    private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
+    private static final Logger logger = Logger.getLogger(ConsultaDAO.class.getName());
 
     public ConsultaDAO(IConexionBD conexion) {
         this.conexion = conexion;
@@ -33,10 +33,8 @@ public class ConsultaDAO implements IConsulta {
     public Cita obtenerCitaPorId(int idCita) throws PersistenciaException {
         String sql = "SELECT idCita, folioEmergencia, fecha, hora, motivo, estadoCita FROM Citas WHERE idCita = ?";
         Cita cita = null;
-
         try (Connection con = conexion.crearConexion(); PreparedStatement stmt = con.prepareStatement(sql)) {
             stmt.setInt(1, idCita);
-
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
                     System.out.println("Se encontró la cita con ID: " + idCita);
@@ -55,30 +53,38 @@ public class ConsultaDAO implements IConsulta {
                 }
             }
         } catch (SQLException ex) {
-            throw new PersistenciaException("Error al obtener la cita con el ID: ", ex);
+            throw new PersistenciaException("Error al obtener la cita con el ID: " + idCita, ex);
         }
         return cita;
     }
 
     @Override
-    public Consulta Registrarconsulta(Consulta consulta) throws PersistenciaException {
+    public Consulta registrarconsulta(Consulta consulta) throws PersistenciaException {
         Cita cita = consulta.getCita();
         String sentenciaSQLRegistrarConsulta = "CALL registrarConsulta(?,?,?,?)";
-
-        try (Connection con = conexion.crearConexion(); CallableStatement stm = con.prepareCall(sentenciaSQLRegistrarConsulta)) {
-            stm.setString(1, consulta.getNotasMedicas());
-            stm.setString(2, consulta.getReceta());
-            stm.setString(3, consulta.getDiagnostico());
-            stm.setInt(4, cita.getId());
-
-            stm.executeUpdate();
-            System.out.println("Consulta registrada en la base de datos.");
-            
-            cita.setEstadoCita("Completada");
-
+        try (Connection con = conexion.crearConexion()) {
+            con.setAutoCommit(false); 
+            try (CallableStatement stm = con.prepareCall(sentenciaSQLRegistrarConsulta)) {
+                stm.setString(1, consulta.getNotasMedicas());
+                stm.setString(2, consulta.getReceta());
+                stm.setString(3, consulta.getDiagnostico());
+                stm.setInt(4, cita.getId());
+                stm.executeUpdate();
+                logger.log(Level.INFO, "Consulta registrada con éxito en la base de datos.");
+                String sqlActualizarCita = "UPDATE Citas SET estadoCita = 'Completada' WHERE idCita = ?";
+                try (PreparedStatement stmt = con.prepareStatement(sqlActualizarCita)) {
+                    stmt.setInt(1, cita.getId());
+                    stmt.executeUpdate();
+                }
+                con.commit(); 
+                cita.setEstadoCita("Completada");
+            } catch (SQLException ex) {
+                con.rollback(); 
+                logger.log(Level.SEVERE, "Error al registrar la consulta.", ex);
+                throw new PersistenciaException("Error al registrar la consulta.", ex);
+            }
         } catch (SQLException ex) {
-            Logger.getLogger(PacienteDAO.class.getName()).log(Level.SEVERE, null, ex);
-            throw new PersistenciaException("Error al registrar la consulta.", ex);
+            throw new PersistenciaException("Error al conectar con la base de datos.", ex);
         }
         return consulta;
     }

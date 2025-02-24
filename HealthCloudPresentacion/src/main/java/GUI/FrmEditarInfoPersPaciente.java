@@ -504,27 +504,27 @@ public class FrmEditarInfoPersPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnInicioMouseClicked
 
     private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
-        setVisible(false);
         FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente(identificador);
         frmInfoPerPac.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnInfoSideMouseClicked
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
-        setVisible(false);
-        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
+        FrmCitasPaciente frmCitas = new FrmCitasPaciente(identificador);
         frmCitas.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
-        setVisible(false);
         FrmHistorialPaciente frmHistorial = new FrmHistorialPaciente(identificador);
         frmHistorial.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
     private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
-        setVisible(false);
         FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
 
     private void TxtDireccionCalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TxtDireccionCalleActionPerformed

@@ -4,6 +4,7 @@
  */
 package GUI;
 
+import BO.DoctorBO;
 import BO.UsuarioBO;
 import Conexion.ConexionBD;
 import DAO.IUsuarioDAO;
@@ -12,7 +13,6 @@ import Exception.PersistenciaException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
 /**
  *
  * @author Maryr
@@ -20,12 +20,15 @@ import java.util.logging.Logger;
 public class FrmIniciarSesion extends javax.swing.JFrame {
 
     private UsuarioBO usuarioBO;
+    DoctorBO doctorBO;
+
     /**
      * Creates new form FrmIniciarSesion
      */
     public FrmIniciarSesion() {
         ConexionBD conexion = new ConexionBD();
         this.usuarioBO = new UsuarioBO(conexion);
+        this.doctorBO = new DoctorBO(conexion);
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -194,11 +197,18 @@ public class FrmIniciarSesion extends javax.swing.JFrame {
                     frmInicioPaciente.setVisible(true);
                 }
                 case "Medico" -> {
-                    this.dispose();
-                    FrmInicioDoctor frmInicioDoctor = new FrmInicioDoctor(identificador);
-                    frmInicioDoctor.setVisible(true);
+                    if (doctorBO.obtenerDoctorPorCedula(identificador).getEstado().equals("Activo")) {                        
+                        FrmInicioDoctor frmInicioDoctor = new FrmInicioDoctor(identificador);
+                        frmInicioDoctor.setVisible(true);
+                        this.dispose();
+                    } else {
+                        FrmInicioDoctorBaja frmInicioDocBaja = new FrmInicioDoctorBaja(identificador);
+                        frmInicioDocBaja.setVisible(true);
+                        this.dispose();
+                    }
                 }
-                default -> throw new PersistenciaException("Usuario no encontrado o algo");
+                default ->
+                    throw new PersistenciaException("Usuario no encontrado o algo");
             }
         } catch (PersistenciaException | NegocioException ex) {
             DlgErrorDatos dlgResgistroError = new DlgErrorDatos(this, rootPaneCheckingEnabled);

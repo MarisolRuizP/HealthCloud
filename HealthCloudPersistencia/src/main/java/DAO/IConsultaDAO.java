@@ -12,8 +12,8 @@ import Exception.PersistenciaException;
  *
  * @author jrasc
  */
-public interface IConsulta {
+public interface IConsultaDAO {
     
-    public Consulta Registrarconsulta (Consulta consulta) throws PersistenciaException;
+    public Consulta registrarconsulta (Consulta consulta) throws PersistenciaException;
     public Cita obtenerCitaPorId(int idCita) throws PersistenciaException;
 }

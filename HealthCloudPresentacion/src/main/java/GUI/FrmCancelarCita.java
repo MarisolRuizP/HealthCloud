@@ -4,26 +4,29 @@
  */
 package GUI;
 
-import BO.PacienteBO;
 import DTO.PacienteNuevoDTO;
+import Entidades.Cita;
+import Entidades.Doctor;
 import Exception.NegocioException;
+import java.sql.Time;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author Maryr
  */
-public class FrmInicioPaciente extends javax.swing.JFrame {
+public class FrmCancelarCita extends javax.swing.JFrame {
 
     private String identificador;
-    private PacienteBO pacienteBO;
-
     /**
-     * Creates new form FrmInicioPaciente
+     * Creates new form FrmCancelarCita
      */
-    public FrmInicioPaciente(String identificador) {
-        initComponents();
+    public FrmCancelarCita(String identificador) {
         this.identificador = identificador;
-        setLocationRelativeTo(null);
+        initComponents();
     }
 
     /**
@@ -35,21 +38,20 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         BtnCitasSide = new javax.swing.JButton();
         BtnInfoSide = new javax.swing.JButton();
         BtnHistorialSide = new javax.swing.JButton();
         BtnCitaEmSide = new javax.swing.JButton();
-        BtnCerrarSesion = new javax.swing.JButton();
-        LblInicio = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-
-        jLabel1.setText("jLabel1");
+        BtnInicio = new javax.swing.JButton();
+        BtnCancel = new javax.swing.JPanel();
+        LblEspecialidad = new javax.swing.JLabel();
+        BtnConfirm = new javax.swing.JButton();
+        BtnCancelEdit = new javax.swing.JButton();
+        CbBoxEspecialidad = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
 
         jPanel1.setBackground(new java.awt.Color(106, 154, 176));
 
@@ -127,22 +129,21 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
             }
         });
 
-        BtnCerrarSesion.setBackground(new java.awt.Color(58, 109, 140));
-        BtnCerrarSesion.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
-        BtnCerrarSesion.setForeground(new java.awt.Color(0, 0, 0));
-        BtnCerrarSesion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/ic-back_97586.png"))); // NOI18N
-        BtnCerrarSesion.setText("Cerrar sesion");
-        BtnCerrarSesion.setBorder(null);
-        BtnCerrarSesion.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
-        BtnCerrarSesion.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
-        BtnCerrarSesion.addMouseListener(new java.awt.event.MouseAdapter() {
+        BtnInicio.setBackground(new java.awt.Color(58, 109, 140));
+        BtnInicio.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
+        BtnInicio.setForeground(new java.awt.Color(0, 0, 0));
+        BtnInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/3844470-home-house_110332.png"))); // NOI18N
+        BtnInicio.setBorder(null);
+        BtnInicio.setContentAreaFilled(false);
+        BtnInicio.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnInicio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                BtnCerrarSesionMouseClicked(evt);
+                BtnInicioMouseClicked(evt);
             }
         });
-        BtnCerrarSesion.addActionListener(new java.awt.event.ActionListener() {
+        BtnInicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnCerrarSesionActionPerformed(evt);
+                BtnInicioActionPerformed(evt);
             }
         });
 
@@ -153,34 +154,102 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(42, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnCitaEmSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnInfoSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(BtnInicio)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(88, Short.MAX_VALUE)
+                .addContainerGap(120, Short.MAX_VALUE)
                 .addComponent(BtnInfoSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(BtnCitasSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
+                .addGap(31, 31, 31)
                 .addComponent(BtnHistorialSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
+                .addGap(32, 32, 32)
                 .addComponent(BtnCitaEmSide, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(BtnCerrarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                .addGap(57, 57, 57)
+                .addComponent(BtnInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        LblInicio.setFont(new java.awt.Font("Cooper Black", 1, 36)); // NOI18N
-        LblInicio.setForeground(new java.awt.Color(58, 109, 140));
-        LblInicio.setText("Bienvenido a HealthCloud!");
+        BtnCancel.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imgs/Logo Farmacia Minimalista Circular Azul (1).png"))); // NOI18N
+        LblEspecialidad.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        LblEspecialidad.setForeground(new java.awt.Color(0, 0, 0));
+        LblEspecialidad.setText("Cita:");
+
+        BtnConfirm.setBackground(new java.awt.Color(58, 109, 140));
+        BtnConfirm.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        BtnConfirm.setForeground(new java.awt.Color(0, 0, 0));
+        BtnConfirm.setText("Confirmar");
+        BtnConfirm.setBorder(null);
+        BtnConfirm.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnConfirmMouseClicked(evt);
+            }
+        });
+
+        BtnCancelEdit.setBackground(new java.awt.Color(58, 109, 140));
+        BtnCancelEdit.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
+        BtnCancelEdit.setForeground(new java.awt.Color(0, 0, 0));
+        BtnCancelEdit.setText("Cancelar");
+        BtnCancelEdit.setBorder(null);
+        BtnCancelEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnCancelEditMouseClicked(evt);
+            }
+        });
+        BtnCancelEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCancelEditActionPerformed(evt);
+            }
+        });
+
+        CbBoxEspecialidad.setBackground(new java.awt.Color(255, 255, 255));
+        CbBoxEspecialidad.setMaximumRowCount(20);
+        CbBoxEspecialidad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        CbBoxEspecialidad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
+
+        javax.swing.GroupLayout BtnCancelLayout = new javax.swing.GroupLayout(BtnCancel);
+        BtnCancel.setLayout(BtnCancelLayout);
+        BtnCancelLayout.setHorizontalGroup(
+            BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, BtnCancelLayout.createSequentialGroup()
+                .addGap(51, 51, 51)
+                .addComponent(BtnCancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(BtnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
+            .addGroup(BtnCancelLayout.createSequentialGroup()
+                .addGroup(BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(LblEspecialidad))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(25, 25, 25)
+                        .addComponent(CbBoxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+        BtnCancelLayout.setVerticalGroup(
+            BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(BtnCancelLayout.createSequentialGroup()
+                .addGap(23, 23, 23)
+                .addComponent(LblEspecialidad)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(CbBoxEspecialidad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
+                .addGroup(BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BtnCancelEdit, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtnConfirm, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
+        );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -188,40 +257,66 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(LblInicio)
-                        .addGap(85, 85, 85))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(224, 224, 224))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 65, Short.MAX_VALUE)
+                .addComponent(BtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(105, 105, 105)
-                .addComponent(LblInicio)
-                .addGap(40, 40, 40)
-                .addComponent(jLabel2)
+                .addGap(150, 150, 150)
+                .addComponent(BtnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(jPanel1);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void BtnCerrarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCerrarSesionActionPerformed
+    private void BtnCancelEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCancelEditActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_BtnCerrarSesionActionPerformed
+    }//GEN-LAST:event_BtnCancelEditActionPerformed
 
-    private void BtnCerrarSesionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCerrarSesionMouseClicked
-        FrmIniciarSesion frmIniciarSesion = new FrmIniciarSesion();
-        frmIniciarSesion.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_BtnCerrarSesionMouseClicked
+    private void BtnCancelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCancelEditMouseClicked
+        setVisible(false);
+        FrmCitasPaciente frmCitas = new FrmCitasPaciente(identificador);
+        frmCitas.setVisible(true);
+    }//GEN-LAST:event_BtnCancelEditMouseClicked
+
+    private void BtnConfirmMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnConfirmMouseClicked
+
+    }//GEN-LAST:event_BtnConfirmMouseClicked
+
+    private void BtnInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInicioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_BtnInicioActionPerformed
+
+    private void BtnInicioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInicioMouseClicked
+        setVisible(false);
+        FrmInicioPaciente frmInicio = new FrmInicioPaciente(identificador);
+        frmInicio.setVisible(true);
+    }//GEN-LAST:event_BtnInicioMouseClicked
 
     private void BtnCitaEmSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitaEmSideActionPerformed
         // TODO add your handling code here:
@@ -263,7 +358,6 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 
-
     /**
      * @param args the command line arguments
      */
@@ -281,33 +375,35 @@ public class FrmInicioPaciente extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmInicioPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCancelarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmInicioPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCancelarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmInicioPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCancelarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmInicioPaciente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmCancelarCita.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BtnCerrarSesion;
+    private javax.swing.JPanel BtnCancel;
+    private javax.swing.JButton BtnCancelEdit;
     private javax.swing.JButton BtnCitaEmSide;
     private javax.swing.JButton BtnCitasSide;
+    private javax.swing.JButton BtnConfirm;
     private javax.swing.JButton BtnHistorialSide;
     private javax.swing.JButton BtnInfoSide;
-    private javax.swing.JLabel LblInicio;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JButton BtnInicio;
+    private javax.swing.JComboBox<String> CbBoxEspecialidad;
+    private javax.swing.JLabel LblEspecialidad;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     // End of variables declaration//GEN-END:variables

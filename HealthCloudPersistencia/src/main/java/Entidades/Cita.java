@@ -145,4 +145,9 @@ public class Cita {
         this.especialidad = especialidad;
     }
 
+    @Override
+    public String toString() {
+        return "Cita ID: " + id + ", Fecha: " + fecha + ", Hora: " + hora;
+    }
+
 }

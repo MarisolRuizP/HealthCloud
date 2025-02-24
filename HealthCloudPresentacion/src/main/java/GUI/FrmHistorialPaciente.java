@@ -310,9 +310,9 @@ public class FrmHistorialPaciente extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
-        setVisible(false);
-        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
+        FrmCitasPaciente frmCitas = new FrmCitasPaciente(identificador);
         frmCitas.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 
     private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed
@@ -320,9 +320,9 @@ public class FrmHistorialPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCitasSideActionPerformed
 
     private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
-        setVisible(false);
         FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente(identificador);
         frmInfoPerPac.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnInfoSideMouseClicked
 
     private void BtnInfoSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInfoSideActionPerformed
@@ -330,9 +330,9 @@ public class FrmHistorialPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnInfoSideActionPerformed
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
-        setVisible(false);
         FrmHistorialPaciente frmHistorial = new FrmHistorialPaciente(identificador);
         frmHistorial.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
 
     private void BtnHistorialSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnHistorialSideActionPerformed
@@ -340,9 +340,9 @@ public class FrmHistorialPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnHistorialSideActionPerformed
 
     private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
-        setVisible(false);
         FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
 
     private void BtnCitaEmSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitaEmSideActionPerformed

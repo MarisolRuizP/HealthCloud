@@ -97,6 +97,11 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
         BtnInfoSide.setText("Información personal");
         BtnInfoSide.setBorder(null);
         BtnInfoSide.setHorizontalAlignment(javax.swing.SwingConstants.LEADING);
+        BtnInfoSide.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BtnInfoSideMouseClicked(evt);
+            }
+        });
         BtnInfoSide.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtnInfoSideActionPerformed(evt);
@@ -386,22 +391,28 @@ public class FrmInfoPersPaciente extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnInicioMouseClicked
 
     private void BtnCitaEmSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitaEmSideMouseClicked
-        setVisible(false);
         FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
-        setVisible(false);
-        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
+        FrmCitasPaciente frmCitas = new FrmCitasPaciente(identificador);
         frmCitas.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
-        setVisible(false);
         FrmHistorialPaciente frmHistorial = new FrmHistorialPaciente(identificador);
         frmHistorial.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_BtnHistorialSideMouseClicked
+
+    private void BtnInfoSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnInfoSideMouseClicked
+        FrmInfoPersPaciente frmInfoPerPac = new FrmInfoPersPaciente(identificador);
+        frmInfoPerPac.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_BtnInfoSideMouseClicked
 
     private void llenarDatosPaciente(String identificador) {
         try {

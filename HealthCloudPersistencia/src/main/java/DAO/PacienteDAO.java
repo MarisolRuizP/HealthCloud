@@ -15,7 +15,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Types;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.mindrot.jbcrypt.BCrypt;
@@ -205,14 +204,16 @@ public class PacienteDAO implements IPacienteDAO {
                             rs.getString("colonia"),
                             rs.getString("municipio")
                     );
+                    direccion.setId(rs.getInt("idDireccion"));
                     paciente.setDireccion(direccion);
 
                     
                     Usuario usuario = new Usuario(
-                            rs.getString("correoElectronico"),
+                            rs.getString("identificador"),
                             rs.getString("contrasenia"),
                             rs.getString("tipoDeUsuario")
                     );
+                    usuario.setId(rs.getInt("idUsuario"));
                     paciente.setUsuario(usuario);
 
                     System.out.println("ID del paciente: " + paciente.getIdPaciente());

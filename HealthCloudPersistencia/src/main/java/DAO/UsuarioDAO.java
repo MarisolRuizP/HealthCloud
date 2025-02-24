@@ -22,7 +22,7 @@ import org.mindrot.jbcrypt.BCrypt;
 public class UsuarioDAO implements IUsuarioDAO {
 
     private final IConexionBD conexion;
-    private static final Logger logger = Logger.getLogger(PacienteDAO.class.getName());
+    private static final Logger logger = Logger.getLogger(UsuarioDAO.class.getName());
 
     public UsuarioDAO(IConexionBD conexion) {
         this.conexion = conexion;
@@ -30,24 +30,29 @@ public class UsuarioDAO implements IUsuarioDAO {
 
     @Override
     public String iniciarSesion(String identificador, String contrasenia) throws PersistenciaException {
-        Usuario usuario = consultarUSuarioPorIdentificador(identificador);       
-        if (usuario != null) {
-            if (BCrypt.checkpw(contrasenia, usuario.getContrasenia())) {
-                return usuario.getTipoDeUsuario();
-            } else {
-                return "Contraseña incorrecta";
-            }
+        Usuario usuario = consultarUsuarioPorIdentificador(identificador);
+        
+        if (usuario == null) {
+            throw new PersistenciaException("Usuario no encontrado");
+        }
+        
+        if (BCrypt.checkpw(contrasenia, usuario.getContrasenia())) {
+            return usuario.getTipoDeUsuario();
         } else {
-            return "Usuario no encontrado";
+            return "Contraseña incorrecta";
         }
     }
 
     @Override
-    public Usuario consultarUSuarioPorIdentificador(String identificador) throws PersistenciaException {
+    public Usuario consultarUsuarioPorIdentificador(String identificador) throws PersistenciaException {
         String sentenciaSQL = "SELECT contrasenia, tipoDeUsuario FROM usuarios WHERE identificador = ?";
         Usuario aux = null;
-        try (Connection con = conexion.crearConexion(); PreparedStatement ps = con.prepareCall(sentenciaSQL)) {
+        
+        try (Connection con = conexion.crearConexion();
+             PreparedStatement ps = con.prepareStatement(sentenciaSQL)) {
+             
             ps.setString(1, identificador);
+            
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     aux = new Usuario();
@@ -56,9 +61,12 @@ public class UsuarioDAO implements IUsuarioDAO {
                     aux.setTipoDeUsuario(rs.getString("tipoDeUsuario"));
                 }
             }
+            
         } catch (SQLException ex) {
-            Logger.getLogger(UsuarioDAO.class.getName()).log(Level.SEVERE, null, ex);
+            logger.log(Level.SEVERE, "Error al consultar usuario por identificador", ex);
+            throw new PersistenciaException("Error al consultar usuario", ex);
         }
+        
         return aux;
     }
 

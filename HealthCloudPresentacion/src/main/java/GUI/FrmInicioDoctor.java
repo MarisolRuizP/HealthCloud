@@ -8,11 +8,12 @@ import BO.DoctorBO;
 import Conexion.ConexionBD;
 import Conexion.IConexionBD;
 import DTO.DoctorDTO;
-import Entidades.horarioAtencion;
+import Entidades.HorarioAtencion;
 import Exception.NegocioException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -31,6 +32,7 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
         this.doctorBO = new DoctorBO(conexion);
         this.identificador = identificador;
         initComponents();
+        setLocationRelativeTo(null);
         llenarDatos(identificador);
     }
 
@@ -295,7 +297,15 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnBajaTemporalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBajaTemporalActionPerformed
-        // TODO add your handling code here:
+        try {
+            DoctorDTO doc = doctorBO.obtenerDoctorPorCedula(identificador);
+            doctorBO.solicitarBajaTemporal(doc.getIdDoctor());
+            JOptionPane.showMessageDialog(this, "El doctor ha sido dado de baja temporalmente", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmInicioDoctor.class.getName()).log(Level.SEVERE, "Error al solicitar la baja temporal", ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnBajaTemporalActionPerformed
 
     private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed
@@ -317,7 +327,9 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnCerrarSesionMouseClicked
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
-        setVisible(false);
+        FrmCitasDoctor frmCitasDoctor = new FrmCitasDoctor(identificador);
+        frmCitasDoctor.setVisible(true);
+        this.dispose();
 
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 
@@ -339,9 +351,9 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
             TxtEspec.setText(especialidad);
 
             // Consultar horario de atención
-            List<horarioAtencion> horarios = doctorBO.consultarHorarioAtencion(doctor.getIdDoctor());
+            List<HorarioAtencion> horarios = doctorBO.consultarHorarioAtencion(doctor.getIdDoctor());
             txtHorarios.setText(""); // Limpiar el JTextArea antes de añadir nuevo texto
-            for (horarioAtencion horario : horarios) {
+            for (HorarioAtencion horario : horarios) {
                 txtHorarios.append(horario.getDia() + ": " + horario.getHoraEntrada() + " - " + horario.getHoraSalida() + "\n");
             }
 
