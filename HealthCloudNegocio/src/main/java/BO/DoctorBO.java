@@ -1,6 +1,7 @@
 package BO;
 
 import Conexion.IConexionBD;
+import DAO.CitaDAO;
 import DAO.DoctorDAO;
 import DAO.ICitaDAO;
 import DAO.IDoctorDAO;
@@ -24,7 +25,7 @@ public class DoctorBO {
 
     public DoctorBO(IConexionBD conexion, DAO.ICitaDAO citaDAO) {
         this.doctorDAO = new DoctorDAO(conexion);
-        this.citaDAO = citaDAO;
+        this.citaDAO = new CitaDAO(conexion);
     }
 
     public void solicitarBajaTemporal(int idDoctor) throws NegocioException {

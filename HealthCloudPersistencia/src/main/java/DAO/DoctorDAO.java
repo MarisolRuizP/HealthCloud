@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -187,16 +188,20 @@ public class DoctorDAO implements IDoctorDAO {
     }
 
     public List<horarioAtencion> consultarHorarioAtencion(int idDoctor) throws PersistenciaException {
-        String sql = "{CALL consultarHorarioAtencion(?)}";
+        String sql = "CALL consultarHorarioAtencion(?)";
         List<horarioAtencion> horarios = new ArrayList<>();
 
         try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
             stmt.setInt(1, idDoctor);
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    horarioAtencion horario = new horarioAtencion(rs.getString("diaSemana"),
-                            rs.getTime("horaInicio"),
-                            rs.getTime("horaFin"),
+                    String dia = rs.getString("diaSemana");
+                    LocalTime horaInicio = rs.getTime("horaInicio").toLocalTime();
+                    LocalTime horaFin = rs.getTime("horaFin").toLocalTime();
+                    horarioAtencion horario = new horarioAtencion(
+                            dia,
+                            Time.valueOf(horaInicio),
+                            Time.valueOf(horaFin),
                             idDoctor);
                     horarios.add(horario);
                 }

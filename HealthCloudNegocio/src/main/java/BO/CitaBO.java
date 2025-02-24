@@ -9,7 +9,8 @@ import Entidades.horarioAtencion;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
 import Mapper.CitaMapper;
-import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
@@ -85,12 +86,16 @@ public class CitaBO {
 
     private void validarHorarioAtencion(AgendarCitaDTO citaDTO) throws NegocioException {
         List<horarioAtencion> horarios = doctorBO.consultarHorarioAtencion(citaDTO.getIdDoctor());
-        String diaSemana = citaDTO.getFecha().toLocalDate().getDayOfWeek().toString();
+        LocalDate localDate = citaDTO.getFecha().toLocalDate();
+        String diaSemana = convertirDiaSemana(localDate.getDayOfWeek().toString());
+
         boolean horarioValido = false;
         for (horarioAtencion horario : horarios) {
             if (horario.getDia().equalsIgnoreCase(diaSemana)) {
-                if (citaDTO.getHora().after(horario.getHoraEntrada())
-                        && citaDTO.getHora().before(horario.getHoraSalida())) {
+                LocalTime horaCita = citaDTO.getHora().toLocalTime();
+                LocalTime horaInicio = horario.getHoraEntrada().toLocalTime();
+                LocalTime horaFin = horario.getHoraSalida().toLocalTime();
+                if (horaCita.isAfter(horaInicio) && horaCita.isBefore(horaFin)) {
                     horarioValido = true;
                     break;
                 }
@@ -101,4 +106,25 @@ public class CitaBO {
         }
     }
 
+    private String convertirDiaSemana(String diaIngles) {
+        switch (diaIngles) {
+            case "MONDAY":
+                return "Lunes";
+            case "TUESDAY":
+                return "Martes";
+            case "WEDNESDAY":
+                return "Miércoles";
+            case "THURSDAY":
+                return "Jueves";
+            case "FRIDAY":
+                return "Viernes";
+            case "SATURDAY":
+                return "Sábado";
+            case "SUNDAY":
+                return "Domingo";
+            default:
+                return diaIngles;
+        }
+
+    }
 }

@@ -113,27 +113,23 @@ public class CitaDAO implements ICitaDAO {
         }
         return citas;
     }
-    
-    @Override
-    public boolean doctorTieneCitaEnHorario(int idDoctor, Date fecha, Time hora) throws PersistenciaException {
-        String sql = "SELECT COUNT(*) AS total FROM Citas WHERE idDoctor = ? AND fecha = ? AND hora = ?";
-        try (Connection con = conexion.crearConexion(); PreparedStatement stmt = con.prepareStatement(sql)) {
 
+    @Override
+    public boolean doctorTieneCitaEnHorario(int idDoctor, java.sql.Date fecha, java.sql.Time hora) throws PersistenciaException {
+        String sql = "CALL verificarCitaEnHorario(?, ?, ?, ?)";
+        try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
             stmt.setInt(1, idDoctor);
             stmt.setDate(2, fecha);
             stmt.setTime(3, hora);
+            stmt.registerOutParameter(4, java.sql.Types.INTEGER);
 
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    int count = rs.getInt("total");
-                    return count > 0;
-                }
-            }
+            stmt.execute();
+
+            int total = stmt.getInt(4);
+            return total > 0;
         } catch (SQLException ex) {
-            logger.log(Level.SEVERE, "Error al verificar el horario del doctor", ex);
             throw new PersistenciaException("Error al verificar la cita del doctor en ese horario", ex);
         }
-        return false;
     }
-    
+
 }
