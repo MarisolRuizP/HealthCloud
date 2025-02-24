@@ -10,6 +10,7 @@ import DAO.IConsulta;
 import Entidades.Consulta;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -32,27 +33,26 @@ public class ConsultaBO {
             if (consulta.getCita() == null) {
                 throw new NegocioException("La consulta no puede generarse sin cita previa");
             }
+            if (consulta.getCita().getId() == 0) {
+                throw new NegocioException("La cita no existe");
+            }
             if (consulta.getReceta() == null) {
                 throw new NegocioException("La consulta debe llevar una receta medica, es obligatorio");
             }
             if (consulta.getNotasMedicas() == null) {
                 throw new NegocioException("La consulta debe llevar notas medicas, es obligatorio");
             }
-            if (consulta.getCita().getEstadoCita().equalsIgnoreCase("Cancelada")){
+            System.out.println(consulta.getCita().getEstadoCita());
+            if (consulta.getCita().getEstadoCita() == null || consulta.getCita().getEstadoCita().equalsIgnoreCase("Cancelada")) {
                 throw new NegocioException("La consulta no se puede generar si la cita ha sido cancelada");
             }
             if (consulta.getCita().getFecha().after(new java.util.Date())) {
                 throw new NegocioException("No puedes consultar a una cita futura");
             }
-            if (consulta.getCita().getFecha().before(new java.util.Date())){
-                throw new NegocioException("No puedes volver a consultar esta cita");
-            }
-            
             return consultaDAO.Registrarconsulta(consulta);
         } catch (PersistenciaException ex) {
             logger.log(Level.SEVERE, "Error al registrar la consulta", ex);
             throw new NegocioException("Ocurrió un error al registrar la consulta: " + ex.getMessage(), ex);
         }
-
     }
 }

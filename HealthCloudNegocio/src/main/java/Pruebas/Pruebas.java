@@ -8,14 +8,18 @@ package Pruebas;
  *
  * @author jrasc
  */
+import BO.ConsultaBO;
 import BO.DoctorBO;
 import BO.HistorialCitaBO;
 import Conexion.ConexionBD;
 import Conexion.IConexionBD;
+import DAO.ConsultaDAO;
 import DTO.DoctorDTO;
 import Entidades.Cita;
+import Entidades.Consulta;
 import Entidades.horarioAtencion;
 import Exception.NegocioException;
+import Exception.PersistenciaException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +29,10 @@ public class Pruebas {
     public static void main(String[] args) {
 
         IConexionBD conexion = new ConexionBD();
-        DoctorBO doctorBO = new DoctorBO(conexion);
+        // DoctorBO doctorBO = new DoctorBO(conexion);
+        ConsultaDAO consultaDAO = new ConsultaDAO(conexion);
+        ConsultaBO consultaBO = new ConsultaBO(conexion);
+
         // Probar consultar especialidad
 //            try {
 //                String especialidad = doctorBO.consultarEspecialidad(1);
@@ -59,10 +66,9 @@ public class Pruebas {
 //            
 //        } catch (NegocioException ex) {
 //            Logger.getLogger(Pruebas.class.getName()).log(Level.SEVERE, null, ex);
-
-        HistorialCitaBO historialCitaBO = new HistorialCitaBO(conexion);
-
-        /*
+        /*HistorialCitaBO historialCitaBO = new HistorialCitaBO(conexion);
+         */
+ /*
         String identificador = "sol@sol.com";
 
         
@@ -83,8 +89,7 @@ public class Pruebas {
             }
         } catch (NegocioException e) {
             Logger.getLogger(Pruebas.class.getName()).log(Level.SEVERE, "Error al obtener el historial de citas.", e);
-        }*/
-
+        }
         int idDoctor = 2;
 
         try {
@@ -95,9 +100,34 @@ public class Pruebas {
         } catch (NegocioException ex) {
             System.out.println("Error al solicitar baja temporal: " + ex.getMessage());
             ex.printStackTrace();
+        }*/
+        try {
+            Cita cita1 = consultaDAO.obtenerCitaPorId(1);
+            if (cita1 == null) {
+                System.out.println("La cita no existe o no se ha encontrado.");
+                return;
+            }
+            Consulta consulta = new Consulta("El paciente llegó pidiendo agua", "2 paracetamol para aliviar", "Gripe aviar", cita1);
+            Consulta registrarConsulta = consultaBO.registrarConsulta(consulta);
+
+        } catch (NegocioException e) {
+            System.out.println("Error al registrar la consulta: " + e.getMessage());
+            e.printStackTrace();
+        } catch (PersistenciaException ex) {
+            Logger.getLogger(Pruebas.class.getName()).log(Level.SEVERE, "Error de persistencia: ", ex);
+        }
+
+        try {
+            Cita citaInvalida = new Cita("F7654321", java.sql.Date.valueOf("2025-02-23"), java.sql.Time.valueOf("09:00:00"), "Consulta general", "Pendiente", "Paciente 2");
+            citaInvalida.setId(3);
+
+            Consulta consultaInvalida = new Consulta("Paciente llegó tarde", "Receta: ibuprofeno", "Dolor cabeza", citaInvalida);
+
+            consultaBO.registrarConsulta(consultaInvalida);
+            System.out.println("Consulta registrada fuera de los 30 minutos.");
+
+        } catch (NegocioException e) {
+            System.out.println("Error al registrar consulta fuera del tiempo permitido: " + e.getMessage());
         }
     }
-
 }
-
-

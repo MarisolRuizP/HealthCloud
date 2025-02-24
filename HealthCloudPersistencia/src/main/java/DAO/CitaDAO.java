@@ -59,30 +59,30 @@ public class CitaDAO implements ICitaDAO {
 
     @Override
     public List<Cita> obtenerHistorialCitas(int idPaciente) throws PersistenciaException {
-    List<Cita> citas = new ArrayList<>();
-    String sql = "CALL obtenerHistorialCitas(?)";
-    
-    try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
-        stmt.setInt(1, idPaciente);
-        ResultSet rs = stmt.executeQuery();
-        while (rs.next()) {
-            Cita cita = new Cita(
-                rs.getString("folioEmergencia"),
-                rs.getDate("fecha"),
-                rs.getTime("hora"),
-                rs.getString("motivo"),
-                rs.getString("estadoCita"),
-                rs.getString("nombreDoctor") + " " + rs.getString("apellidoDoctor"),
-                rs.getString("especialidadDoctor")
-            );
-            citas.add(cita);
+        List<Cita> citas = new ArrayList<>();
+        String sql = "CALL obtenerHistorialCitas(?)";
+
+        try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
+            stmt.setInt(1, idPaciente);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                Cita cita = new Cita(
+                        rs.getString("folioEmergencia"),
+                        rs.getDate("fecha"),
+                        rs.getTime("hora"),
+                        rs.getString("motivo"),
+                        rs.getString("estadoCita"),
+                        rs.getString("nombreDoctor") + " " + rs.getString("apellidoDoctor"),
+                        rs.getString("especialidadDoctor")
+                );
+                citas.add(cita);
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException("Error al obtener el historial de citas", ex);
         }
-    } catch (SQLException ex) {
-        throw new PersistenciaException("Error al obtener el historial de citas", ex);
+        return citas;
     }
-    return citas;
-}
-    
+
     @Override
     public List<Cita> obtenerCitasDoctor(int idDoctor) throws PersistenciaException {
         String sentenciaSQLObtenerCitas = "CALL obtenerCitasDoctor(?)";
@@ -110,5 +110,5 @@ public class CitaDAO implements ICitaDAO {
         }
         return citas;
     }
-
+    
 }

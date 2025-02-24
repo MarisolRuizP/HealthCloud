@@ -4,6 +4,7 @@
  */
 package DAO;
 
+import Entidades.Cita;
 import Entidades.Consulta;
 import Exception.PersistenciaException;
 
@@ -14,4 +15,5 @@ import Exception.PersistenciaException;
 public interface IConsulta {
     
     public Consulta Registrarconsulta (Consulta consulta) throws PersistenciaException;
+    public Cita obtenerCitaPorId(int idCita) throws PersistenciaException;
 }
