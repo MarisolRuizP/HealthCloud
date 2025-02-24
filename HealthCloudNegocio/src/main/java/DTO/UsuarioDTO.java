@@ -18,6 +18,10 @@ public class UsuarioDTO {
     public UsuarioDTO() {
     }
 
+    public UsuarioDTO(String contrasenia) {
+        this.contrasenia = contrasenia;
+    }
+
     public UsuarioDTO(String identificador, String contrasenia, String tipoDeUsuario) {
         this.identificador = identificador;
         this.contrasenia = contrasenia;
@@ -54,11 +58,6 @@ public class UsuarioDTO {
 
     public void setTipoDeUsuario(String tipoDeUsuario) {
         this.tipoDeUsuario = tipoDeUsuario;
-    }
-
-    @Override
-    public String toString() {
-        return "UsuarioDTO{" + "id=" + id + ", identificador=" + identificador + ", contrasenia=" + contrasenia + ", tipoDeUsuario=" + tipoDeUsuario + '}';
     }
 
 }
