@@ -3,11 +3,12 @@ package BO;
 import Conexion.IConexionBD;
 import DAO.CitaDAO;
 import DAO.ICitaDAO;
+import DTO.AgendarCitaDTO;
 import Entidades.Cita;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
 import java.sql.Date;
-import java.sql.Time;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,95 +18,162 @@ public class CitaBO {
 
 
     private final ICitaDAO citaDAO;
+    private final DoctorBO doctorBO;
     private static final Logger logger = Logger.getLogger(CitaBO.class.getName());
+
 
     public CitaBO(IConexionBD conexion) {
         this.citaDAO = new CitaDAO(conexion);
+        this.doctorBO = new DoctorBO(conexion);
+
     }
 
-    // validaciones.
-    public Cita agendarCita(CitaNuevoDTO citaDTO) throws NegocioException {
+    // Validaciones, llaman metodos .
+    public Cita agendarCita(AgendarCitaDTO citaDTO) throws NegocioException {
         try {
-
-            validarCita(citaDTO);
+    
+            // Para verrificar los datos de la cita. (Especialidad, Fecha y Hora)
+            validarDatosAgendarCita(citaDTO);
             
+            // Para verificar que el doctor pertenezca a la especialidad seleccionada.
+            validarEspecialidadDoctor(citaDTO.getIdDoctor(), citaDTO.getEspecialidad());
+            
+            // Para verificar la disponibilidad del doctor en el horario seleccionado.
+            validarDisponibilidadDoctor(citaDTO);
+
+            ////////////////////////////////////////////////////////
             CitaMapper mapper = new CitaMapper();
             Cita cita = mapper.toEntity(citaDTO);
-            
+
             Cita citaRegistrada = citaDAO.agendarCita(cita);
-            
+
             return citaRegistrada;
+            ////////////////////////////////////////////////////////
+
+
+            ////////////////////////////////////////////////////////
+            // Cita cita = new Cita();
+            // cita.setFecha(citaDTO.getFecha());
+            // cita.setHora(citaDTO.getHora());
+            // cita.setNotas(citaDTO.getNotasParaDoctor());
+            // cita.setEstadoCita("Cita Agendada");
+            //
+            // 
+            // Doctor doctor = doctorBO.obtenerDoctorPorId(citaDTO.getIdDoctor());
+            // Paciente paciente = pacienteBO.obtenerPacientePorId(citaDTO.getIdPaciente());
+            //
+            // cita.setDoctor(doctor);
+            // cita.setPaciente(paciente);
+            // return citaDAO.agendarCita(cita);
+            //////////////////////////////////////////////////////// 
+           
+      
+            
         } catch (PersistenciaException ex) {
-            logger.log(Level.SEVERE, "Hubo un error al agendar la cita.", ex);
-            throw new NegocioException("No se pudo agendar la cita.", ex);
+            logger.log(Level.SEVERE, "Error al agendar la cita", ex);
+            throw new NegocioException("No se pudo agendar la cita", ex);
         }
     }
 
-    private void validarCita(CitaNuevoDTO citaDTO) throws NegocioException {
-
-        // Para validar la fecha
-        Date fechaActual = new Date(System.currentTimeMillis());
-        if (citaDTO.getFecha().before(fechaActual)) {
-            throw new NegocioException("Favor de seleccionar la fecha.");
+    // Metodo para validar la Especialidad, fecha y hora.
+    private void validarDatosAgendarCita(AgendarCitaDTO citaDTO) throws NegocioException {
+       
+        // Validar especialidad tal vez no sea necesario.
+        if (citaDTO.getEspecialidad() == null || citaDTO.getEspecialidad().trim().isEmpty()) {
+            throw new NegocioException("Favor de seleccionar una especialidad.");
         }
 
-        // Validar doctor
         if (citaDTO.getDoctor() == null) {
             throw new NegocioException("Favor de seleccionar a un doctor.");
         }
-
-        // validar notas para el doctor
-        if (citaDTO.getMotivo() == null || citaDTO.getMotivo().trim().isEmpty()) {
-            throw new NegocioException("Favor de incluir notas para el doctor.");
+        
+        if (citaDTO.getFecha() == null) {
+            throw new NegocioException("Favor de seleccionar una fecha.");
+        }
+        
+        if (citaDTO.getHora() == null) {
+            throw new NegocioException("Favor de seleccionar la hora.");
         }
 
-        // Validar hora dentro del horario de atención
+        if (citaDTO.getNotasParaDoctor() == null || citaDTO.getNotasParaDoctor().trim().isEmpty()) {
+            throw new NegocioException("Favor de escribir notas para el doctor.");
+        }
+
+
+        // Para validar que se seleccione una fecha futura. Tal vez inecesario.
+        Date fechaActual = new Date(System.currentTimeMillis());
+        if (citaDTO.getFecha().before(fechaActual)) {
+            throw new NegocioException("No se pudo seleccionar la fecha.");
+        }
+
+        // Validar horario de atención
         validarHorarioAtencion(citaDTO);
+
+
     }
 
-    private void validarHorarioAtencion(CitaNuevoDTO citaDTO) throws NegocioException {
+    // Para validar la especialidad coincida con el doctor. Tal vez inecesario.
+    private void validarEspecialidadDoctor(int idDoctor, String especialidad) throws NegocioException {
+        try {
+            String especialidadDoctor = doctorBO.consultarEspecialidad(idDoctor);
+            if (!especialidadDoctor.equals(especialidad)) {
+                throw new NegocioException("El doctor seleccionado no pertenece a la especialidad seleccionada.");
+            }
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Hubo un error al validar la especialidad del doctor.", ex);
+        }
+    }
+
+
+
+    private void validarDisponibilidadDoctor(AgendarCitaDTO citaDTO) throws NegocioException {
         try {
 
+            // Para verificar que el doctor este activo.
+            if (!doctorBO.estaActivo(citaDTO.getIdDoctor())) {
+                throw new NegocioException("El doctor seleccionado no se encuentra disponible actualmente.");
+            }
 
-            // Consultar el horario de atencion del doctor de DoctorBO
-            DoctorBO doctorBO = new DoctorBO(conexion);
-            List<horarioAtencion> horarios = doctorBO.consultarHorarioAtencion(citaDTO.getDoctor().getIdDoctor());
+            // Para verificar si ya tiene una cita en ese horario.
+            if (citaDAO.doctorTieneCitaEnHorario(citaDTO.getIdDoctor(), 
+                citaDTO.getFecha(), citaDTO.getHora())) {
+                throw new NegocioException("El doctor no tiene disponibilidad en ese momento.");
+            }
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Hubo un error al validar la disponibilidad del doctor.", ex);
+        }
+    }
+
+    
+    // Para validar que el horario del doctor y la hora de la cita agendada coincidan.
+    private void validarHorarioAtencion(AgendarCitaDTO citaDTO) throws NegocioException {
+        try {
+            List<horarioAtencion> horarios = doctorBO.consultarHorarioAtencion(citaDTO.getIdDoctor());
+            String diaSemana = citaDTO.getFecha().toLocalDate().getDayOfWeek().toString();
             
-            // Validar que la hora esté dentro del horario de atencion
             boolean horarioValido = false;
-            Time horaCita = citaDTO.getHora();
-            
             for (horarioAtencion horario : horarios) {
-                if (horario.getDia().equals(obtenerDiaSemana(citaDTO.getFecha()))) {
-                    if (horaCita.after(horario.getHoraEntrada()) && 
-                        horaCita.before(horario.getHoraSalida())) {
+                if (horario.getDia().equals(diaSemana)) {
+                    if (citaDTO.getHora().after(horario.getHoraEntrada()) && 
+                        citaDTO.getHora().before(horario.getHoraSalida())) {
                         horarioValido = true;
                         break;
                     }
-
                 }
-
             }
-
             
             if (!horarioValido) {
-                throw new NegocioException("La hora seleccionada está fuera del horario de atención del doctor.");
+                throw new NegocioException("La hora seleccionada esta fuera del horario de atención del doctor.");
             }
-            
         } catch (PersistenciaException ex) {
-            throw new NegocioException("Hubo un error al validar horario de atención.", ex);
+            throw new NegocioException("Hubo un error al validar el horario de atencion.", ex);
         }
+
+
     }
 
-    ////////////////////////////////////////////////////////
-    //private String obtenerDiaSemana(Date fecha) {
-    //
-    //    return fecha.toLocalDate().getDayOfWeek().toString();
-    //}
-    ///////////////////////////////////////////////////////
-   
 
-
+ 
 }
 
 
