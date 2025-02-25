@@ -21,6 +21,7 @@ public class FrmHistorialDoctor extends javax.swing.JFrame {
 
     String identificador;
     HistorialCitaBO historialCitaBO;
+
     /**
      * Creates new form FrmHistorialDoctor
      */
@@ -249,7 +250,7 @@ public class FrmHistorialDoctor extends javax.swing.JFrame {
     }//GEN-LAST:event_BtnInfoSideMouseClicked
 
     private void BtnInfoSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnInfoSideActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_BtnInfoSideActionPerformed
 
     private void BtnHistorialSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnHistorialSideMouseClicked
@@ -335,7 +336,7 @@ public class FrmHistorialDoctor extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                
+
             }
         });
     }

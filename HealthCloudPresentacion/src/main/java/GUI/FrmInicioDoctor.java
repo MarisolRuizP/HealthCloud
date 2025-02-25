@@ -13,6 +13,7 @@ import Exception.NegocioException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -295,7 +296,24 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BtnBajaTemporalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBajaTemporalActionPerformed
-        // TODO add your handling code here:
+        try {
+            DoctorDTO doctor = doctorBO.obtenerDoctorPorCedula(identificador);
+            int idDoctor = doctor.getIdDoctor();
+
+            // Confirmación del usuario
+            int confirm = JOptionPane.showConfirmDialog(this,
+                    "¿Estás seguro de que deseas solicitar la baja temporal?",
+                    "Confirmación", JOptionPane.YES_NO_OPTION);
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                doctorBO.solicitarBajaTemporal(idDoctor);
+                JOptionPane.showMessageDialog(this, "Baja temporal realizada con éxito.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            }
+
+        } catch (NegocioException ex) {
+            Logger.getLogger(FrmInicioDoctor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, "Error al solicitar la baja temporal: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_BtnBajaTemporalActionPerformed
 
     private void BtnCitasSideActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCitasSideActionPerformed
