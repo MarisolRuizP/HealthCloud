@@ -318,6 +318,8 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
 
     private void BtnCitasSideMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCitasSideMouseClicked
         setVisible(false);
+        FrmHistorialDoctor frmAgenda = new FrmHistorialDoctor(identificador);
+        frmAgenda.setVisible(true);
 
     }//GEN-LAST:event_BtnCitasSideMouseClicked
 

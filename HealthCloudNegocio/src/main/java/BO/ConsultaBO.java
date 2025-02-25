@@ -7,6 +7,7 @@ package BO;
 import Conexion.IConexionBD;
 import DAO.ConsultaDAO;
 import DAO.IConsulta;
+import Entidades.Cita;
 import Entidades.Consulta;
 import Exception.NegocioException;
 import Exception.PersistenciaException;
@@ -55,4 +56,13 @@ public class ConsultaBO {
             throw new NegocioException("Ocurrió un error al registrar la consulta: " + ex.getMessage(), ex);
         }
     }
+
+    public Cita obtenerCitaPorId(int idCita) throws NegocioException {
+        try {
+            return consultaDAO.obtenerCitaPorId(idCita);
+        } catch (PersistenciaException ex) {
+            throw new NegocioException("Error al obtener la cita con ID: " + idCita, ex);
+        }
+    }
+
 }
