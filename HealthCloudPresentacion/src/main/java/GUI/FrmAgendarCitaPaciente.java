@@ -13,6 +13,7 @@ import Entidades.Doctor;
 import Exception.NegocioException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Time;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -67,7 +68,7 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
         DtChFechaCita = new com.toedter.calendar.JDateChooser();
         CbBoxEspecialidad = new javax.swing.JComboBox<>();
         CbBoxDoctor = new javax.swing.JComboBox<>();
-        CbBoxHora = new javax.swing.JComboBox<>();
+        jTextField1 = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.BoxLayout(getContentPane(), javax.swing.BoxLayout.LINE_AXIS));
@@ -263,10 +264,12 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
         CbBoxDoctor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         CbBoxDoctor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
 
-        CbBoxHora.setBackground(new java.awt.Color(255, 255, 255));
-        CbBoxHora.setMaximumRowCount(20);
-        CbBoxHora.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        CbBoxHora.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(217, 217, 217)));
+        jTextField1.setText("jTextField1");
+        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout BtnCancelLayout = new javax.swing.GroupLayout(BtnCancel);
         BtnCancel.setLayout(BtnCancelLayout);
@@ -290,19 +293,19 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
                         .addGap(42, 42, 42)
                         .addComponent(LblHora))
                     .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(LblFecha))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
+                        .addGap(40, 40, 40)
+                        .addComponent(LblCorreo))
+                    .addGroup(BtnCancelLayout.createSequentialGroup()
                         .addGap(25, 25, 25)
                         .addGroup(BtnCancelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(TxtCorreo, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                             .addComponent(DtChFechaCita, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CbBoxEspecialidad, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(CbBoxDoctor, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(CbBoxHora, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(BtnCancelLayout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(LblFecha))
-                    .addGroup(BtnCancelLayout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(LblCorreo)))
+                            .addComponent(jTextField1))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         BtnCancelLayout.setVerticalGroup(
@@ -322,9 +325,9 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
                 .addComponent(DtChFechaCita, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(LblHora)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CbBoxHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(LblCorreo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(TxtCorreo, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -429,10 +432,11 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
             return;
         }
         java.sql.Date fecha = new java.sql.Date(fechaUtil.getTime());
-        java.sql.Time hora = java.sql.Time.valueOf(CbBoxHora.getSelectedItem().toString());
-
+        String horaTexto = jTextField1.getText();
+        Time hora = java.sql.Time.valueOf(horaTexto);
+        
         String notas = TxtCorreo.getText();
-
+        
         int idPaciente;
         try {
             idPaciente = Integer.parseInt(identificador);
@@ -450,6 +454,10 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error al agendar la cita: " + ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_BtnConfirmEditActionPerformed
+
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void inicializarComboBoxes() {
         String[] especialidades = {"Cardiología", "Dermatología", "Pediatría", "Neurología"};
@@ -528,7 +536,6 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
     private javax.swing.JButton BtnInicio;
     private javax.swing.JComboBox<String> CbBoxDoctor;
     private javax.swing.JComboBox<String> CbBoxEspecialidad;
-    private javax.swing.JComboBox<String> CbBoxHora;
     private com.toedter.calendar.JDateChooser DtChFechaCita;
     private javax.swing.JLabel LblCorreo;
     private javax.swing.JLabel LblDoctor;
@@ -538,5 +545,6 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField TxtCorreo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
