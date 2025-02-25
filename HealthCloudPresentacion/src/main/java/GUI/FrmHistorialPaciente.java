@@ -406,7 +406,7 @@ public class FrmHistorialPaciente extends javax.swing.JFrame {
     }
 
     public void llenarHistorialCitas(String identificador) {
-        try {
+        try {    
             List<Cita> historialCitas = historialCitaBO.obtenerHistorialCitas(identificador);
             DefaultListModel<String> listModel = new DefaultListModel<>();
             if (historialCitas.isEmpty()) {

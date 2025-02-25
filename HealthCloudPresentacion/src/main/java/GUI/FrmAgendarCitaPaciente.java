@@ -4,17 +4,39 @@
  */
 package GUI;
 
+import BO.CitaBO;
+import BO.DoctorBO;
+import Conexion.ConexionBD;
+import DTO.AgendarCitaDTO;
+import Entidades.Cita;
+import Entidades.Doctor;
+import Exception.NegocioException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Maryr
  */
 public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
+
     String identificador;
+    CitaBO citaBO;
+    DoctorBO doctorBO;
+
     /**
      * Creates new form FrmInicioPaciente
      */
     public FrmAgendarCitaPaciente() {
         initComponents();
+        ConexionBD conexion = new ConexionBD();
+        this.citaBO = new CitaBO(conexion);
+        this.doctorBO = new DoctorBO(conexion);
+        inicializarComboBoxes();
+        especialidadDoctores();
     }
 
     /**
@@ -206,6 +228,11 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
         BtnConfirmEdit.setForeground(new java.awt.Color(0, 0, 0));
         BtnConfirmEdit.setText("Confirmar");
         BtnConfirmEdit.setBorder(null);
+        BtnConfirmEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnConfirmEditActionPerformed(evt);
+            }
+        });
 
         BtnCancelEdit.setBackground(new java.awt.Color(58, 109, 140));
         BtnCancelEdit.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
@@ -358,7 +385,7 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
 
     private void BtnCancelEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnCancelEditMouseClicked
         setVisible(false);
-        FrmCitasPaciente frmCitas= new FrmCitasPaciente();
+        FrmCitasPaciente frmCitas = new FrmCitasPaciente();
         frmCitas.setVisible(true);
     }//GEN-LAST:event_BtnCancelEditMouseClicked
 
@@ -391,6 +418,62 @@ public class FrmAgendarCitaPaciente extends javax.swing.JFrame {
         FrmCitaEmergencia frmCitaEm = new FrmCitaEmergencia(identificador);
         frmCitaEm.setVisible(true);
     }//GEN-LAST:event_BtnCitaEmSideMouseClicked
+
+    private void BtnConfirmEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnConfirmEditActionPerformed
+        String especialidad = CbBoxEspecialidad.getSelectedItem().toString();
+        int idDoctor = Integer.parseInt(CbBoxDoctor.getSelectedItem().toString());
+        java.util.Date fechaUtil = DtChFechaCita.getDate();
+
+        if (fechaUtil == null) {
+            JOptionPane.showMessageDialog(this, "Error", "Fecha de la cita en blanco", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        java.sql.Date fecha = new java.sql.Date(fechaUtil.getTime());
+        java.sql.Time hora = java.sql.Time.valueOf(CbBoxHora.getSelectedItem().toString());
+
+        String notas = TxtCorreo.getText();
+
+        int idPaciente;
+        try {
+            idPaciente = Integer.parseInt(identificador);
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Error", "El paciente no existe", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        AgendarCitaDTO citaDTO = new AgendarCitaDTO(especialidad, idDoctor, fecha, hora, notas, idPaciente);
+
+        try {
+            Cita citaRegistrada = citaBO.agendarCita(citaDTO);
+            JOptionPane.showMessageDialog(this, "", "Cita agendada", JOptionPane.INFORMATION_MESSAGE);
+        } catch (NegocioException ex) {
+            JOptionPane.showMessageDialog(this, "Error al agendar la cita: " + ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_BtnConfirmEditActionPerformed
+
+    private void inicializarComboBoxes() {
+        String[] especialidades = {"Cardiología", "Dermatología", "Pediatría", "Neurología"};
+        CbBoxEspecialidad.setModel(new DefaultComboBoxModel<>(especialidades));
+    }
+
+    private void especialidadDoctores() {
+        CbBoxEspecialidad.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String especialidadSeleccionada = (String) CbBoxEspecialidad.getSelectedItem();
+                try {
+                    List<Doctor> doctores = doctorBO.obtenerDoctoresPorEspecialidad(especialidadSeleccionada);
+                    DefaultComboBoxModel<String> modeloDoctores = new DefaultComboBoxModel<>();
+                    for (Doctor doctor : doctores) {
+                        modeloDoctores.addElement(doctor.getNombrePila() + " " + doctor.getApellidoPaterno());
+                    }
+                    CbBoxDoctor.setModel(modeloDoctores);
+                } catch (NegocioException ex) {
+                    JOptionPane.showMessageDialog(null, "Error al cargar las doctores" + ex.getMessage(), "", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
 
     /**
      * @param args the command line arguments

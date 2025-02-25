@@ -15,5 +15,6 @@ public interface IDoctorDAO {
     public boolean tieneCitasPendientes(int idDoctor) throws PersistenciaException;
     public void darBajaTemporal(int idDoctor) throws PersistenciaException;
     public boolean estaActivo(int idDoctor) throws PersistenciaException;
+    public List<Doctor> obtenerDoctoresPorEspecialidad(String especialidad) throws PersistenciaException;
 
 }

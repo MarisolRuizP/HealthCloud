@@ -212,4 +212,23 @@ public class DoctorDAO implements IDoctorDAO {
         return horarios;
     }
 
+    public List<Doctor> obtenerDoctoresPorEspecialidad(String especialidad) throws PersistenciaException {
+        String sql = "CALL obtenerDoctoresPorEspecialidad(?)";
+        List<Doctor> doctores = new ArrayList<>();
+        try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
+            stmt.setString(1, especialidad);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Doctor doctor = new Doctor();
+                    doctor.setNombrePila(rs.getString("nombreDoctor"));
+                    doctor.setApellidoPaterno(rs.getString("apellidoDoctor"));
+                    doctores.add(doctor);
+                }
+            }
+        } catch (SQLException ex) {
+            throw new PersistenciaException("Error al obtener los doctores por especialidad", ex);
+        }
+        return doctores;
+    }
+
 }

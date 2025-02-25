@@ -23,7 +23,7 @@ public class DoctorBO {
     private final ICitaDAO citaDAO;
     private static final Logger logger = Logger.getLogger(DoctorBO.class.getName());
 
-    public DoctorBO(IConexionBD conexion, DAO.ICitaDAO citaDAO) {
+    public DoctorBO(IConexionBD conexion) {
         this.doctorDAO = new DoctorDAO(conexion);
         this.citaDAO = new CitaDAO(conexion);
     }
@@ -102,5 +102,15 @@ public class DoctorBO {
             throw new NegocioException("Error al verificar la disponibilidad del doctor.", ex);
         }
     }
+    
+    public List<Doctor> obtenerDoctoresPorEspecialidad(String especialidad) throws NegocioException {
+    try {
+        return doctorDAO.obtenerDoctoresPorEspecialidad(especialidad);
+    } catch (PersistenciaException ex) {
+        logger.log(Level.SEVERE, "Error al obtener doctores por especialidad", ex);
+        throw new NegocioException("Error al obtener doctores", ex);
+    }
+}
+
 
 }

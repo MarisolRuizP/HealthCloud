@@ -29,7 +29,7 @@ public class FrmInicioDoctor extends javax.swing.JFrame {
      */
     public FrmInicioDoctor(String identificador) {
         IConexionBD conexion = new ConexionBD();
-        this.doctorBO = new DoctorBO(conexion, null);
+        this.doctorBO = new DoctorBO(conexion);
         this.identificador = identificador;
         initComponents();
         llenarDatos(identificador);

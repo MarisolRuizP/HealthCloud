@@ -27,7 +27,7 @@ public class HistorialCitaBO {
     public HistorialCitaBO(IConexionBD conexion) {
         this.historialCita = new CitaDAO(conexion);
         pacienteBO = new PacienteBO(conexion);
-        doctorBO = new DoctorBO(conexion, null);
+        doctorBO = new DoctorBO(conexion);
     }
 
     public List<Cita> obtenerHistorialCitas(String identificador) throws NegocioException {

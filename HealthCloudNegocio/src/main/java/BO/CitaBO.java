@@ -24,7 +24,7 @@ public class CitaBO {
 
     public CitaBO(IConexionBD conexion) {
         this.citaDAO = new CitaDAO(conexion);
-        this.doctorBO = new DoctorBO(conexion, null);
+        this.doctorBO = new DoctorBO(conexion);
     }
 
     public Cita agendarCita(AgendarCitaDTO citaDTO) throws NegocioException {
