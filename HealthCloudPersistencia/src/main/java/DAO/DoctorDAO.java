@@ -171,7 +171,7 @@ public class DoctorDAO implements IDoctorDAO {
     }
 
     public String consultarEspecialidad(int idDoctor) throws PersistenciaException {
-        String sql = "{CALL consultarEspecialidad(?)}";
+        String sql = "CALL consultarEspecialidad(?)";
 
         try (Connection con = conexion.crearConexion(); CallableStatement stmt = con.prepareCall(sql)) {
             stmt.setInt(1, idDoctor);
